@@ -1,0 +1,26 @@
+=====
+idea 1
+===== 
+React components are classified into two types:
+1. container components
+2. presentation components
+
+for example: 
+TodoList component = presentation components, show a list of TodoList
+and
+TodoApp page = container component, provide the todo object data to TodoList component
+
+
+=====
+idea 2
+===== 
+main js file should be clean (only use to initiate the app)
+dom controller file provides the functions that handle the ui and the event handlers
+relationship: dom controller file provides the funciton to main js to handle the ui and the event handlers.
+
+the dom controller will use the other controller to handle the CRUD operations + other operations
+for example, if the app is use to manage inventory, then inventory controller is created, the global variable is 
+save in the inventory controller
+
+(controlling the ui and the user event + handlers)
+
