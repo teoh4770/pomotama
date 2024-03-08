@@ -25,7 +25,7 @@ interface tabItemProps {
 }
 
 interface TabsProps {
-    defaultTab?: string;
+    defaultTab?: tabItemProps;
     items: tabItemProps[];
     handler: (value: number) => void;
 }
@@ -33,13 +33,12 @@ interface TabsProps {
 const Tabs = ({ defaultTab, items, handler }: TabsProps) => {
     const [tab, setTab] = useState(defaultTab ?? items[0].name);
 
-    // should set the time outside of the component
     useEffect(() => {
-        handler(items[0].value);
+        handler(defaultTab?.value ?? items[0].value);
     }, []);
 
     return (
-        <div className="tabs">
+        <div className="tabs mx-auto w-fit">
             <div className="tabList">
                 {items.map(({ name, label, value }) => {
                     const isActive = tab === name;
@@ -48,7 +47,7 @@ const Tabs = ({ defaultTab, items, handler }: TabsProps) => {
                         <button
                             key={name}
                             type="button"
-                            className={`${isActive ? 'active-style' : ''}`}
+                            className={`${isActive ? 'bg-black/15 font-bold' : ''} rounded-md px-[12px] py-[2px]`}
                             onClick={() => {
                                 setTab(name);
                                 handler(value);
