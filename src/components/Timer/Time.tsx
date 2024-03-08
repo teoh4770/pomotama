@@ -7,8 +7,8 @@ interface TimeProps {
 
 const Time = ({ minutes, seconds }: TimeProps) => {
     return (
-        <p className="text-9xl">
-            {formattedTimes(minutes)} : {formattedTimes(seconds)}
+        <p className="text-[7.5rem] font-extrabold">
+            {formattedTimes(minutes)}:{formattedTimes(seconds)}
         </p>
     );
 };

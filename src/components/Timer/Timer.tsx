@@ -60,7 +60,7 @@ const Timer = () => {
 
     const updateTimer = (val: number) => {
         if (val < 0) throw new Error('Cannot set negative value for timer');
-        setStatus('idle');
+        resetTimer();
         setInitialTime(minutesToSeconds(val));
     };
 
@@ -79,7 +79,7 @@ const Timer = () => {
     };
 
     return (
-        <article className="timer">
+        <article className="timer mx-auto max-w-[30rem] space-y-1 rounded-lg bg-white/10 py-8 pt-6 text-center">
             <Tabs items={timerSettings} handler={updateTimer} />
             <Time minutes={time.minutes} seconds={time.seconds} />
             <Controls
