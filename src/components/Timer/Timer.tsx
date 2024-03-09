@@ -18,12 +18,12 @@ Handlers
 - reset the timer
  */
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Controls } from './Controls';
 import { Tabs } from './Tabs';
 import { Time } from './Time';
 import { useInterval } from '../../effects';
-import { minutesToSeconds, getTimes } from '../../utils';
+import { getTimes, minutesToSeconds } from '../../utils';
 
 const timerSettings = [
     {
@@ -49,7 +49,8 @@ const Timer = () => {
     const [timeElapsed, setTimeElapsed] = useState(0);
     const [status, setStatus] = useState('idle'); // idle or running
 
-    const time = getTimes(initialTime - timeElapsed);
+    const time = initialTime - timeElapsed;
+    const { minutes, seconds } = getTimes(time);
 
     useInterval(
         () => {
@@ -58,8 +59,13 @@ const Timer = () => {
         status === 'running' ? 1000 : null
     );
 
+    useEffect(() => {
+        if (time === 0) {
+          resetTimer();
+        }
+    }, [time])
+
     const updateTimer = (val: number) => {
-        if (val < 0) throw new Error('Cannot set negative value for timer');
         resetTimer();
         setInitialTime(minutesToSeconds(val));
     };
@@ -81,7 +87,7 @@ const Timer = () => {
     return (
         <article className="timer mx-auto max-w-[30rem] space-y-1 rounded-lg bg-white/10 py-8 pt-6 text-center">
             <Tabs items={timerSettings} handler={updateTimer} />
-            <Time minutes={time.minutes} seconds={time.seconds} />
+            <Time minutes={minutes} seconds={seconds} />
             <Controls
                 status={status}
                 toggleTimer={toggleTimer}
