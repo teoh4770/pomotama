@@ -30,12 +30,20 @@ import { timerSettingOptions } from '../../App';
 // instead, the setting component should contains multiple sub setting component
 
 interface Timer {
+    activeMode: string;
+    activeModeHandler: (arg0: string) => void;
     timerSettings: timerSettingOptions;
     initialTime: number;
     initialTimeHandler: (arg0: number) => void;
 }
 
-const Timer = ({ timerSettings, initialTime, initialTimeHandler }: Timer) => {
+const Timer = ({
+    activeMode,
+    activeModeHandler,
+    timerSettings,
+    initialTime,
+    initialTimeHandler,
+}: Timer) => {
     const [timeElapsed, setTimeElapsed] = useState(0);
     const [status, setStatus] = useState('idle');
 
@@ -77,6 +85,8 @@ const Timer = ({ timerSettings, initialTime, initialTimeHandler }: Timer) => {
     return (
         <article className="timer mx-auto max-w-[30rem] space-y-1 rounded-lg bg-white/10 py-8 pt-6 text-center text-white">
             <Tabs
+                activeTab={activeMode}
+                setActiveTab={activeModeHandler}
                 items={[
                     {
                         name: 'pomodoroDuration',

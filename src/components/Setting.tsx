@@ -2,7 +2,6 @@ import { FormEvent } from 'react';
 import { clipNumber } from '../utils';
 import { timerSettingOptions } from '../App';
 
-// ? time setting options prop is not good enough?
 interface settingProps {
     timerSettings: timerSettingOptions;
     timerSettingshandler: (arg0: timerSettingOptions) => void;
@@ -27,7 +26,6 @@ const Setting = ({ timerSettings, timerSettingshandler }: settingProps) => {
 
     return (
         <div>
-            {/* a lot of repetition, can use for loop to iterate through the list */}
             <label htmlFor="pomodoro-input">Pomodoro</label>
             <input
                 type="number"

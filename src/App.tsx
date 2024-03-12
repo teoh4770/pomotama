@@ -6,6 +6,9 @@ export type timerSettingOptions = {
     [key: string]: number;
 };
 
+// Todo: fix the bug that exists
+// bug 1: the timer keeps running when time is 0
+
 const App = () => {
     // timer setting is shared between the timer and the setting
     const [timerSettings, setTimerSettings] = useState<timerSettingOptions>({
@@ -13,13 +16,14 @@ const App = () => {
         shortBreakDuration: 5,
         longBreakDuration: 20,
     });
-    // when timer setting is
+
     const [initialTime, setInitialTime] = useState(0);
+    const [activeTab, setActiveTab] = useState('pomodoroDuration');
 
     // should change "pomodoroDuration" to current focus tab
     useEffect(() => {
-        setInitialTime(minutesToSeconds(timerSettings['pomodoroDuration']));
-    }, [timerSettings]);
+        setInitialTime(minutesToSeconds(timerSettings[activeTab]));
+    }, [timerSettings, activeTab]);
 
     return (
         <div className="font-sans">
@@ -27,6 +31,8 @@ const App = () => {
                 initialTime={initialTime}
                 initialTimeHandler={setInitialTime}
                 timerSettings={timerSettings}
+                activeMode={activeTab}
+                activeModeHandler={setActiveTab}
             />
             <Setting
                 timerSettings={timerSettings}

@@ -25,13 +25,13 @@ interface TabItemProp {
 }
 
 interface TabsProps {
-    defaultTab?: string;
+    activeTab?: string;
+    setActiveTab: (arg0: string) => void
     items: TabItemProp[];
     handler: (name: string) => void;
 }
 
-const Tabs = ({ defaultTab, items, handler }: TabsProps) => {
-    const [activeTab, setActiveTab] = useState(defaultTab ?? items[0].name);
+const Tabs = ({ activeTab, setActiveTab, items, handler }: TabsProps) => {
 
     return (
         <div className="tabs mx-auto w-fit">
