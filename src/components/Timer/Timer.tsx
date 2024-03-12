@@ -24,30 +24,20 @@ import { Tabs } from './Tabs';
 import { Time } from './Time';
 import { useInterval } from '../../effects';
 import { getTimes, minutesToSeconds } from '../../utils';
+import { timerSettingOptions } from '../../App';
 
-const timerSettings = [
-    {
-        name: 'pomodoro',
-        label: 'Pomodoro',
-        value: 15,
-    },
-    {
-        name: 'shortBreak',
-        label: 'Short Break',
-        value: 5,
-    },
-    {
-        name: 'longBreak',
-        label: 'Long Break',
-        value: 20,
-    },
-];
+// the timer setting component should stay inside Timer component
+// instead, the setting component should contains multiple sub setting component
 
-// contain all the timer related logic
-const Timer = () => {
-    const [initialTime, setInitialTime] = useState(0);
+interface Timer {
+    timerSettings: timerSettingOptions;
+    initialTime: number;
+    initialTimeHandler: (arg0: number) => void;
+}
+
+const Timer = ({ timerSettings, initialTime, initialTimeHandler }: Timer) => {
     const [timeElapsed, setTimeElapsed] = useState(0);
-    const [status, setStatus] = useState('idle'); // idle or running
+    const [status, setStatus] = useState('idle');
 
     const time = initialTime - timeElapsed;
     const { minutes, seconds } = getTimes(time);
@@ -61,13 +51,13 @@ const Timer = () => {
 
     useEffect(() => {
         if (time === 0) {
-          resetTimer();
+            resetTimer();
         }
-    }, [time])
+    }, [time]);
 
-    const updateTimer = (val: number) => {
+    const updateTimerMode = (name: string) => {
         resetTimer();
-        setInitialTime(minutesToSeconds(val));
+        initialTimeHandler(minutesToSeconds(timerSettings[name]));
     };
 
     const toggleTimer = () => {
@@ -85,8 +75,27 @@ const Timer = () => {
     };
 
     return (
-        <article className="timer mx-auto max-w-[30rem] space-y-1 rounded-lg bg-white/10 py-8 pt-6 text-center">
-            <Tabs items={timerSettings} handler={updateTimer} />
+        <article className="timer mx-auto max-w-[30rem] space-y-1 rounded-lg bg-white/10 py-8 pt-6 text-center text-white">
+            <Tabs
+                items={[
+                    {
+                        name: 'pomodoroDuration',
+                        label: 'Pomodoro',
+                        value: timerSettings.pomodoroDuration,
+                    },
+                    {
+                        name: 'shortBreakDuration',
+                        label: 'Short Break',
+                        value: timerSettings.shortBreakDuration,
+                    },
+                    {
+                        name: 'longBreakDuration',
+                        label: 'Long Break',
+                        value: timerSettings.longBreakDuration,
+                    },
+                ]}
+                handler={updateTimerMode}
+            />
             <Time minutes={minutes} seconds={seconds} />
             <Controls
                 status={status}

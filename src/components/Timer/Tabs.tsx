@@ -9,6 +9,8 @@
 `handler`: The handler to update the timer value
 */
 
+import { useState } from 'react';
+
 /* Test Case
 - All the provided items should be displayed.
 - The default active item should be reflected correctly.
@@ -16,32 +18,26 @@
 - Test that you are able to initialize multiple instances of the component, each with independent states.
  */
 
-import { useState, useEffect } from 'react';
-
-interface tabItemProps {
+interface TabItemProp {
     name: string;
     label: string;
     value: number;
 }
 
 interface TabsProps {
-    defaultTab?: tabItemProps;
-    items: tabItemProps[];
-    handler: (value: number) => void;
+    defaultTab?: string;
+    items: TabItemProp[];
+    handler: (name: string) => void;
 }
 
 const Tabs = ({ defaultTab, items, handler }: TabsProps) => {
-    const [tab, setTab] = useState(defaultTab ?? items[0].name);
-
-    useEffect(() => {
-        handler(defaultTab?.value ?? items[0].value);
-    }, []);
+    const [activeTab, setActiveTab] = useState(defaultTab ?? items[0].name);
 
     return (
         <div className="tabs mx-auto w-fit">
             <div className="tabList">
                 {items.map(({ name, label, value }) => {
-                    const isActive = tab === name;
+                    const isActive = activeTab === name;
 
                     return (
                         <button
@@ -49,8 +45,8 @@ const Tabs = ({ defaultTab, items, handler }: TabsProps) => {
                             type="button"
                             className={`${isActive ? 'bg-black/15 font-bold' : ''} rounded-md px-[12px] py-[2px]`}
                             onClick={() => {
-                                setTab(name);
-                                handler(value);
+                                handler(name);
+                                setActiveTab(name);
                             }}
                             value={value}
                         >
