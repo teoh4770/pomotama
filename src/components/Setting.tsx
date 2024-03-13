@@ -1,24 +1,19 @@
 import { FormEvent } from 'react';
 import { clipNumber } from '../utils';
-import { timerSettingOptions } from '../App';
-
-interface settingProps {
-    timerSettings: timerSettingOptions;
-    timerSettingshandler: (arg0: timerSettingOptions) => void;
-}
+import { timerSettingsAtom } from '../lib/atom';
+import { useAtom } from 'jotai';
 
 const clipTime = (time: number) => {
     return clipNumber(time, 0, 999);
 };
 
-/**
- * @returns a setting section that contain multiple sub setting, like setting for times, todos, themes...
- */
-const Setting = ({ timerSettings, timerSettingshandler }: settingProps) => {
+const Setting = () => {
+    const [timerSettings, setTimerSettings] = useAtom(timerSettingsAtom);
+
     const handleTimerSetting = (event: FormEvent<HTMLInputElement>) => {
         const target = event.currentTarget;
 
-        timerSettingshandler({
+        setTimerSettings({
             ...timerSettings,
             [target.name]: clipTime(+target.value),
         });

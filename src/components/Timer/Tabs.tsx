@@ -9,14 +9,14 @@
 `handler`: The handler to update the timer value
 */
 
-import { useState } from 'react';
-
 /* Test Case
 - All the provided items should be displayed.
 - The default active item should be reflected correctly.
 - Selecting the tab items updates the current timer value
 - Test that you are able to initialize multiple instances of the component, each with independent states.
  */
+import { activeTabAtom } from '../../lib/atom';
+import { useAtom } from 'jotai';
 
 interface TabItemProp {
     name: string;
@@ -25,13 +25,13 @@ interface TabItemProp {
 }
 
 interface TabsProps {
-    activeTab?: string;
-    setActiveTab: (arg0: string) => void
+    defaultValue?: string;
     items: TabItemProp[];
     handler: (name: string) => void;
 }
 
-const Tabs = ({ activeTab, setActiveTab, items, handler }: TabsProps) => {
+const Tabs = ({ items, handler }: TabsProps) => {
+    const [activeTab, setActiveTab] = useAtom(activeTabAtom);
 
     return (
         <div className="tabs mx-auto w-fit">

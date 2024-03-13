@@ -24,31 +24,19 @@ import { Tabs } from './Tabs';
 import { Time } from './Time';
 import { useInterval } from '../../effects';
 import { getTimes, minutesToSeconds } from '../../utils';
-import { timerSettingOptions } from '../../App';
+import { useAtomValue } from 'jotai';
+import { timerSettingsAtom, activeTimeMode } from '../../lib/atom';
 
-// the timer setting component should stay inside Timer component
-// instead, the setting component should contains multiple sub setting component
+const Timer = () => {
+    const timerSettings = useAtomValue(timerSettingsAtom);
+    const timeMode = useAtomValue(activeTimeMode);
 
-interface Timer {
-    activeMode: string;
-    activeModeHandler: (arg0: string) => void;
-    timerSettings: timerSettingOptions;
-    initialTime: number;
-    initialTimeHandler: (arg0: number) => void;
-}
-
-const Timer = ({
-    activeMode,
-    activeModeHandler,
-    timerSettings,
-    initialTime,
-    initialTimeHandler,
-}: Timer) => {
+    const [initialTime, setInitialTime] = useState(0);
     const [timeElapsed, setTimeElapsed] = useState(0);
-    const [status, setStatus] = useState('idle');
+    const remainingTime = initialTime - timeElapsed;
+    const { minutes, seconds } = getTimes(remainingTime);
 
-    const time = initialTime - timeElapsed;
-    const { minutes, seconds } = getTimes(time);
+    const [status, setStatus] = useState('idle');
 
     useInterval(
         () => {
@@ -58,14 +46,22 @@ const Timer = ({
     );
 
     useEffect(() => {
-        if (time === 0) {
+        if (remainingTime <= 0) {
             resetTimer();
         }
-    }, [time]);
+    }, [remainingTime]);
+
+    useEffect(() => {
+        const currentActiveTimeModeValue = minutesToSeconds(
+            timerSettings[timeMode]
+        );
+
+        setInitialTime(currentActiveTimeModeValue);
+    }, [timerSettings, timeMode]);
 
     const updateTimerMode = (name: string) => {
         resetTimer();
-        initialTimeHandler(minutesToSeconds(timerSettings[name]));
+        setInitialTime(minutesToSeconds(timerSettings[name]));
     };
 
     const toggleTimer = () => {
@@ -85,8 +81,6 @@ const Timer = ({
     return (
         <article className="timer mx-auto max-w-[30rem] space-y-1 rounded-lg bg-white/10 py-8 pt-6 text-center text-white">
             <Tabs
-                activeTab={activeMode}
-                setActiveTab={activeModeHandler}
                 items={[
                     {
                         name: 'pomodoroDuration',
