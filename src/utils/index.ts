@@ -1,4 +1,6 @@
 const getTimes = (timeInSeconds: number) => {
+    if (timeInSeconds < 0) throw new Error('Input cannot be a negative number');
+
     const minutes = Math.floor(timeInSeconds / 60);
     const seconds = timeInSeconds % 60;
 
@@ -6,10 +8,9 @@ const getTimes = (timeInSeconds: number) => {
 };
 
 const formattedTimes = (time: number) => {
-    if (time >= 10) {
-        return '' + time;
-    }
-    return '0' + time;
+    if (time < 0) throw new Error('Input cannot be a negative number');
+    
+    return time >= 10 ? String(time) : '0' + time;
 };
 
 const minutesToSeconds = (minutes: number) => {
