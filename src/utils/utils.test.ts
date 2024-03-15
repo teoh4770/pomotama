@@ -1,8 +1,6 @@
 import { describe, test, expect } from 'vitest';
 import { getTimes, formattedTimes, clipNumber } from './index';
 
-// Tests
-// should be able to get time in seconds, and return an object that contains minutes and seconds
 describe('getTimes function', () => {
     test('return a time object when input is positive', () => {
         const seconds = 60;
