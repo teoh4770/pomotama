@@ -20,10 +20,11 @@ describe('getTimes function', () => {
         expect(getTimes(61)).toEqual({ minutes: 1, seconds: 1 });
     });
 
-    test('throws an error for negative input', () => {
-        expect(() => getTimes(-1)).toThrowError(
-            'Input cannot be a negative number'
-        );
+    test('return default time object with minutes and seconds when input is negative', () => {
+        const defaultTimeObject = { minutes: 0, seconds: 0 };
+        const seconds = -1;
+
+        expect(getTimes(seconds)).toEqual(defaultTimeObject);
     });
 });
 
