@@ -4,11 +4,30 @@ A Pomofocus clone with React and TypeScript. I love Pomofocus.io so much that I'
 
 ## 📦 Technologies
 
-- Vite
-- React.js
-- TypeScript
-- Tailwind CSS
+- <code>Vite</code>
+- <code>React.js</code>
+- <code>TypeScript</code>
+- <code>Tailwind</code>
+- <code>HTML/CSS</code>
+- <code>Testing Library</code>
 
-## ✨ Features
+## ✨ Features (In progress)
+- [X] Pomodoro timer for tracking time 
+- [X] Three different time mode: pomodoro, short break and long break
+- [X] Setting to customise the duration
+- [ ] Automatic break after complete a session
+- [ ] Todo List + Treat System
+- [ ] Activity summary that shows the amount of hours focused
+- [ ] Need to determine the storage method
 
-In progress...
+## 👩🏽‍🍳 The Process
+
+## 📚 What I Learned
+
+## 💭 How can it be improved?
+
+## 🚦 Running the Project
+
+
+
+
