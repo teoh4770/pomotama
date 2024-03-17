@@ -6,7 +6,7 @@ export type timerSettingOptions = {
 
 const App = () => {
     return (
-        <div className="font-sans">
+        <div>
             <Timer />
             <Setting />
         </div>

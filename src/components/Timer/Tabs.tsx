@@ -34,27 +34,26 @@ const Tabs = ({ items, handler }: TabsProps) => {
     const [activeTab, setActiveTab] = useAtom(activeTabAtom);
 
     return (
-        <div className="tabs mx-auto w-fit">
-            <div className="tabList">
-                {items.map(({ name, label, value }) => {
-                    const isActive = activeTab === name;
+        <div className="center | w-fit flex-row">
+            {items.map(({ name, label, value }) => {
+                const isActive = activeTab === name;
 
-                    return (
-                        <button
-                            key={name}
-                            type="button"
-                            className={`${isActive ? 'bg-black/15 font-bold' : ''} rounded-md px-[12px] py-[2px]`}
-                            onClick={() => {
-                                handler(name);
-                                setActiveTab(name);
-                            }}
-                            value={value}
-                        >
-                            {label}
-                        </button>
-                    );
-                })}
-            </div>
+                return (
+                    <button
+                        key={name}
+                        type="button"
+                        data-type="naked"
+                        className={`button ${isActive ? 'active' : ''}`}
+                        onClick={() => {
+                            handler(name);
+                            setActiveTab(name);
+                        }}
+                        value={value}
+                    >
+                        {label}
+                    </button>
+                );
+            })}
         </div>
     );
 };
