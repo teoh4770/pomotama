@@ -1,11 +1,4 @@
-interface IndicatorProps {
-    initialTime: number;
-    timeElapsed: number;
-}
-
-const Indicator = ({ initialTime, timeElapsed }: IndicatorProps) => {
-    const percentage = timeElapsed / initialTime;
-
+const Indicator = ({ percentage }: { percentage: number }) => {
     return (
         <div className="h-1 w-full bg-slate-500">
             <div

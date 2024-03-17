@@ -26,6 +26,7 @@ import { useInterval } from '../../effects';
 import { getTimes, minutesToSeconds } from '../../utils';
 import { useAtomValue } from 'jotai';
 import { timerSettingsAtom, activeTimeMode } from '../../lib/atom';
+import { Indicator } from './Indicator';
 
 const Timer = () => {
     const timerSettings = useAtomValue(timerSettingsAtom);
@@ -33,10 +34,12 @@ const Timer = () => {
 
     const [initialTime, setInitialTime] = useState(0);
     const [timeElapsed, setTimeElapsed] = useState(0);
+    const [status, setStatus] = useState('idle');
+    
     const remainingTime = initialTime - timeElapsed;
     const { minutes, seconds } = getTimes(remainingTime);
+    const percentageToCompletion = timeElapsed / initialTime;
 
-    const [status, setStatus] = useState('idle');
 
     useInterval(
         () => {
@@ -79,34 +82,37 @@ const Timer = () => {
     };
 
     return (
-        <article className="timer mx-auto max-w-[30rem] space-y-1 rounded-lg bg-white/10 py-8 pt-6 text-center text-white">
-            <Tabs
-                items={[
-                    {
-                        name: 'pomodoroDuration',
-                        label: 'Pomodoro',
-                        value: timerSettings.pomodoroDuration,
-                    },
-                    {
-                        name: 'shortBreakDuration',
-                        label: 'Short Break',
-                        value: timerSettings.shortBreakDuration,
-                    },
-                    {
-                        name: 'longBreakDuration',
-                        label: 'Long Break',
-                        value: timerSettings.longBreakDuration,
-                    },
-                ]}
-                handler={updateTimerMode}
-            />
-            <Time minutes={minutes} seconds={seconds} />
-            <Controls
-                status={status}
-                toggleTimer={toggleTimer}
-                resetTimer={resetTimer}
-            />
-        </article>
+        <div>
+            <Indicator percentage={percentageToCompletion} />
+            <article className="timer mx-auto max-w-[30rem] space-y-1 rounded-lg bg-white/10 py-8 pt-6 text-center text-white">
+                <Tabs
+                    items={[
+                        {
+                            name: 'pomodoroDuration',
+                            label: 'Pomodoro',
+                            value: timerSettings.pomodoroDuration,
+                        },
+                        {
+                            name: 'shortBreakDuration',
+                            label: 'Short Break',
+                            value: timerSettings.shortBreakDuration,
+                        },
+                        {
+                            name: 'longBreakDuration',
+                            label: 'Long Break',
+                            value: timerSettings.longBreakDuration,
+                        },
+                    ]}
+                    handler={updateTimerMode}
+                />
+                <Time minutes={minutes} seconds={seconds} />
+                <Controls
+                    status={status}
+                    toggleTimer={toggleTimer}
+                    resetTimer={resetTimer}
+                />
+            </article>
+        </div>
     );
 };
 
