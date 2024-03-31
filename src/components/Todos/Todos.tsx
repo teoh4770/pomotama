@@ -1,3 +1,5 @@
+import { todoArray } from '../data/todos';
+
 const Tasks = () => {
     return (
         <section className="tasks-section">
@@ -12,54 +14,25 @@ const Tasks = () => {
                 </button>
             </header>
             <ol id="todo-list" className="todo-list mb-3 mt-5 grid gap-2">
-                <li
-                    id="something-unique"
-                    className="flex items-center border p-2"
-                >
-                    <label className="mr-auto">
-                        <input type="checkbox" name="todo1" />
-                        Prepare for Microprocessor
-                    </label>
-                    <button
-                        className="button"
-                        data-type="secondary"
-                        data-size="small"
-                    >
-                        Options
-                    </button>
-                </li>
-                <li
-                    id="something-unique"
-                    className="flex items-center border p-2"
-                >
-                    <label className="mr-auto">
-                        <input type="checkbox" name="todo1" />
-                        Prepare for Microprocessor
-                    </label>
-                    <button
-                        className="button"
-                        data-type="secondary"
-                        data-size="small"
-                    >
-                        Options
-                    </button>
-                </li>
-                <li
-                    id="something-unique"
-                    className="flex items-center border p-2"
-                >
-                    <label className="mr-auto">
-                        <input type="checkbox" name="todo1" />
-                        Prepare for Microprocessor
-                    </label>
-                    <button
-                        className="button"
-                        data-type="secondary"
-                        data-size="small"
-                    >
-                        Options
-                    </button>
-                </li>
+                {todoArray.map((todo) => (
+                    <li id={todo.id} className="flex items-center border p-2">
+                        <label className="mr-auto">
+                            <input
+                                type="checkbox"
+                                name="todo1"
+                                checked={todo.completed}
+                            />
+                            {todo.title}
+                        </label>
+                        <button
+                            className="button"
+                            data-type="secondary"
+                            data-size="small"
+                        >
+                            Options
+                        </button>
+                    </li>
+                ))}
             </ol>
             <button
                 className="w-full border p-4 text-center"
@@ -79,7 +52,11 @@ const Tasks = () => {
             >
                 <label>
                     <span className="sr-only">New Todo</span>
-                    <input type="text" name="todo" className="w-full bg-transparent pl-1" />
+                    <input
+                        type="text"
+                        name="todo"
+                        className="w-full bg-transparent pl-1"
+                    />
                 </label>
                 <div className="todo-options flex justify-end  gap-2 ">
                     <button className="button" data-type="naked">

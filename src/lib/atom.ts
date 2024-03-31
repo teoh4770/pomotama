@@ -13,7 +13,7 @@ const timerSettingsAtom = atom<TimerSettingOptions>({
 const activeTabAtom = atom('pomodoroDuration');
 const activeTimeMode = activeTabAtom;
 
-interface Todo {
+export interface Todo {
     title: string;
     completed: boolean;
     id: string;
