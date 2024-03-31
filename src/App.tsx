@@ -1,4 +1,4 @@
-import { Setting, Tasks, Timer } from './components';
+import { Setting, Todos, Timer } from './components';
 
 export type timerSettingOptions = {
     [key: string]: number;
@@ -9,7 +9,7 @@ const App = () => {
         <div>
             <Timer />
             <Setting />
-            <Tasks />
+            <Todos />
         </div>
     );
 };
