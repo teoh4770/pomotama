@@ -2,6 +2,7 @@ import { useAtom } from 'jotai';
 import { Todo, todosAtom } from '../../lib/atom';
 import { FormEvent, useEffect, useState } from 'react';
 import { updateItemsInLocalStorage } from '../../localStorage';
+import { Form } from './Form';
 
 const Todos = () => {
     const [todos, setTodos] = useAtom(todosAtom);
@@ -11,7 +12,6 @@ const Todos = () => {
     useEffect(() => {
         updateItemsInLocalStorage(todos);
     }, [todos]);
-
 
     const addTodo = (formData: { [k: string]: FormDataEntryValue }) => {
         setTodos((prevTodos: Todo[]) => {
@@ -54,6 +54,7 @@ const Todos = () => {
 
     return (
         <section className="tasks-section">
+            {/* tasks header */}
             <header className="tasks-section__header flex items-center justify-between border py-4">
                 <h2 className="font-semibold text-white">Tasks</h2>
                 <button
@@ -64,6 +65,7 @@ const Todos = () => {
                     Options
                 </button>
             </header>
+            {/* tasks todo list */}
             <ol id="todo-list" className="todo-list mb-3 mt-5 grid gap-2">
                 {todos.map((todo) => (
                     <li key={todo.id} className="flex items-center border p-2">
@@ -103,39 +105,11 @@ const Todos = () => {
                 Add Task
             </button>
 
-            <form
-                onSubmit={handleSubmit}
-                id="task-adder"
-                className="task-adder [&>*]:border [&>*]:p-2"
-                style={{
-                    display: hideTaskAdder ? 'none' : 'grid',
-                }}
-            >
-                <label>
-                    <span className="sr-only">New Todo</span>
-                    <input
-                        type="text"
-                        name="title"
-                        className="w-full border bg-transparent pl-1"
-                        required
-                    />
-                </label>
-                <div className="todo-options flex justify-end gap-2 ">
-                    <button
-                        className="button"
-                        data-type="naked"
-                        onClick={() => {
-                            setHideAddTaskBtn(false);
-                            setHideTaskAdder(true);
-                        }}
-                    >
-                        Cancel
-                    </button>
-                    <button className="button" data-type="confirm">
-                        Save
-                    </button>
-                </div>
-            </form>
+            {/* form component, 2 states
+              -> expanded form when add button is clicked
+              -> expanded form when editing the todo
+            */}
+            <Form mode={'editTodo'} onSubmit={addTodo}/>
         </section>
     );
 };
