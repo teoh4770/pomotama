@@ -1,4 +1,5 @@
 import { atom } from 'jotai';
+import { getItemsFromLocalStorage } from '../localStorage';
 
 interface TimerSettingOptions {
     [index: string]: number;
@@ -20,7 +21,7 @@ export interface Todo {
 }
 
 // initiate a global todo variable
-const initialTodos: string = localStorage['todos'] ?? '[]';
+const initialTodos: string = getItemsFromLocalStorage() ?? '[]';
 const todosAtom = atom<Todo[]>(JSON.parse(initialTodos));
 
 export { timerSettingsAtom, activeTabAtom, activeTimeMode, todosAtom };

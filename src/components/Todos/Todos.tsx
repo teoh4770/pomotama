@@ -1,9 +1,14 @@
 import { useAtom } from 'jotai';
 import { Todo, todosAtom } from '../../lib/atom';
-import { FormEvent } from 'react';
+import { FormEvent, useEffect } from 'react';
+import { updateItemsInLocalStorage } from '../../localStorage';
 
 const Todos = () => {
     const [todos, setTodos] = useAtom(todosAtom);
+
+    useEffect(() => {
+        updateItemsInLocalStorage(todos);
+    }, [todos]);
 
     const addTodo = (formData: { [k: string]: FormDataEntryValue }) => {
         setTodos((prevTodos: Todo[]) => {
@@ -87,7 +92,7 @@ const Todos = () => {
             >
                 Add Task
             </button>
-            
+
             <form
                 onSubmit={handleSubmit}
                 id="todo-form"
