@@ -1,14 +1,13 @@
 import { useAtom } from 'jotai';
 import { Todo, todosAtom } from '../../lib/atom';
-import { FormEvent, useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { updateItemsInLocalStorage } from '../../localStorage';
 import { Form } from './Form';
 import { TodoItem } from './Todo';
+import { Header } from './Header';
 
 const Todos = () => {
     const [todos, setTodos] = useAtom(todosAtom);
-    const [hideAddTaskBtn, setHideAddTaskBtn] = useState(false);
-    const [hideTaskAdder, setHideTaskAdder] = useState(true);
 
     useEffect(() => {
         updateItemsInLocalStorage(todos);
@@ -42,30 +41,10 @@ const Todos = () => {
         });
     };
 
-    const handleSubmit = (e: FormEvent) => {
-        e.preventDefault();
-
-        const $form = e.currentTarget as HTMLFormElement;
-        const formData = Object.fromEntries(new FormData($form));
-
-        addTodo(formData);
-
-        $form.reset();
-    };
-
     return (
         <section className="tasks-section">
             {/* tasks header */}
-            <header className="tasks-section__header flex items-center justify-between border py-4">
-                <h2 className="font-semibold text-white">Tasks</h2>
-                <button
-                    className="button"
-                    data-type="secondary"
-                    data-size="small"
-                >
-                    Options
-                </button>
-            </header>
+            <Header />
             {/* tasks todo list */}
             <ol id="todo-list" className="todo-list mb-3 mt-5 grid gap-2">
                 {todos.map((todo) => (
@@ -76,19 +55,6 @@ const Todos = () => {
                     />
                 ))}
             </ol>
-            <button
-                id="add-task-button"
-                className="w-full border p-4 text-center"
-                style={{
-                    display: hideAddTaskBtn ? 'none' : 'block',
-                }}
-                onClick={() => {
-                    setHideAddTaskBtn(true);
-                    setHideTaskAdder(false);
-                }}
-            >
-                Add Task
-            </button>
 
             {/* form component, 2 states
               -> expanded form when add button is clicked
