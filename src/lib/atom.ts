@@ -21,6 +21,6 @@ export interface Todo {
 
 // initiate a global todo variable
 const initialTodos: string = localStorage['todos'] ?? '[]';
-const Todos = atom<Todo[]>(JSON.parse(initialTodos));
+const todosAtom = atom<Todo[]>(JSON.parse(initialTodos));
 
-export { timerSettingsAtom, activeTabAtom, activeTimeMode, Todos };
+export { timerSettingsAtom, activeTabAtom, activeTimeMode, todosAtom };
