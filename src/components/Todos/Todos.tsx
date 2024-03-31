@@ -1,14 +1,17 @@
 import { useAtom } from 'jotai';
 import { Todo, todosAtom } from '../../lib/atom';
-import { FormEvent, useEffect } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import { updateItemsInLocalStorage } from '../../localStorage';
 
 const Todos = () => {
     const [todos, setTodos] = useAtom(todosAtom);
+    const [hideAddTaskBtn, setHideAddTaskBtn] = useState(false);
+    const [hideTaskAdder, setHideTaskAdder] = useState(true);
 
     useEffect(() => {
         updateItemsInLocalStorage(todos);
     }, [todos]);
+
 
     const addTodo = (formData: { [k: string]: FormDataEntryValue }) => {
         setTodos((prevTodos: Todo[]) => {
@@ -87,16 +90,26 @@ const Todos = () => {
                 ))}
             </ol>
             <button
-                className="w-full border p-4 text-center"
                 id="add-task-button"
+                className="w-full border p-4 text-center"
+                style={{
+                    display: hideAddTaskBtn ? 'none' : 'block',
+                }}
+                onClick={() => {
+                    setHideAddTaskBtn(true);
+                    setHideTaskAdder(false);
+                }}
             >
                 Add Task
             </button>
 
             <form
                 onSubmit={handleSubmit}
-                id="todo-form"
-                className="todo-form grid [&>*]:border [&>*]:p-2"
+                id="task-adder"
+                className="task-adder [&>*]:border [&>*]:p-2"
+                style={{
+                    display: hideTaskAdder ? 'none' : 'grid',
+                }}
             >
                 <label>
                     <span className="sr-only">New Todo</span>
@@ -108,7 +121,14 @@ const Todos = () => {
                     />
                 </label>
                 <div className="todo-options flex justify-end gap-2 ">
-                    <button className="button" data-type="naked">
+                    <button
+                        className="button"
+                        data-type="naked"
+                        onClick={() => {
+                            setHideAddTaskBtn(false);
+                            setHideTaskAdder(true);
+                        }}
+                    >
                         Cancel
                     </button>
                     <button className="button" data-type="confirm">
