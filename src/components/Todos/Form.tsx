@@ -21,7 +21,7 @@ const Form = ({
 
     useEffect(() => {
         const input = titleInput.current as HTMLInputElement;
-        
+
         input.focus();
         moveCursorToTheEnd(input);
 
@@ -48,22 +48,22 @@ const Form = ({
         <form
             onSubmit={(e) => handleFormSubmit(e)}
             id="task-adder"
-            className="task-adder grid [&>*]:border [&>*]:p-2"
+            className="task-adder grid overflow-hidden rounded-lg bg-white"
         >
-            <label>
+            <label className="px-5 py-4">
                 <span className="sr-only">New Todo</span>
                 <input
                     ref={titleInput}
                     type="text"
                     name="title"
-                    className="w-full border bg-transparent pl-1"
+                    className="w-full bg-transparent pl-1 text-xl placeholder:italic"
                     required
                     defaultValue={todo?.title ?? ''}
                     placeholder="What are you working on?"
                 />
             </label>
 
-            <div className="todo-options flex justify-between">
+            <div className="todo-options flex justify-between bg-slate-300 px-5 py-3">
                 {mode === 'editTodo' ? (
                     <button
                         type="button"
@@ -88,7 +88,12 @@ const Form = ({
                     >
                         Cancel
                     </button>
-                    <button type="submit" data-type="confirm" aria-label="Save">
+                    <button
+                        type="submit"
+                        className="button"
+                        data-type="confirm"
+                        aria-label="Save"
+                    >
                         Save
                     </button>
                 </div>

@@ -64,7 +64,7 @@ const Todos = () => {
     };
 
     return (
-        <section className="tasks-section">
+        <section className="tasks-section mx-auto max-w-[30rem]">
             <Header />
             <TodoList
                 todos={todos}
