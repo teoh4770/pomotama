@@ -1,7 +1,7 @@
 import { Todo } from '../../lib/atom';
 import { FormEvent, useState } from 'react';
 
-interface TodoFormData {
+export interface TodoFormData {
     title: string;
 }
 
