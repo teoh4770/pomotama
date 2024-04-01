@@ -1,4 +1,4 @@
-import { FormEvent } from 'react';
+import { FormEvent, useEffect, useRef } from 'react';
 import { Todo } from '../../lib/atom';
 import { TodoFormData } from './Todo';
 
@@ -17,6 +17,18 @@ const Form = ({
     handleCancel,
     handleDelete,
 }: FormProps) => {
+    const titleInput = useRef<HTMLInputElement>(null);
+
+    useEffect(() => {
+        const input = titleInput.current as HTMLInputElement;
+        input.focus();
+        moveCursorToTheEnd(input);
+
+        function moveCursorToTheEnd(input: HTMLInputElement) {
+            input.setSelectionRange(input.value.length, input.value.length);
+        }
+    }, []);
+
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
 
@@ -40,6 +52,7 @@ const Form = ({
             <label>
                 <span className="sr-only">New Todo</span>
                 <input
+                    ref={titleInput}
                     type="text"
                     name="title"
                     className="w-full border bg-transparent pl-1"
