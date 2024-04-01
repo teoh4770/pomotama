@@ -14,7 +14,7 @@ const Todos = () => {
         updateItemsInLocalStorage(todos);
     }, [todos]);
 
-    const addTodo = (formData: { [k: string]: FormDataEntryValue }) => {
+    const addTodo = (formData: TodoFormData) => {
         setTodos((prevTodos: Todo[]) => {
             return [
                 ...prevTodos,
@@ -74,7 +74,11 @@ const Todos = () => {
                     toggleTodoState,
                 }}
             />
-            <Form mode={'addTodo'} onSubmit={addTodo} />
+            <Form
+                mode={'addTodo'}
+                onSubmitHandler={addTodo}
+                handleCancel={() => console.log('cancel add todo operation')}
+            />
         </section>
     );
 };

@@ -1,18 +1,32 @@
 import { FormEvent } from 'react';
+import { Todo } from '../../lib/atom';
+import { TodoFormData } from './Todo';
 
 interface FormProps {
     mode: 'addTodo' | 'editTodo';
-    onSubmit: (formData: { [k: string]: FormDataEntryValue }) => void;
+    todo?: Todo;
+    onSubmitHandler: (todoFormData: TodoFormData) => void;
+    handleCancel: () => void;
+    handleDelete?: () => void;
 }
 
-const Form = ({ mode, onSubmit }: FormProps) => {
+const Form = ({
+    mode,
+    todo,
+    onSubmitHandler,
+    handleCancel,
+    handleDelete,
+}: FormProps) => {
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
 
         const $form = e.currentTarget as HTMLFormElement;
         const formData = Object.fromEntries(new FormData($form));
 
-        onSubmit(formData);
+        const todoFormData: TodoFormData = {
+            title: formData.title as string,
+        };
+        onSubmitHandler(todoFormData);
 
         $form.reset();
     };
@@ -30,12 +44,19 @@ const Form = ({ mode, onSubmit }: FormProps) => {
                     name="title"
                     className="w-full border bg-transparent pl-1"
                     required
+                    defaultValue={todo?.title ?? ''}
+                    placeholder="What are you working on?"
                 />
             </label>
 
             <div className="todo-options flex justify-between">
                 {mode === 'editTodo' ? (
-                    <button type="button" className="button" data-type="naked">
+                    <button
+                        type="button"
+                        className="button"
+                        data-type="naked"
+                        onClick={handleDelete}
+                    >
                         Delete
                     </button>
                 ) : (
@@ -43,7 +64,12 @@ const Form = ({ mode, onSubmit }: FormProps) => {
                 )}
 
                 <div className="flex">
-                    <button type="button" className="button" data-type="naked">
+                    <button
+                        type="button"
+                        className="button"
+                        data-type="naked"
+                        onClick={handleCancel}
+                    >
                         Cancel
                     </button>
                     <button type="submit" data-type="confirm">

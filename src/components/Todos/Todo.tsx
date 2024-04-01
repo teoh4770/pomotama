@@ -1,5 +1,6 @@
 import { Todo } from '../../lib/atom';
-import { FormEvent, useState } from 'react';
+import { useState } from 'react';
+import { Form } from './Form';
 
 export interface TodoFormData {
     title: string;
@@ -19,68 +20,22 @@ const TodoItem = ({
     removeTodo,
 }: TodoProps) => {
     const [editing, setEditing] = useState(false);
-    // handle delete
-    // handle save/edit
-    // handle cancel editing
-    // can handle it outside (pass a callback in)
-    // can pass an object in
-    const saveTodo = (e: FormEvent) => {
-        e.preventDefault();
 
-        const $form = e.currentTarget as HTMLFormElement;
-        const formData = Object.fromEntries(new FormData($form));
-
-        const todoFormData: TodoFormData = {
-            title: formData.title as string,
-        };
+    const saveTodo = (todoFormData: TodoFormData) => {
         editTodo(todo.id, todoFormData);
-
         setEditing(false);
     };
 
     return (
         <li className="border p-2">
             {editing ? (
-                <form
-                    onSubmit={saveTodo}
-                    id="task-adder"
-                    className="task-editor grid [&>*]:border [&>*]:p-2"
-                >
-                    <label>
-                        <span className="sr-only">New Todo</span>
-                        <input
-                            type="text"
-                            name="title"
-                            className="w-full border bg-transparent pl-1"
-                            required
-                            defaultValue={todo.title}
-                        />
-                    </label>
-
-                    <div className="todo-options flex justify-between">
-                        <button
-                            type="button"
-                            className="button"
-                            data-type="naked"
-                            onClick={() => removeTodo(todo.id)}
-                        >
-                            delete
-                        </button>
-                        <div className="flex">
-                            <button
-                                type="button"
-                                className="button"
-                                data-type="naked"
-                                onClick={() => setEditing(false)}
-                            >
-                                Cancel
-                            </button>
-                            <button type="submit" data-type="confirm">
-                                Save
-                            </button>
-                        </div>
-                    </div>
-                </form>
+                <Form
+                    mode="editTodo"
+                    todo={todo}
+                    onSubmitHandler={saveTodo}
+                    handleCancel={() => setEditing(false)}
+                    handleDelete={() => removeTodo(todo.id)}
+                />
             ) : (
                 <div id={todo.id} className="todo-item flex items-center">
                     <label className="mr-auto">
