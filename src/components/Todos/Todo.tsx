@@ -32,7 +32,7 @@ const TodoItem = ({
                 <Form
                     mode="editTodo"
                     todo={todo}
-                    onSubmitHandler={saveTodo}
+                    handleTodo={saveTodo}
                     handleCancel={() => setEditing(false)}
                     handleDelete={() => removeTodo(todo.id)}
                 />

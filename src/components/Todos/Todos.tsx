@@ -76,7 +76,7 @@ const Todos = () => {
             />
             <Form
                 mode={'addTodo'}
-                onSubmitHandler={addTodo}
+                handleTodo={addTodo}
                 handleCancel={() => console.log('cancel add todo operation')}
             />
         </section>

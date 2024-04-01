@@ -5,7 +5,7 @@ import { TodoFormData } from './Todo';
 interface FormProps {
     mode: 'addTodo' | 'editTodo';
     todo?: Todo;
-    onSubmitHandler: (todoFormData: TodoFormData) => void;
+    handleTodo: (todoFormData: TodoFormData) => void;
     handleCancel: () => void;
     handleDelete?: () => void;
 }
@@ -13,7 +13,7 @@ interface FormProps {
 const Form = ({
     mode,
     todo,
-    onSubmitHandler,
+    handleTodo,
     handleCancel,
     handleDelete,
 }: FormProps) => {
@@ -21,6 +21,7 @@ const Form = ({
 
     useEffect(() => {
         const input = titleInput.current as HTMLInputElement;
+        
         input.focus();
         moveCursorToTheEnd(input);
 
@@ -29,7 +30,7 @@ const Form = ({
         }
     }, []);
 
-    const handleSubmit = (e: FormEvent) => {
+    const handleFormSubmit = (e: FormEvent) => {
         e.preventDefault();
 
         const $form = e.currentTarget as HTMLFormElement;
@@ -38,14 +39,14 @@ const Form = ({
         const todoFormData: TodoFormData = {
             title: formData.title as string,
         };
-        onSubmitHandler(todoFormData);
+        handleTodo(todoFormData);
 
         $form.reset();
     };
 
     return (
         <form
-            onSubmit={(e) => handleSubmit(e)}
+            onSubmit={(e) => handleFormSubmit(e)}
             id="task-adder"
             className="task-adder grid [&>*]:border [&>*]:p-2"
         >
@@ -69,6 +70,7 @@ const Form = ({
                         className="button"
                         data-type="naked"
                         onClick={handleDelete}
+                        aria-label="Delete"
                     >
                         Delete
                     </button>
@@ -82,10 +84,11 @@ const Form = ({
                         className="button"
                         data-type="naked"
                         onClick={handleCancel}
+                        aria-label="Cancel"
                     >
                         Cancel
                     </button>
-                    <button type="submit" data-type="confirm">
+                    <button type="submit" data-type="confirm" aria-label="Save">
                         Save
                     </button>
                 </div>
