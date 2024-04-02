@@ -1,7 +1,9 @@
 import { useAtom } from 'jotai';
-import { Todo, todosAtom } from '../../lib/atom';
 import { useEffect } from 'react';
+
+import { Todo, todosAtom } from '../../lib/atom';
 import { updateItemsInLocalStorage } from '../../localStorage';
+
 import { Form } from './Form';
 import { TodoFormData } from './Todo';
 import { Header } from './Header';
@@ -48,6 +50,20 @@ const Todos = () => {
         });
     };
 
+    const clearAllTodos = () => {
+        if (!confirm('You really wanna clear all todos?!')) {
+            return;
+        }
+        setTodos([]);
+    };
+
+    const clearCompletedTodos = () => {
+        setTodos((prevTodos: Todo[]) => {
+            const incompleteTodos = prevTodos.filter((todo) => !todo.completed);
+            return incompleteTodos;
+        });
+    };
+
     const toggleTodoState = (id: string) => {
         setTodos((prevTodos: Todo[]) => {
             const updatedTodos = prevTodos.map((todo) => {
@@ -79,6 +95,22 @@ const Todos = () => {
                 handleTodo={addTodo}
                 handleCancel={() => console.log('cancel add todo operation')}
             />
+            <button
+                type="button"
+                className="button"
+                data-type="primary"
+                onClick={clearAllTodos}
+            >
+                Clear All Tasks
+            </button>
+            <button
+                type="button"
+                className="button"
+                data-type="primary"
+                onClick={clearCompletedTodos}
+            >
+                Clear Finished Tasks
+            </button>
         </section>
     );
 };
