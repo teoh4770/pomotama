@@ -65,11 +65,8 @@ const TodoItem = ({
                       </label>
                     </div>
                     <button
-                        className="button border border-slate-300"
+                        className="button border border-slate-300 !text-black/60"
                         data-type="secondary"
-                        style={{
-                            '--color': 'rgba(0 0 0 / 0.6)',
-                        }}
                         data-size="small"
                         onClick={() => setEditing(true)}
                     >

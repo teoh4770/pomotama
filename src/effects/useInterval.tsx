@@ -2,7 +2,9 @@ import { useEffect, useRef } from 'react';
 
 // the enhance setInterval allows user to adjust the delay dynamically
 const useInterval = (callback: () => void, delay: number | null) => {
-    const intervalRef = useRef(0);
+    const intervalRef: React.MutableRefObject<ReturnType<
+        typeof setInterval
+    > | null> = useRef(null);
     const savedCallback = useRef(callback);
 
     // remember the latest callback
@@ -18,8 +20,8 @@ const useInterval = (callback: () => void, delay: number | null) => {
 
         if (typeof delay === 'number') {
             intervalRef.current = setInterval(tick, delay);
-
-            return () => clearInterval(intervalRef.current);
+            
+            return () => clearInterval(String(intervalRef.current));
         }
     }, [delay]);
 

@@ -10,10 +10,11 @@ import { Header } from './Header';
 import { TodoList } from './TodoList';
 
 const Todos = () => {
-    const [todos, setTodos] = useAtom(todosAtom);
+    const [todos, setTodos] = useAtom<Todo[]>(todosAtom);
 
     useEffect(() => {
         updateItemsInLocalStorage(todos);
+        console.log(typeof todos, todos)
     }, [todos]);
 
     const addTodo = (formData: TodoFormData) => {
