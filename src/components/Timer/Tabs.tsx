@@ -16,6 +16,8 @@
 - Test that you are able to initialize multiple instances of the component, each with independent states.
  */
 import { useEffect, useState } from 'react';
+import { useAtomValue } from 'jotai';
+import { timerSettingsAtom } from '../../lib/atom';
 
 type TimerMode =
     | 'pomodoroDuration'
@@ -36,10 +38,11 @@ interface TabsProps {
 
 const Tabs = ({ defaultValue, items, handler }: TabsProps) => {
     const [activeTab, setActiveTab] = useState(defaultValue);
+    const timerSetting = useAtomValue(timerSettingsAtom);
 
     useEffect(() => {
         handler(activeTab);
-    }, [handler, activeTab]);
+    }, [timerSetting]);
 
     return (
         <div className="center | w-fit flex-row">

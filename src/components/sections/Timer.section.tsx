@@ -9,7 +9,7 @@ const Timer = () => {
     const timerSettings = useAtomValue(timerSettingsAtom);
     const { status, remainingTime, percentageToCompletion, timerActions } =
         useTimer();
-
+    
     return (
         <section id="timer-section" className="timer-section">
             <Indicator percentage={percentageToCompletion} />

@@ -72,7 +72,12 @@ const useTimer = (): UseTimer => {
         setMode,
     };
 
-    return { remainingTime, percentageToCompletion, status, timerActions };
+    return {
+        remainingTime,
+        percentageToCompletion,
+        status,
+        timerActions,
+    };
 };
 
 export { useTimer };
