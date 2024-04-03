@@ -4,8 +4,9 @@ interface ControlsProps {
     resetTimer: () => void;
 }
 
-const Controls = ({ status, toggleTimer, resetTimer }: ControlsProps) => {
-    const buttonState = status === 'running' ? 'stop' : 'start';
+const TimerControls = ({ status, toggleTimer, resetTimer }: ControlsProps) => {
+    const timerIsRunning = status === 'running';
+    const buttonText = timerIsRunning ? 'stop' : 'start';
 
     return (
         <div className="flex-row">
@@ -15,7 +16,7 @@ const Controls = ({ status, toggleTimer, resetTimer }: ControlsProps) => {
                 data-size="large"
                 onClick={toggleTimer}
             >
-                {buttonState}
+                {buttonText}
             </button>
             <button
                 className="button"
@@ -29,4 +30,4 @@ const Controls = ({ status, toggleTimer, resetTimer }: ControlsProps) => {
     );
 };
 
-export { Controls };
+export { TimerControls };

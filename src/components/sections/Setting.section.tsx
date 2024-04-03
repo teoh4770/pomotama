@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { TimerSetting } from './TimerSetting';
+import { TimerSetting } from '../Setting/TimerSetting';
 import { useAtomValue } from 'jotai';
 import { timerSettingsAtom } from '../../lib/atom';
 

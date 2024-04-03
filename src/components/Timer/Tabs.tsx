@@ -15,23 +15,31 @@
 - Selecting the tab items updates the current timer value
 - Test that you are able to initialize multiple instances of the component, each with independent states.
  */
-import { activeTabAtom } from '../../lib/atom';
-import { useAtom } from 'jotai';
+import { useEffect, useState } from 'react';
+
+type TimerMode =
+    | 'pomodoroDuration'
+    | 'shortBreakDuration'
+    | 'longBreakDuration';
 
 interface TabItemProp {
-    name: string;
+    name: TimerMode;
     label: string;
     value: number;
 }
 
 interface TabsProps {
-    defaultValue?: string;
+    defaultValue: TimerMode;
     items: TabItemProp[];
-    handler: (name: string) => void;
+    handler: (name: TimerMode) => void;
 }
 
-const Tabs = ({ items, handler }: TabsProps) => {
-    const [activeTab, setActiveTab] = useAtom(activeTabAtom);
+const Tabs = ({ defaultValue, items, handler }: TabsProps) => {
+    const [activeTab, setActiveTab] = useState(defaultValue);
+
+    useEffect(() => {
+        handler(activeTab);
+    }, [handler, activeTab]);
 
     return (
         <div className="center | w-fit flex-row">

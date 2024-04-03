@@ -1,19 +1,16 @@
 import { FormEvent } from 'react';
-import { clipNumber } from '../../utils';
-import { timerSettingsAtom } from '../../lib/atom';
 import { useAtom } from 'jotai';
 
-const clipTime = (time: number) => {
-    return clipNumber(time, 0, 999);
-};
+import { timerSettingsAtom } from '../../lib/atom';
+import { clipTime } from '../../utils';
 
 const TimerSetting = () => {
-    const [timerSettings, setTimerSettings] = useAtom(timerSettingsAtom);
+    const [timerSettings, updateTimerSetting] = useAtom(timerSettingsAtom);
 
     const handleTimerSetting = (event: FormEvent<HTMLInputElement>) => {
         const target = event.currentTarget;
 
-        setTimerSettings({
+        updateTimerSetting({
             ...timerSettings,
             [target.name]: clipTime(+target.value),
         });
@@ -21,14 +18,13 @@ const TimerSetting = () => {
 
     return (
         <div>
-            {/* need to set the class */}
             <div className="setting-title py-4 font-semibold uppercase text-gray-400">
                 ❤️ Timer
             </div>
             <div className="stack">
                 <div>
                     <div className="mb-3 font-bold">Time (minutes)</div>
-                    <div className="flex flex-wrap gap-2 justify-between">
+                    <div className="flex flex-wrap justify-between gap-2">
                         <label>
                             <div>Pomodoro</div>
                             <input

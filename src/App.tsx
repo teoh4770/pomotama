@@ -6,11 +6,11 @@ export type timerSettingOptions = {
 
 const App = () => {
     return (
-        <div>
+        <main>
             <Timer />
             <Setting />
             <Todos />
-        </div>
+        </main>
     );
 };
 

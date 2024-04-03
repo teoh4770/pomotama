@@ -1,4 +1,8 @@
-const Indicator = ({ percentage }: { percentage: number }) => {
+interface IndicatorProps {
+    percentage: number;
+}
+
+const Indicator = ({ percentage }: IndicatorProps) => {
     return (
         <div className="h-1 w-full bg-slate-500">
             <div

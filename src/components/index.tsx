@@ -1,3 +1,3 @@
-export { Timer } from './Timer/Timer';
-export { Setting } from './Setting/Setting';
-export { Todos } from './Todos/Todos';
+export { Timer } from './sections/Timer.section';
+export { Setting } from './sections/Setting.section';
+export { Todos } from './sections/Todos.section';

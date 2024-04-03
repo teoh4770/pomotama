@@ -1,4 +1,4 @@
-import { Todo } from './lib/atom';
+import { Todo } from './types';
 
 // const initialTodos: string = localStorage['todos'] ?? '[]';
 const LocalStorageKey = 'todos';

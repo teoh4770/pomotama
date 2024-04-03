@@ -1,11 +1,12 @@
-import { formattedTimes } from '../../utils';
+import { formattedTimes, getTimes } from '../../utils';
 
 interface TimeProps {
-    minutes: number;
-    seconds: number;
+    remainingTime: number;
 }
 
-const Time = ({ minutes, seconds }: TimeProps) => {
+const Time = ({ remainingTime }: TimeProps) => {
+    const { minutes, seconds } = getTimes(remainingTime);
+
     return (
         <p className="text-[7.5rem] font-extrabold">
             {formattedTimes(minutes)}:{formattedTimes(seconds)}

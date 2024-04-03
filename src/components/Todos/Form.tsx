@@ -1,36 +1,28 @@
 import { FormEvent, useEffect, useRef } from 'react';
-import { Todo } from '../../lib/atom';
-import { TodoFormData } from './Todo';
+
+import { Todo, TodoFormData } from '../../types';
+import { moveCursorToTheEnd } from '../../utils';
 
 interface FormProps {
     mode: 'addTodo' | 'editTodo';
     todo?: Todo;
-    handleTodo: (todoFormData: TodoFormData) => void;
-    handleCancel: () => void;
-    handleDelete?: () => void;
+    onSave: (formData: TodoFormData) => void;
+    onCancel: () => void;
+    onDelete?: () => void;
 }
 
-const Form = ({
-    mode,
-    todo,
-    handleTodo,
-    handleCancel,
-    handleDelete,
-}: FormProps) => {
+const Form = ({ mode, todo, onSave, onCancel, onDelete }: FormProps) => {
     const titleInput = useRef<HTMLInputElement>(null);
 
+    // focus on input once form is created
     useEffect(() => {
         const input = titleInput.current as HTMLInputElement;
 
         input.focus();
         moveCursorToTheEnd(input);
-
-        function moveCursorToTheEnd(input: HTMLInputElement) {
-            input.setSelectionRange(input.value.length, input.value.length);
-        }
     }, []);
 
-    const handleFormSubmit = (e: FormEvent) => {
+    const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
 
         const $form = e.currentTarget as HTMLFormElement;
@@ -39,14 +31,14 @@ const Form = ({
         const todoFormData: TodoFormData = {
             title: formData.title as string,
         };
-        handleTodo(todoFormData);
+        onSave(todoFormData);
 
         $form.reset();
     };
 
     return (
         <form
-            onSubmit={(e) => handleFormSubmit(e)}
+            onSubmit={handleSubmit}
             id="task-adder"
             className="task-adder grid overflow-hidden rounded-lg bg-white"
         >
@@ -63,13 +55,13 @@ const Form = ({
                 />
             </label>
 
-            <div className="todo-options flex justify-between bg-slate-300 px-5 py-3">
+            <div className="todo-actions flex justify-between bg-slate-300 px-5 py-3">
                 {mode === 'editTodo' ? (
                     <button
                         type="button"
                         className="button"
                         data-type="naked"
-                        onClick={handleDelete}
+                        onClick={onDelete}
                         aria-label="Delete"
                     >
                         Delete
@@ -83,7 +75,7 @@ const Form = ({
                         type="button"
                         className="button"
                         data-type="naked"
-                        onClick={handleCancel}
+                        onClick={onCancel}
                         aria-label="Cancel"
                     >
                         Cancel
