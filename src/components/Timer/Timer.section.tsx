@@ -3,7 +3,8 @@ import { timerSettingsAtom } from '../../lib/atom';
 
 import { useTimer } from '../../hooks';
 
-import { TimerControls, Time, Indicator, Tabs } from '.';
+import { Time, Indicator, TimerControls } from '.';
+import { Tabs } from '../Tabs';
 
 const Timer = () => {
     const timerSettings = useAtomValue(timerSettingsAtom);
