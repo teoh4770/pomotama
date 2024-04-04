@@ -9,9 +9,17 @@ interface FormProps {
     onSave: (formData: TodoFormData) => void;
     onCancel: () => void;
     onDelete?: () => void;
+    onClose?: () => void;
 }
 
-const Form = ({ mode, todo, onSave, onCancel, onDelete }: FormProps) => {
+const Form = ({
+    mode,
+    todo,
+    onSave,
+    onCancel,
+    onDelete,
+    onClose,
+}: FormProps) => {
     const titleInput = useRef<HTMLInputElement>(null);
 
     // focus on input once form is created
@@ -34,6 +42,8 @@ const Form = ({ mode, todo, onSave, onCancel, onDelete }: FormProps) => {
         onSave(todoFormData);
 
         $form.reset();
+
+        onClose?.();
     };
 
     return (
