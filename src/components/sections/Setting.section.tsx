@@ -3,10 +3,6 @@ import { TimerSetting } from '../Setting/TimerSetting';
 import { useAtomValue } from 'jotai';
 import { timerSettingsAtom } from '../../lib/atom';
 
-// now comes to styling
-// need to setup the system (CUBE style method)
-// after that, only use tailwind to do minor adjustment
-
 const Setting = () => {
     const timerSetting = useAtomValue(timerSettingsAtom);
     const dialog = useRef<HTMLDialogElement | null>(null);

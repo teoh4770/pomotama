@@ -1,7 +1,9 @@
 import { useState } from 'react';
 
 import { Todo, TodoActions, TodoFormData } from '../../types';
+
 import { Form } from './Form';
+import { Checkbox } from '../Checkbox';
 
 interface TodoProps {
     todo: Todo;
@@ -55,13 +57,13 @@ const TodoItem = ({ todo, todoActions }: TodoProps) => {
             >
                 <div className="todo__input mr-auto flex">
                     <label className="form-control">
-                        <input
+                        <Checkbox
                             id={todo.id}
-                            type="checkbox"
-                            name="todo1"
+                            name={'todo-' + todo.id}
                             checked={todo.completed}
                             onChange={toggleTodo}
                         />
+
                         {todo.title}
                     </label>
                 </div>
