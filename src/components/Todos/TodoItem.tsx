@@ -8,21 +8,22 @@ import { Checkbox } from '../Checkbox';
 interface TodoProps {
     todo: Todo;
     todoActions: TodoActions;
+    isActive: boolean;
+    onShow: () => void;
 }
 
-const TodoItem = ({ todo, todoActions }: TodoProps) => {
-    const [editingTodo, setEditingTodo] = useState(false);
+const TodoItem = ({ todo, todoActions, isActive, onShow }: TodoProps) => {
+    const [isEditing, setIsEditing] = useState(false);
 
     const openForm = () => {
-        setEditingTodo(true);
+        setIsEditing(true);
     };
 
     const closeForm = () => {
-        setEditingTodo(false);
+        setIsEditing(false);
     };
 
     const saveTodo = (todoFormData: TodoFormData) => {
-        console.log(todoFormData);
         todoActions.edit(todo.id, todoFormData);
         closeForm();
     };
@@ -35,7 +36,7 @@ const TodoItem = ({ todo, todoActions }: TodoProps) => {
         todoActions.toggleState(todo.id);
     };
 
-    if (editingTodo) {
+    if (isActive && isEditing) {
         return (
             <li>
                 <Form
@@ -71,7 +72,10 @@ const TodoItem = ({ todo, todoActions }: TodoProps) => {
                     className="button border border-slate-300 !text-black/60"
                     data-type="secondary"
                     data-size="small"
-                    onClick={openForm}
+                    onClick={() => {
+                        onShow();
+                        openForm();
+                    }}
                 >
                     Options
                 </button>
