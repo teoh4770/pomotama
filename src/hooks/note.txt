@@ -1,0 +1,9 @@
+this is the business layer
+-> implemented as a set of custom Hooks that can be reused across components
+
+The business logic layer is in charge of implementing the application’s business rules and workflows. 
+This layer should be completely independent of the presentation layer and have no knowledge of the user interface. 
+It should contain all the application logic and algorithms and communicate with the data access layer to retrieve the required data.
+
+
+have a listener to listen to the event of other component, and update the state based on that

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useTodos } from '../../hooks';
 
-import { Form, TodoList } from '../Todos';
+import { Form, TodoList } from '.';
 import { Header } from '../Header';
 
 const Todos = () => {

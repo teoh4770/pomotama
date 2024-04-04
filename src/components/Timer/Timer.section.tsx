@@ -3,19 +3,20 @@ import { timerSettingsAtom } from '../../lib/atom';
 
 import { useTimer } from '../../hooks';
 
-import { TimerControls, Time, Indicator, Tabs } from '../Timer';
+import { TimerControls, Time, Indicator, Tabs } from '.';
 
 const Timer = () => {
     const timerSettings = useAtomValue(timerSettingsAtom);
-    const { status, remainingTime, percentageToCompletion, timerActions } =
-        useTimer();
+
+    const timer = useTimer();
 
     return (
         <section id="timer-section" className="timer-section">
             <Indicator
-                className="mx-auto h-1 w-full max-w-2xl bg-slate-500 mb-8"
-                percentage={percentageToCompletion}
+                className="mx-auto mb-8 h-1 w-full max-w-2xl bg-slate-500"
+                percentage={timer.percentageToCompletion}
             />
+
             <article className="timer mx-auto max-w-[30rem] space-y-1 rounded-lg bg-white/10 py-8 pt-6 text-center text-white">
                 <Tabs
                     items={[
@@ -35,14 +36,16 @@ const Timer = () => {
                             value: timerSettings.longBreakDuration,
                         },
                     ]}
-                    handler={timerActions.setMode}
+                    handler={timer.actions.changeTimerMode}
                     defaultValue="pomodoroDuration"
                 />
-                <Time remainingTime={remainingTime} />
+
+                <Time remainingTime={timer.remainingTime} />
+
                 <TimerControls
-                    status={status}
-                    toggleTimer={timerActions.toggle}
-                    resetTimer={timerActions.reset}
+                    status={timer.status}
+                    toggleTimer={timer.actions.toggle}
+                    resetTimer={timer.actions.reset}
                 />
             </article>
         </section>
