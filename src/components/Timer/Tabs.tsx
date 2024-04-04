@@ -40,21 +40,20 @@ const Tabs = ({ defaultValue, items, handler }: TabsProps) => {
     const [activeTab, setActiveTab] = useState(defaultValue);
     const timerSetting = useAtomValue(timerSettingsAtom);
 
+    // if timer setting change, this should change too
     useEffect(() => {
         handler(activeTab);
-    }, [timerSetting]);
+    }, [activeTab, handler, timerSetting]);
 
     return (
         <div className="center | w-fit flex-row">
             {items.map(({ name, label, value }) => {
-                const isActive = activeTab === name;
-
                 return (
                     <button
                         key={name}
                         type="button"
                         data-type="naked"
-                        className={`button ${isActive ? 'active' : ''}`}
+                        className={`button ${name === activeTab ? 'active' : ''}`}
                         onClick={() => {
                             handler(name);
                             setActiveTab(name);

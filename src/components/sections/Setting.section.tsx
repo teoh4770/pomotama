@@ -11,6 +11,14 @@ const Setting = () => {
     const timerSetting = useAtomValue(timerSettingsAtom);
     const dialog = useRef<HTMLDialogElement | null>(null);
 
+    function showModal() {
+        (dialog.current as HTMLDialogElement).showModal();
+    }
+
+    function hideModal() {
+        (dialog.current as HTMLDialogElement).close();
+    }
+
     return (
         <div>
             <button
@@ -18,9 +26,7 @@ const Setting = () => {
                 className="button"
                 data-type="secondary"
                 data-size="small"
-                onClick={() =>
-                    (dialog.current as HTMLDialogElement).showModal()
-                }
+                onClick={showModal}
             >
                 {/* note: i have to make the icon inherit the parent color, in this case white */}
                 <span>❤️</span>
@@ -38,13 +44,13 @@ const Setting = () => {
                         type="button"
                         className="button to-right"
                         data-type="naked"
+                        aria-label="close button"
+                        onClick={hideModal}
                     >
-                        ❤️
+                        Close
                     </button>
                 </div>
                 <div className="dialog__content | box">
-                    <TimerSetting />
-                    <TimerSetting />
                     <TimerSetting />
                 </div>
                 {/* TaskSetting */}
@@ -55,9 +61,7 @@ const Setting = () => {
                         data-type="confirm"
                         data-size="medium"
                         disabled={timerSetting.pomodoroDuration <= 0}
-                        onClick={() =>
-                            (dialog.current as HTMLDialogElement).close()
-                        }
+                        onClick={hideModal}
                     >
                         OK
                     </button>
