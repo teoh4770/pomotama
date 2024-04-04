@@ -1,14 +1,17 @@
-import { Setting, Todos, Timer } from './components';
-
-export type timerSettingOptions = {
-    [key: string]: number;
-};
+import { Header } from './components/Header';
+import { Setting, Todos, Timer } from './components/sections';
 
 const App = () => {
     return (
-        <main>
+        <main className="px-4">
+            <Header
+                headingLevel={1}
+                title="Pomotama"
+                className="mx-auto max-w-2xl py-4"
+            >
+                <Setting />
+            </Header>
             <Timer />
-            <Setting />
             <Todos />
         </main>
     );
