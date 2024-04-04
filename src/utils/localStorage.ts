@@ -1,5 +1,3 @@
-// Data access layer
-// retrieve the todos from localstorage
 import { Todo } from '../types';
 
 const LocalStorageKey = 'todos';
