@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import { useTodos } from '../../hooks';
 
-import { Form } from '../Todos';
-import { Header } from '../Todos';
-import { TodoList } from '../Todos';
+import { Form, TodoList } from '../Todos';
+import { Header } from '../Header';
 
 const Todos = () => {
     const { todos, todoActions } = useTodos();
@@ -19,7 +18,16 @@ const Todos = () => {
 
     return (
         <section className="tasks-section mx-auto max-w-[30rem]">
-            <Header />
+            <Header headingLevel={2} title="Tasks" className="border-b-2 py-4">
+                <button
+                    className="button"
+                    data-type="secondary"
+                    data-size="small"
+                >
+                    Options
+                </button>
+            </Header>
+
             <TodoList todos={todos} todoActions={todoActions} />
 
             {openAddTaskForm ? (
