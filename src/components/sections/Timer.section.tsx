@@ -9,10 +9,13 @@ const Timer = () => {
     const timerSettings = useAtomValue(timerSettingsAtom);
     const { status, remainingTime, percentageToCompletion, timerActions } =
         useTimer();
-    
+
     return (
         <section id="timer-section" className="timer-section">
-            <Indicator percentage={percentageToCompletion} />
+            <Indicator
+                className="mx-auto h-1 w-full max-w-2xl bg-slate-500 mb-8"
+                percentage={percentageToCompletion}
+            />
             <article className="timer mx-auto max-w-[30rem] space-y-1 rounded-lg bg-white/10 py-8 pt-6 text-center text-white">
                 <Tabs
                     items={[
