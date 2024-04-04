@@ -43,7 +43,7 @@ const Tabs = ({ defaultValue, items, handler }: TabsProps) => {
     // if timer setting change, this should change too
     useEffect(() => {
         handler(activeTab);
-    }, [activeTab, handler, timerSetting]);
+    }, [timerSetting]);
 
     return (
         <div className="center | w-fit flex-row">
