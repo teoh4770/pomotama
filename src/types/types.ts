@@ -4,10 +4,13 @@ interface Todo {
     title: string;
     completed: boolean;
     id: string;
+    targetPomodoro: number;
+    completedPomodoro: number;
 }
 
 interface TodoFormData {
     title: string;
+    targetPomodoro: number;
 }
 
 interface TodoActions {
@@ -17,6 +20,7 @@ interface TodoActions {
     toggleState: (id: string) => void;
     clearAll: () => void;
     clearCompleted: () => void;
+    incrementPomodoro: (id: string) => void;
 }
 
 export type { Todo, TodoFormData, TodoActions };

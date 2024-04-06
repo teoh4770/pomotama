@@ -2,17 +2,26 @@ import { useState } from 'react';
 
 import { Todo, TodoActions, TodoFormData } from '../../types';
 
-import { Form } from './Form';
+import { TodoForm } from './Form';
 import { Checkbox } from '../Checkbox';
 
 interface TodoProps {
     todo: Todo;
     todoActions: TodoActions;
     isActive: boolean;
-    onShow: () => void;
+    isFocus: boolean;
+    showTodo: () => void;
+    focusTodo: () => void;
 }
 
-const TodoItem = ({ todo, todoActions, isActive, onShow }: TodoProps) => {
+const TodoItem = ({
+    todo,
+    todoActions,
+    isActive,
+    isFocus,
+    showTodo,
+    focusTodo,
+}: TodoProps) => {
     const [isEditing, setIsEditing] = useState(false);
 
     const openForm = () => {
@@ -39,7 +48,7 @@ const TodoItem = ({ todo, todoActions, isActive, onShow }: TodoProps) => {
     if (isActive && isEditing) {
         return (
             <li>
-                <Form
+                <TodoForm
                     mode="editTodo"
                     todo={todo}
                     onSave={saveTodo}
@@ -54,10 +63,19 @@ const TodoItem = ({ todo, todoActions, isActive, onShow }: TodoProps) => {
         <li>
             <div
                 id={todo.id}
-                className="todo flex items-center rounded-lg bg-white px-5 py-4"
+                className="todo flex cursor-pointer items-center rounded-lg bg-white px-5 py-4"
+                style={{
+                    border: isFocus ? '5px solid black' : '',
+                }}
+                onClick={() => focusTodo()}
             >
                 <div className="todo__input mr-auto flex">
-                    <label className="form-control">
+                    <label
+                        className="form-control"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                        }}
+                    >
                         <Checkbox
                             id={todo.id}
                             name={'todo-' + todo.id}
@@ -68,17 +86,30 @@ const TodoItem = ({ todo, todoActions, isActive, onShow }: TodoProps) => {
                         {todo.title}
                     </label>
                 </div>
-                <button
-                    className="button border border-slate-300 !text-black/60"
-                    data-type="secondary"
-                    data-size="small"
-                    onClick={() => {
-                        onShow();
-                        openForm();
-                    }}
-                >
-                    Options
-                </button>
+
+                <div className="flex items-center gap-3">
+                    <div className="todo-pomodoro-amount">
+                        <span className="completed-pomodoro-amount text-xl font-bold">
+                            {todo.completedPomodoro}
+                        </span>
+                        /
+                        <span className="expected-pomodoro-amount">
+                            {todo.targetPomodoro}
+                        </span>
+                    </div>
+                    <button
+                        className="button border border-slate-300 !text-black/60 hover:bg-black/10"
+                        data-type="secondary"
+                        data-size="small"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            showTodo();
+                            openForm();
+                        }}
+                    >
+                        Options
+                    </button>
+                </div>
             </div>
         </li>
     );

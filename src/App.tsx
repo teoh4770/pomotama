@@ -1,7 +1,4 @@
-import { Header } from './components/Header';
-import { Setting } from './components/Setting/Setting.section';
-import { Timer } from './components/Timer/Timer.section';
-import { Todos } from './components/Todos/Todos.section';
+import { Header, Setting, Timer, Todos } from './components';
 
 const App = () => {
     return (

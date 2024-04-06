@@ -1,6 +1,8 @@
 import { useState } from 'react';
+
 import { Todo, TodoActions } from '../../types';
 import { TodoItem } from './TodoItem';
+import { useTodos } from '../../hooks';
 
 interface TodoListProps {
     todos: Todo[];
@@ -9,6 +11,7 @@ interface TodoListProps {
 
 const TodoList = ({ todos, todoActions }: TodoListProps) => {
     const [activeIndex, setActiveIndex] = useState('');
+    const { selectedTodoId, setSelectedTodoId } = useTodos();
 
     return (
         <ol id="todo-list" className="todo-list mb-3 mt-5 grid gap-2">
@@ -18,7 +21,9 @@ const TodoList = ({ todos, todoActions }: TodoListProps) => {
                     todo={todo}
                     todoActions={todoActions}
                     isActive={activeIndex === todo.id}
-                    onShow={() => setActiveIndex(todo.id)}
+                    isFocus={selectedTodoId === todo.id}
+                    showTodo={() => setActiveIndex(todo.id)}
+                    focusTodo={() => setSelectedTodoId(todo.id)}
                 />
             ))}
         </ol>

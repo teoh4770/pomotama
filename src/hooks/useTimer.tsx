@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 
 import { useAtomValue } from 'jotai';
-import { timerSettingsAtom } from '../lib/atom';
+import { timerSettingsAtom } from '../lib';
 
 import { useInterval } from './useInterval';
 import { minutesToSeconds } from '../utils';
+import { useTodos } from './useTodos';
 
 type Status = 'idle' | 'running';
 
@@ -28,16 +29,14 @@ interface UseTimer {
 }
 
 const useTimer = (): UseTimer => {
-    // global variable
     const timerSettings = useAtomValue(timerSettingsAtom);
+    const { todos, selectedTodoId, todoActions } = useTodos();
 
-    // states
     const [initialTime, setInitialTime] = useState(0);
     const [timeElapsed, setTimeElapsed] = useState(0);
     const [status, setStatus] = useState<Status>('idle');
     const [timerMode, setTimerMode] = useState<TimerMode>('pomodoroDuration');
 
-    // calculated variable
     const remainingTime = initialTime - timeElapsed;
     const percentageToCompletion = timeElapsed / initialTime;
 
@@ -45,6 +44,16 @@ const useTimer = (): UseTimer => {
     useInterval(
         () => {
             if (remainingTime <= 0) {
+                const todo = todos.find(
+                    (todoItem) => todoItem.id === selectedTodoId
+                );
+
+                if (todo) {
+                    todoActions.incrementPomodoro(selectedTodoId);
+                } else {
+                    console.log('todo does not exist');
+                }
+
                 reset();
                 return;
             }
@@ -53,7 +62,7 @@ const useTimer = (): UseTimer => {
         },
         status === 'running' ? 1000 : null
     );
-    
+
     // reset the initial value whenever timer setting or timer mode change
     useEffect(() => {
         setTimer();

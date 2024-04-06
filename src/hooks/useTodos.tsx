@@ -1,18 +1,22 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { useAtom } from 'jotai';
 
 import { Todo, TodoFormData, TodoActions } from '../types';
-import { fetchUserTodos, updateUserTodos } from '../utils';
+import { updateUserTodos } from '../utils';
+import { selectedTodoIdAtom, todosAtom } from '../lib';
 
 interface UseTodos {
     todos: Todo[];
+    selectedTodoId: string;
+    setSelectedTodoId: (id: string) => void;
     todoActions: TodoActions;
 }
 
 const useTodos = (): UseTodos => {
-    const [todos, setTodos] = useState<Todo[]>(
-        JSON.parse(fetchUserTodos() ?? '[]')
-    );
+    const [todos, setTodos] = useAtom<Todo[]>(todosAtom);
+    const [selectedTodoId, setSelectedTodoId] = useAtom(selectedTodoIdAtom);
 
+    // update user in localStorage
     useEffect(() => {
         updateUserTodos(todos);
     }, [todos]);
@@ -25,6 +29,8 @@ const useTodos = (): UseTodos => {
                     title: formData.title,
                     completed: false,
                     id: self.crypto.randomUUID(),
+                    targetPomodoro: formData.targetPomodoro,
+                    completedPomodoro: 0,
                 },
             ];
         });
@@ -76,6 +82,26 @@ const useTodos = (): UseTodos => {
         });
     }
 
+    function incrementPomodoro(id: string) {
+        setTodos((prevTodos: Todo[]) => {
+            const key = 'completedPomodoro';
+
+            const todo = prevTodos.find((todo) => todo.id === id) as Todo;
+            const updatedTodo = {
+                ...todo,
+                [key]: todo[key] + 1,
+            };
+            const updatedTodos = todos.map((todo) => {
+                if (todo.id === id) {
+                    return updatedTodo;
+                }
+                return todo;
+            });
+
+            return updatedTodos;
+        });
+    }
+
     const todoActions: TodoActions = {
         add,
         edit,
@@ -83,9 +109,10 @@ const useTodos = (): UseTodos => {
         toggleState,
         clearAll,
         clearCompleted,
+        incrementPomodoro,
     };
 
-    return { todos, todoActions };
+    return { todos, selectedTodoId, setSelectedTodoId, todoActions };
 };
 
 export { useTodos };
