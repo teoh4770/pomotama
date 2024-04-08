@@ -17,7 +17,7 @@ const NumberInput: React.FC<NumberInputProps> = ({
         defaultValue ? Number(defaultValue) : 1
     );
 
-    const spanText = `${completedPomodoro ? 'Act / Est. Pomodoro' : 'Est. Pomodoro'}`;
+    const spanText = `${completedPomodoro !== undefined ? 'Act / Est. Pomodoro' : 'Est. Pomodoro'}`;
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
         const value = +e.currentTarget.value;
@@ -44,17 +44,21 @@ const NumberInput: React.FC<NumberInputProps> = ({
                 <span className="mb-1 inline-block">{spanText}</span>
 
                 <div className="flex items-center gap-1">
-                    {completedPomodoro !== undefined && (
+                    {completedPomodoro !== undefined ? (
                         <input
                             type="number"
                             className="w-fit basis-20 border"
                             value={completedPomodoro}
                             readOnly
                         />
+                    ) : (
+                        ''
                     )}
 
-                    {completedPomodoro !== undefined && (
+                    {completedPomodoro !== undefined ? (
                         <span className="font-extralight">/</span>
+                    ) : (
+                        ''
                     )}
 
                     <input
