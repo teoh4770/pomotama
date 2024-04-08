@@ -1,20 +1,23 @@
 import { useState } from 'react';
 
-// Note:
-// create a special number input that contains number input and 2 buttons
-// button can be reusable for sure
+interface NumberInputExtraProps {
+    completedPomodoro?: number;
+}
 
-type NumberInputProps = React.HTMLProps<HTMLDivElement>;
+type NumberInputProps = React.HTMLProps<HTMLDivElement> & NumberInputExtraProps;
 
 const NumberInput: React.FC<NumberInputProps> = ({
     className,
     name,
     defaultValue,
+    completedPomodoro,
     ...props
 }) => {
     const [number, setNumber] = useState<number>(
         defaultValue ? Number(defaultValue) : 1
     );
+
+    const spanText = `${completedPomodoro ? 'Act / Est. Pomodoro' : 'Est. Pomodoro'}`;
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
         const value = +e.currentTarget.value;
@@ -38,22 +41,37 @@ const NumberInput: React.FC<NumberInputProps> = ({
     return (
         <div className={className} {...props}>
             <label>
-                <span>Est. Pomodoro</span>
-                <div className="grid grid-cols-8 gap-4">
+                <span className="mb-1 inline-block">{spanText}</span>
+
+                <div className="flex items-center gap-1">
+                    {completedPomodoro !== undefined && (
+                        <input
+                            type="number"
+                            className="w-fit basis-20 border"
+                            value={completedPomodoro}
+                            readOnly
+                        />
+                    )}
+
+                    {completedPomodoro !== undefined && (
+                        <span className="font-extralight">/</span>
+                    )}
+
                     <input
                         type="number"
                         name={name}
-                        className="col-span-2 w-fit border"
+                        className="w-fit basis-20 border"
                         min={1}
                         step={1}
                         value={number}
                         onChange={handleChange}
                     />
-                    <div className="col-span-2 flex">
+
+                    <div className="flex">
                         <button
                             type="button"
                             aria-label="increment pomodoros amount by 1"
-                            className="grid aspect-square place-items-center border"
+                            className="border p-4"
                             onClick={increment}
                         >
                             <svg
@@ -69,10 +87,11 @@ const NumberInput: React.FC<NumberInputProps> = ({
                                 />
                             </svg>
                         </button>
+
                         <button
                             type="button"
                             aria-label="decrement pomodoros amount by 1"
-                            className="grid aspect-square place-items-center border"
+                            className="border p-4"
                             onClick={decrement}
                         >
                             <svg

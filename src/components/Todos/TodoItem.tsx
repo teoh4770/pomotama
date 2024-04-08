@@ -63,11 +63,8 @@ const TodoItem = ({
         <li>
             <div
                 id={todo.id}
-                className="todo flex cursor-pointer items-center rounded-lg bg-white px-5 py-4"
-                style={{
-                    border: isFocus ? '5px solid black' : '',
-                }}
-                onClick={() => focusTodo()}
+                className={`todo ${isFocus && 'focus'} flex cursor-pointer items-center rounded-lg bg-white px-5 py-4`}
+                onClick={focusTodo}
             >
                 <div className="todo__input mr-auto flex">
                     <label
@@ -87,16 +84,22 @@ const TodoItem = ({
                     </label>
                 </div>
 
-                <div className="flex items-center gap-3">
-                    <div className="todo-pomodoro-amount">
-                        <span className="completed-pomodoro-amount text-xl font-bold">
-                            {todo.completedPomodoro}
+                <div className="flex items-center gap-4">
+                    <div className="todo-pomodoro-amount grid text-sm">
+                        <span className="amount -translate-x-[1px] text-right">
+                            <span className="completed-pomodoro-amount text-lg font-bold">
+                                {todo.completedPomodoro}
+                            </span>
+                            /
+                            <span className="expected-pomodoro-amount">
+                                {todo.targetPomodoro}
+                            </span>
                         </span>
-                        /
-                        <span className="expected-pomodoro-amount">
-                            {todo.targetPomodoro}
+                        <span className="">
+                            round{todo.targetPomodoro > 1 && 's'}
                         </span>
                     </div>
+
                     <button
                         className="button border border-slate-300 !text-black/60 hover:bg-black/10"
                         data-type="secondary"

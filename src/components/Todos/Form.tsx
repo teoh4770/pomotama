@@ -67,10 +67,12 @@ const TodoForm = ({
                         placeholder="What are you working on?"
                     />
                 </label>
+                
                 <NumberInput
                     name="targetPomodoro"
                     className=""
                     defaultValue={todo?.targetPomodoro}
+                    completedPomodoro={todo?.completedPomodoro}
                 />
             </div>
 
