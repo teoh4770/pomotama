@@ -7,8 +7,18 @@ export { getTimes, formattedTimes, minutesToSeconds, clipTime };
 /**
  * localStorage.ts
  */
-import { fetchUserTodos, updateUserTodos } from './localStorage';
-export { fetchUserTodos, updateUserTodos };
+import {
+    fetchUserTodos,
+    updateUserTodos,
+    fetchSelectedTodoId,
+    updateSelectedTodoId,
+} from './localStorage';
+export {
+    fetchUserTodos,
+    updateUserTodos,
+    fetchSelectedTodoId,
+    updateSelectedTodoId,
+};
 
 /**
  * dom.ts
