@@ -1,3 +1,3 @@
-import { TimerSetting } from './TimerSetting';
+import { TimerSettingInputs } from './TimerSettingInputs';
 
-export { TimerSetting };
+export { TimerSettingInputs };

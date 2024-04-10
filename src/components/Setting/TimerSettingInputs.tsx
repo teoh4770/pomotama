@@ -1,31 +1,18 @@
-import { FormEvent } from 'react';
-import { useAtom } from 'jotai';
+interface SettingFormTimerData {
+    pomodoroDuration: number;
+    shortBreakDuration: number;
+    longBreakDuration: number;
+    longBreakInterval: number;
+}
 
-import { longBreakIntervalAtom, timerSettingsAtom } from '../../lib/atom';
-import { clipTime } from '../../utils';
+interface TimerSettingProps {
+    timerSetting: SettingFormTimerData;
+}
 
-const TimerSetting = () => {
-    const [timerSettings, updateTimerSetting] = useAtom(timerSettingsAtom);
-    const [longBreakInterval, updateLongBreakInterval] = useAtom(
-        longBreakIntervalAtom
-    );
-
-    const handleTimerSetting = (event: FormEvent<HTMLInputElement>) => {
-        const target = event.currentTarget;
-
-        updateTimerSetting({
-            ...timerSettings,
-            [target.name]: clipTime(+target.value),
-        });
-    };
-
-    const handleLongBreakInterval = (event: FormEvent<HTMLInputElement>) => {
-        const target = event.currentTarget;
-        updateLongBreakInterval(+target.value);
-    };
-
+const TimerSettingInputs = ({ timerSetting }: TimerSettingProps) => {
+    // https://developer.mozilla.org/en-US/docs/Learn/Forms/Form_validation
     return (
-        <div>
+        <div className="timer-setting">
             <div className="setting-title py-4 font-semibold uppercase text-gray-400">
                 ❤️ Timer
             </div>
@@ -38,18 +25,14 @@ const TimerSetting = () => {
                             <input
                                 type="number"
                                 className="min-w-[6.25rem]"
-                                min={0}
+                                min={1}
                                 max={999}
                                 id="pomodoro-input"
                                 name="pomodoroDuration"
-                                onChange={handleTimerSetting}
-                                value={
-                                    timerSettings.pomodoroDuration === 0
-                                        ? ''
-                                        : timerSettings.pomodoroDuration
-                                }
+                                defaultValue={timerSetting.pomodoroDuration}
                             />
                         </label>
+
                         <label>
                             <div>Short Break</div>
                             <input
@@ -59,14 +42,10 @@ const TimerSetting = () => {
                                 max={999}
                                 id="short-break-input"
                                 name="shortBreakDuration"
-                                onChange={handleTimerSetting}
-                                value={
-                                    timerSettings.shortBreakDuration === 0
-                                        ? ''
-                                        : timerSettings.shortBreakDuration
-                                }
+                                defaultValue={timerSetting.shortBreakDuration}
                             />
                         </label>
+
                         <label>
                             <div>Long Break</div>
                             <input
@@ -76,29 +55,20 @@ const TimerSetting = () => {
                                 max={999}
                                 id="long-break-input"
                                 name="longBreakDuration"
-                                onChange={handleTimerSetting}
-                                value={
-                                    timerSettings.longBreakDuration === 0
-                                        ? ''
-                                        : timerSettings.longBreakDuration
-                                }
+                                defaultValue={timerSetting.longBreakDuration}
                             />
                         </label>
+
                         <label>
                             <div>Long Break Interval</div>
                             <input
                                 type="number"
                                 className="min-w-[6.25rem]"
-                                min={0}
+                                min={1}
                                 max={999}
                                 id="long-break-interval"
                                 name="longBreakInterval"
-                                onChange={handleLongBreakInterval}
-                                value={
-                                    longBreakInterval <= 0
-                                        ? '0'
-                                        : longBreakInterval
-                                }
+                                defaultValue={timerSetting.longBreakInterval}
                             />
                         </label>
                     </div>
@@ -108,4 +78,4 @@ const TimerSetting = () => {
     );
 };
 
-export { TimerSetting };
+export { TimerSettingInputs };
