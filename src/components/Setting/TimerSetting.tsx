@@ -1,11 +1,14 @@
 import { FormEvent } from 'react';
 import { useAtom } from 'jotai';
 
-import { timerSettingsAtom } from '../../lib/atom';
+import { longBreakIntervalAtom, timerSettingsAtom } from '../../lib/atom';
 import { clipTime } from '../../utils';
 
 const TimerSetting = () => {
     const [timerSettings, updateTimerSetting] = useAtom(timerSettingsAtom);
+    const [longBreakInterval, updateLongBreakInterval] = useAtom(
+        longBreakIntervalAtom
+    );
 
     const handleTimerSetting = (event: FormEvent<HTMLInputElement>) => {
         const target = event.currentTarget;
@@ -14,6 +17,11 @@ const TimerSetting = () => {
             ...timerSettings,
             [target.name]: clipTime(+target.value),
         });
+    };
+
+    const handleLongBreakInterval = (event: FormEvent<HTMLInputElement>) => {
+        const target = event.currentTarget;
+        updateLongBreakInterval(+target.value);
     };
 
     return (
@@ -73,6 +81,23 @@ const TimerSetting = () => {
                                     timerSettings.longBreakDuration === 0
                                         ? ''
                                         : timerSettings.longBreakDuration
+                                }
+                            />
+                        </label>
+                        <label>
+                            <div>Long Break Interval</div>
+                            <input
+                                type="number"
+                                className="min-w-[6.25rem]"
+                                min={0}
+                                max={999}
+                                id="long-break-interval"
+                                name="longBreakInterval"
+                                onChange={handleLongBreakInterval}
+                                value={
+                                    longBreakInterval <= 0
+                                        ? '0'
+                                        : longBreakInterval
                                 }
                             />
                         </label>

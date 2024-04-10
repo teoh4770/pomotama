@@ -1,3 +1,8 @@
-import { timerSettingsAtom, todosAtom, selectedTodoIdAtom } from './atom';
+import {
+    timerSettingsAtom,
+    longBreakIntervalAtom,
+    todosAtom,
+    selectedTodoIdAtom,
+} from './atom';
 
-export { timerSettingsAtom, todosAtom, selectedTodoIdAtom };
+export { timerSettingsAtom, longBreakIntervalAtom, todosAtom, selectedTodoIdAtom };

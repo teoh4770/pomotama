@@ -8,7 +8,6 @@ import { Tabs } from '../Tabs';
 
 const Timer = () => {
     const timerSettings = useAtomValue(timerSettingsAtom);
-
     const timer = useTimer();
 
     return (
@@ -38,7 +37,7 @@ const Timer = () => {
                         },
                     ]}
                     handler={timer.actions.changeTimerMode}
-                    defaultValue="pomodoroDuration"
+                    timerMode={timer.timerMode}
                 />
 
                 <Time remainingTime={timer.remainingTime} />

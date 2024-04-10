@@ -15,7 +15,7 @@
 - Selecting the tab items updates the current timer value
 - Test that you are able to initialize multiple instances of the component, each with independent states.
  */
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 type TimerMode =
     | 'pomodoroDuration'
@@ -29,13 +29,19 @@ interface TabItemProp {
 }
 
 interface TabsProps {
-    defaultValue: TimerMode;
+    defaultValue?: TimerMode;
+    timerMode: TimerMode;
     items: TabItemProp[];
     handler: (name: TimerMode) => void;
 }
 
-const Tabs = ({ defaultValue, items, handler }: TabsProps) => {
-    const [activeTab, setActiveTab] = useState(defaultValue);
+const Tabs = ({ timerMode, items, handler }: TabsProps) => {
+    const [activeTab, setActiveTab] = useState<TimerMode>('pomodoroDuration');
+
+    // when the timermode is updated, tab is also get updated as well
+    useEffect(() => {
+        setActiveTab(timerMode);
+    }, [timerMode]);
 
     return (
         <div className="center | w-fit flex-row">
