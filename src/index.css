@@ -275,6 +275,8 @@ input[type='number']:read-only:focus {
     outline: none;
 }
 
+/* input number valid state and invalid state! */
+
 .dialog {
     --bg-color: white;
     max-width: 30rem;
