@@ -27,6 +27,10 @@ body {
     -webkit-tap-highlight-color: transparent;
 }
 
+body:has(dialog[open]) {
+    overflow: hidden;
+}
+
 /* Composition */
 /* Stack */
 .stack {
@@ -279,7 +283,7 @@ input[type='number']:read-only:focus {
 
 .dialog {
     --bg-color: white;
-    max-width: 30rem;
+    max-width: 25rem;
     width: 100%;
     border-radius: 0.5rem;
     scrollbar-width: none; /* Firefox */

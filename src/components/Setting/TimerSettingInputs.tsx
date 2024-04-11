@@ -19,7 +19,7 @@ const TimerSettingInputs = ({ timerSetting }: TimerSettingProps) => {
             <div className="stack">
                 <div>
                     <div className="mb-3 font-bold">Time (minutes)</div>
-                    <div className="flex flex-wrap justify-between gap-2">
+                    <div className="">
                         <label>
                             <div>Pomodoro</div>
                             <input

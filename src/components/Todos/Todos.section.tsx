@@ -18,6 +18,15 @@ const Todos = () => {
 
     return (
         <section className="tasks-section mx-auto max-w-[30rem]">
+            <div className="mt-4">
+                <div className="display-current-todo py-4 text-center text-white">
+                    <p>#2</p>
+                    <p className="text-lg">
+                        Prepare for Microprocessor Midterm
+                    </p>
+                </div>
+            </div>
+
             <Header
                 headingLevel={2}
                 title="Tasks"
@@ -35,10 +44,10 @@ const Todos = () => {
                 />
             ) : (
                 <button
-                    className="w-full border-2 border-dashed bg-transparent p-4"
+                    className="w-full border-2 border-dashed bg-slate-700/50 p-4 font-bold text-white/80 hover:text-white"
                     onClick={showAddTaskForm}
                 >
-                    Add Task
+                    (icon)Add Task
                 </button>
             )}
 

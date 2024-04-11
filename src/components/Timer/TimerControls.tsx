@@ -11,21 +11,16 @@ const TimerControls = ({ status, toggleTimer, resetTimer }: ControlsProps) => {
     return (
         <div className="flex-row">
             <button
-                className="button"
-                data-type="primary"
-                data-size="large"
+                className="button | !uppercase [--fs:1.375rem] [--px:3rem] [--py:0.75rem] sm:[--px:4rem]"
                 onClick={toggleTimer}
+                data-type="primary"
             >
                 {buttonText}
             </button>
-            <button
-                className="button"
-                data-type="naked"
-                data-size="large"
-                onClick={resetTimer}
-            >
+            {/* temporarily remove the  */}
+            {/* <button className="button !bg-black" onClick={resetTimer}>
                 Reset
-            </button>
+            </button> */}
         </div>
     );
 };

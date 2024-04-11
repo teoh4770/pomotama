@@ -2,7 +2,7 @@ import { Header, Setting, Timer, Todos } from './components';
 
 const App = () => {
     return (
-        <main className="px-4">
+        <main className="px-3 sm:px-4">
             <Header
                 headingLevel={1}
                 title="Pomotama"
@@ -16,7 +16,7 @@ const App = () => {
                 <h2 className="text-xl font-bold">
                     How to use the Pomodoro Timer?
                 </h2>
-                <ol className="list-decimal ml-10">
+                <ol className="ml-10 list-decimal">
                     <li>Add tasks to work on today</li>
                     <li>
                         Set estimate pomodoros (1 = 25min of work) for each

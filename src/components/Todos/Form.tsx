@@ -52,9 +52,9 @@ const TodoForm = ({
         <form
             onSubmit={handleSubmit}
             id="task-adder"
-            className="task-adder grid overflow-hidden rounded-lg bg-white"
+            className="task-adder grid overflow-hidden rounded-lg bg-white !font-bold text-slate-700"
         >
-            <div className="form-inputs grid gap-4 px-5 py-5">
+            <div className="form-inputs grid gap-4 px-5 py-7">
                 <label>
                     <span className="sr-only">New Todo</span>
                     <input
@@ -67,7 +67,7 @@ const TodoForm = ({
                         placeholder="What are you working on?"
                     />
                 </label>
-                
+
                 <NumberInput
                     name="targetPomodoro"
                     className=""
