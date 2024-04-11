@@ -15,8 +15,8 @@ type TimerMode =
     | 'longBreakDuration';
 
 interface TimerActions {
-    toggle: () => void;
-    reset: () => void;
+    toggleTimer: () => void;
+    resetTimer: () => void;
     changeTimerMode: (name: TimerMode) => void;
 }
 
@@ -61,7 +61,7 @@ const useTimer = (): UseTimer => {
         () => {
             if (remainingTime <= 0) {
                 timerEndHandler();
-                reset();
+                resetTimer();
                 return;
             }
 
@@ -70,7 +70,7 @@ const useTimer = (): UseTimer => {
         status === 'running' ? 1000 : null
     );
 
-    // reset the initial value whenever timer setting or timer mode change
+    // set the timer whenever timer setting or timer mode change
     useEffect(() => {
         setTimer();
 
@@ -79,6 +79,17 @@ const useTimer = (): UseTimer => {
             setInitialTime(time);
         }
     }, [timerMode, timerSettings]);
+
+    //  Reset timer if todo changes and timer is running
+    useEffect(() => {
+        const isTimerRunningDuringPomodoro =
+            status === 'running' && timerMode === 'pomodoroDuration';
+
+        if (isTimerRunningDuringPomodoro) {
+            resetTimer();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [selectedTodoId]);
 
     function timerEndHandler() {
         incrementTodoPomodoro();
@@ -129,7 +140,7 @@ const useTimer = (): UseTimer => {
         }
     }
 
-    function toggle() {
+    function toggleTimer() {
         setStatus((status) => {
             if (status === 'running') {
                 return 'idle';
@@ -138,19 +149,19 @@ const useTimer = (): UseTimer => {
         });
     }
 
-    function reset() {
+    function resetTimer() {
         setStatus('idle');
         setTimeElapsed(0);
     }
 
     function changeTimerMode(mode: TimerMode) {
         setTimerMode(mode);
-        reset();
+        resetTimer();
     }
 
     const actions: TimerActions = {
-        toggle,
-        reset,
+        toggleTimer,
+        resetTimer,
         changeTimerMode,
     };
 

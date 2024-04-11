@@ -44,8 +44,8 @@ const Timer = () => {
 
                 <TimerControls
                     status={timer.status}
-                    toggleTimer={timer.actions.toggle}
-                    resetTimer={timer.actions.reset}
+                    toggleTimer={timer.actions.toggleTimer}
+                    resetTimer={timer.actions.resetTimer}
                 />
             </article>
         </section>

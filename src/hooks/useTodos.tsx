@@ -23,6 +23,7 @@ const useTodos = (): UseTodos => {
 
     // update the selected todoId in localstorage
     useEffect(() => {
+        // localstorage update
         updateSelectedTodoId(selectedTodoId);
     }, [selectedTodoId]);
 
