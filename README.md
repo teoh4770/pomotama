@@ -18,10 +18,10 @@ A Pomofocus clone with React and TypeScript. I love Pomofocus.io so much that I'
 - [X] Setting to customise the duration
 - [X] Todo List
 - [X] Combine Todo List with Pomodoro Timer
-- [X] Use LocalStorage as the main storage
-- [ ] Automatic break after complete a session
+- [X] Use LocalStorage as the secondary storage
+- [X] Automatic break after complete a session
+- [ ] Auth System + Database
 - [ ] Treat System
-- [ ] Activity summary that shows the amount of hours focused
 ## 👩🏽‍🍳 The Process
 
 ## 📚 What I Learned
