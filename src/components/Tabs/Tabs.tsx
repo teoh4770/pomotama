@@ -29,13 +29,13 @@ interface TabItemProp {
 }
 
 interface TabsProps {
+    items: TabItemProp[];
     defaultValue?: TimerMode;
     timerMode: TimerMode;
-    items: TabItemProp[];
     handler: (name: TimerMode) => void;
 }
 
-const Tabs = ({ timerMode, items, handler }: TabsProps) => {
+const Tabs: React.FC<TabsProps> = ({ timerMode, items, handler }) => {
     const [activeTab, setActiveTab] = useState<TimerMode>('pomodoroDuration');
 
     // when the timermode is updated, tab is also get updated as well
@@ -45,23 +45,21 @@ const Tabs = ({ timerMode, items, handler }: TabsProps) => {
 
     return (
         <div className="center | w-fit flex-row">
-            {items.map(({ name, label, value }) => {
-                return (
-                    <button
-                        key={name}
-                        type="button"
-                        data-type="naked"
-                        className={`button ${name === activeTab ? 'active' : ''}`}
-                        onClick={() => {
-                            handler(name);
-                            setActiveTab(name);
-                        }}
-                        value={value}
-                    >
-                        {label}
-                    </button>
-                );
-            })}
+            {items.map(({ name, label, value }) => (
+                <button
+                    key={name}
+                    type="button"
+                    data-type="naked"
+                    className={`button ${name === activeTab ? 'active' : ''}`}
+                    onClick={() => {
+                        handler(name);
+                        setActiveTab(name);
+                    }}
+                    value={value}
+                >
+                    {label}
+                </button>
+            ))}
         </div>
     );
 };

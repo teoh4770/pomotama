@@ -1,15 +1,12 @@
-import { Header, Setting, Timer, Todos } from './components';
+import { Setting, Timer, Todos } from './components';
 
 const App = () => {
     return (
         <main className="px-3 sm:px-4">
-            <Header
-                headingLevel={1}
-                title="Pomotama"
-                className="mx-auto max-w-2xl py-4"
-            >
+            <header className="mx-auto flex max-w-2xl items-center justify-between py-4">
+                <h1 className="text-2xl font-bold text-white">Pomotama</h1>
                 <Setting />
-            </Header>
+            </header>
             <Timer />
             <Todos />
             <div className="mt-10 bg-white">

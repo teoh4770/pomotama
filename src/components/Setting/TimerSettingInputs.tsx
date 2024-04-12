@@ -1,3 +1,5 @@
+// Note: https://developer.mozilla.org/en-US/docs/Learn/Forms/Form_validation
+
 interface SettingFormTimerData {
     pomodoroDuration: number;
     shortBreakDuration: number;
@@ -10,21 +12,24 @@ interface TimerSettingProps {
 }
 
 const TimerSettingInputs = ({ timerSetting }: TimerSettingProps) => {
-    // https://developer.mozilla.org/en-US/docs/Learn/Forms/Form_validation
     return (
         <div className="timer-setting">
-            <div className="setting-title py-4 font-semibold uppercase text-gray-400">
+            <h3 className="setting-title py-4 font-semibold uppercase text-gray-400">
                 ❤️ Timer
-            </div>
+            </h3>
             <div className="stack">
                 <div>
-                    <div className="mb-3 font-bold">Time (minutes)</div>
-                    <div className="">
-                        <label>
-                            <div>Pomodoro</div>
+                    <h4 className="timer-setting__title mb-3 font-bold">
+                        Time (minutes)
+                    </h4>
+                    <div>
+                        <label className="timer-setting__item">
+                            <div className="timer-setting__item-label">
+                                Pomodoro
+                            </div>
                             <input
                                 type="number"
-                                className="min-w-[6.25rem]"
+                                className="timer-setting__item-"
                                 min={1}
                                 max={999}
                                 id="pomodoro-input"
@@ -33,11 +38,13 @@ const TimerSettingInputs = ({ timerSetting }: TimerSettingProps) => {
                             />
                         </label>
 
-                        <label>
-                            <div>Short Break</div>
+                        <label className="timer-setting__item">
+                            <div className="timer-setting__item-label">
+                                Short Break
+                            </div>
                             <input
                                 type="number"
-                                className="min-w-[6.25rem]"
+                                className="timer-setting__item-"
                                 min={0}
                                 max={999}
                                 id="short-break-input"
@@ -46,11 +53,13 @@ const TimerSettingInputs = ({ timerSetting }: TimerSettingProps) => {
                             />
                         </label>
 
-                        <label>
-                            <div>Long Break</div>
+                        <label className="timer-setting__item">
+                            <div className="timer-setting__item-label">
+                                Long Break
+                            </div>
                             <input
                                 type="number"
-                                className="min-w-[6.25rem]"
+                                className="timer-setting__item-"
                                 min={0}
                                 max={999}
                                 id="long-break-input"
@@ -59,11 +68,13 @@ const TimerSettingInputs = ({ timerSetting }: TimerSettingProps) => {
                             />
                         </label>
 
-                        <label>
-                            <div>Long Break Interval</div>
+                        <label className="timer-setting__item">
+                            <div className="timer-setting__item-label">
+                                Long Break Interval
+                            </div>
                             <input
                                 type="number"
-                                className="min-w-[6.25rem]"
+                                className="timer-setting__item-"
                                 min={1}
                                 max={999}
                                 id="long-break-interval"

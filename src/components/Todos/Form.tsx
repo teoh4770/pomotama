@@ -23,15 +23,16 @@ const TodoForm = ({
 }: FormProps) => {
     const titleInput = useRef<HTMLInputElement>(null);
 
-    // focus on input once form is created
     useEffect(() => {
+        // Focuses on the input element when the component mounts
+        // and moves the cursor to the end of the input field
         const input = titleInput.current as HTMLInputElement;
 
         input.focus();
         moveCursorToTheEnd(input);
     }, []);
 
-    const handleSubmit = (e: FormEvent) => {
+    function handleSubmit(e: FormEvent) {
         e.preventDefault();
 
         const $form = e.currentTarget as HTMLFormElement;
@@ -46,7 +47,7 @@ const TodoForm = ({
         $form.reset();
 
         onClose?.();
-    };
+    }
 
     return (
         <form

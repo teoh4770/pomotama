@@ -4,7 +4,7 @@ interface ControlsProps {
     resetTimer: () => void;
 }
 
-const TimerControls = ({ status, toggleTimer, resetTimer }: ControlsProps) => {
+const TimerControls = ({ status, toggleTimer }: ControlsProps) => {
     const timerIsRunning = status === 'running';
     const buttonText = timerIsRunning ? 'stop' : 'start';
 

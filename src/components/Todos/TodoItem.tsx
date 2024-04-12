@@ -24,27 +24,28 @@ const TodoItem = ({
 }: TodoProps) => {
     const [isEditing, setIsEditing] = useState(false);
 
-    const openForm = () => {
+    function openForm() {
         setIsEditing(true);
-    };
+    }
 
-    const closeForm = () => {
+    function closeForm() {
         setIsEditing(false);
-    };
+    }
 
-    const saveTodo = (todoFormData: TodoFormData) => {
+    function saveTodo(todoFormData: TodoFormData) {
         todoActions.edit(todo.id, todoFormData);
         closeForm();
-    };
+    }
 
-    const deleteTodo = () => {
+    function deleteTodo() {
         todoActions.remove(todo.id);
-    };
+    }
 
-    const toggleTodo = () => {
+    function toggleTodo() {
         todoActions.toggleState(todo.id);
-    };
+    }
 
+    // the logic is a bit confusing
     if (isActive && isEditing) {
         return (
             <li>

@@ -41,13 +41,13 @@ const NumberInput: React.FC<NumberInputProps> = ({
     return (
         <div className={className} {...props}>
             <label>
-                <span className="mb-1 inline-block">{spanText}</span>
+                <span className="label-text mb-1 inline-block">{spanText}</span>
 
                 <div className="flex items-center gap-1">
                     {completedPomodoro !== undefined ? (
                         <input
                             type="number"
-                            className="w-fit basis-20 border"
+                            className="number-input w-fit basis-20 border"
                             value={completedPomodoro}
                             readOnly
                         />
@@ -64,7 +64,7 @@ const NumberInput: React.FC<NumberInputProps> = ({
                     <input
                         type="number"
                         name={name}
-                        className="w-fit basis-20 border"
+                        className="number-input w-fit basis-20 border"
                         min={1}
                         step={1}
                         value={number}
@@ -75,7 +75,7 @@ const NumberInput: React.FC<NumberInputProps> = ({
                         <button
                             type="button"
                             aria-label="increment pomodoros amount by 1"
-                            className="border p-4"
+                            className="increment-btn border p-4"
                             onClick={increment}
                         >
                             <svg
@@ -95,7 +95,7 @@ const NumberInput: React.FC<NumberInputProps> = ({
                         <button
                             type="button"
                             aria-label="decrement pomodoros amount by 1"
-                            className="border p-4"
+                            className="decrement-btn border p-4"
                             onClick={decrement}
                         >
                             <svg

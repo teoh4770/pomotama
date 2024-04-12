@@ -8,16 +8,21 @@ import { Tabs } from '../Tabs';
 
 const Timer = () => {
     const timerSettings = useAtomValue(timerSettingsAtom);
-    const timer = useTimer();
+    const {
+        percentageToCompletion,
+        remainingTime,
+        actions,
+        status,
+        timerMode,
+    } = useTimer();
 
     return (
         <section id="timer-section" className="timer-section">
             <Indicator
                 className="mx-auto mb-8 h-1 w-full max-w-2xl bg-slate-500"
-                percentage={timer.percentageToCompletion}
+                percentage={percentageToCompletion}
             />
 
-            {/*  py-8 pt-6 */}
             <article className="timer mx-auto max-w-[30rem] space-y-6 rounded-lg bg-white/10 px-4 py-6 text-center text-white sm:space-y-8 sm:py-8">
                 <Tabs
                     items={[
@@ -37,16 +42,16 @@ const Timer = () => {
                             value: timerSettings.longBreakDuration,
                         },
                     ]}
-                    handler={timer.actions.changeTimerMode}
-                    timerMode={timer.timerMode}
+                    handler={actions.changeTimerMode}
+                    timerMode={timerMode}
                 />
 
-                <Time remainingTime={timer.remainingTime} />
+                <Time remainingTime={remainingTime} />
 
                 <TimerControls
-                    status={timer.status}
-                    toggleTimer={timer.actions.toggleTimer}
-                    resetTimer={timer.actions.resetTimer}
+                    status={status}
+                    toggleTimer={actions.toggleTimer}
+                    resetTimer={actions.resetTimer}
                 />
             </article>
         </section>

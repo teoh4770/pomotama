@@ -55,12 +55,13 @@ const Setting = () => {
     }
 
     return (
-        <div>
+        <>
             <button
                 type="button"
                 className="button"
                 data-type="secondary"
                 data-size="small"
+                aria-label="setting button"
                 onClick={showModal}
             >
                 <span>❤️</span>
@@ -68,11 +69,10 @@ const Setting = () => {
             </button>
 
             {/* link about dialog html component: https://blog.webdevsimplified.com/2023-04/html-dialog/ */}
-
             <dialog ref={dialog} className="dialog | box">
                 <form method="dialog" onSubmit={handleSubmit}>
-                    <div className="dialog__header | box | flex-row">
-                        <span className="font-bold uppercase">Setting</span>
+                    <header className="dialog__header | box | flex-row">
+                        <h2 className="font-bold uppercase">Setting</h2>
                         <button
                             type="reset"
                             className="button to-right"
@@ -82,16 +82,20 @@ const Setting = () => {
                         >
                             Cancel/Close
                         </button>
-                    </div>
+                    </header>
 
                     <div className="dialog__content | box">
-                        {/* besides the timer setting, other setting can be updated in real time, such as background color and sound (decorative) */}
+                        {/* besides the timer setting, other setting should be updated in real time, such as background color and sound (decorative) */}
                         <TimerSettingInputs
                             timerSetting={{
                                 ...timerSetting,
                                 longBreakInterval,
                             }}
                         />
+
+                        {/* setting 2 */}
+
+                        {/* setting 3 */}
                     </div>
 
                     <div className="dialog__footer | box">
@@ -106,7 +110,7 @@ const Setting = () => {
                     </div>
                 </form>
             </dialog>
-        </div>
+        </>
     );
 };
 

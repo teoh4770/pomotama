@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useTodos } from '../../hooks';
 
 import { TodoForm, TodoList } from '.';
-import { Header } from '../Header';
 
 const Todos = () => {
     const { todos, todoActions } = useTodos();
@@ -16,6 +15,14 @@ const Todos = () => {
         setOpenAddTaskForm(false);
     }
 
+    function handleClearAll() {
+        todoActions.clearAll();
+    }
+
+    function handleClearCompleted() {
+        todoActions.clearCompleted();
+    }
+
     return (
         <section className="tasks-section mx-auto max-w-[30rem]">
             <div className="mt-4">
@@ -27,11 +34,9 @@ const Todos = () => {
                 </div>
             </div>
 
-            <Header
-                headingLevel={2}
-                title="Tasks"
-                className="border-b-2 py-4"
-            ></Header>
+            <header className="flex justify-between border-b-2 py-4">
+                <h2 className="text-lg font-bold text-white">Tasks</h2>
+            </header>
 
             <TodoList todos={todos} todoActions={todoActions} />
 
@@ -44,29 +49,31 @@ const Todos = () => {
                 />
             ) : (
                 <button
-                    className="w-full border-2 border-dashed bg-slate-700/50 p-4 font-bold text-white/80 hover:text-white"
+                    className="add-task-button w-full border-2 border-dashed bg-slate-700/50 p-4 font-bold text-white/80 hover:text-white"
                     onClick={showAddTaskForm}
                 >
                     (icon)Add Task
                 </button>
             )}
-
-            <button
-                type="button"
-                className="button"
-                data-type="primary"
-                onClick={todoActions.clearAll}
-            >
-                Clear All Tasks
-            </button>
-            <button
-                type="button"
-                className="button"
-                data-type="primary"
-                onClick={todoActions.clearCompleted}
-            >
-                Clear Finished Tasks
-            </button>
+            
+            <div className="mt-4 flex justify-between">
+                <button
+                    type="button"
+                    className="button"
+                    data-type="primary"
+                    onClick={handleClearAll}
+                >
+                    Clear All Tasks
+                </button>
+                <button
+                    type="button"
+                    className="button"
+                    data-type="primary"
+                    onClick={handleClearCompleted}
+                >
+                    Clear Finished Tasks
+                </button>
+            </div>
         </section>
     );
 };

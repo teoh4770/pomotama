@@ -71,6 +71,7 @@ body:has(dialog[open]) {
     padding-inline: var(--s1);
 }
 
+/* !should fix */
 .flex-row {
     display: flex;
     gap: var(--gap);

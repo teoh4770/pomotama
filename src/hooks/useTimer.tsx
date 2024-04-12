@@ -28,27 +28,22 @@ interface UseTimer {
     actions: TimerActions;
 }
 
-// global variable
 const LONG_BREAK_INTERVAL_START_INDEX = 0;
 
 const useTimer = (): UseTimer => {
     const timerSettings = useAtomValue(timerSettingsAtom);
     const userLongBreakInterval = useAtomValue(longBreakIntervalAtom);
 
-    // timer
     const [initialTime, setInitialTime] = useState(
         minutesToSeconds(timerSettings['pomodoroDuration'])
     );
     const [timeElapsed, setTimeElapsed] = useState(0);
     const [status, setStatus] = useState<Status>('idle');
-
-    // timerMode
     const [longBreakInterval, setLongBreakInterval] = useState(
         LONG_BREAK_INTERVAL_START_INDEX
     );
     const [timerMode, setTimerMode] = useState<TimerMode>('pomodoroDuration');
 
-    // external
     const { todos, selectedTodoId, todoActions } = useTodos();
 
     // calculated variables
@@ -60,7 +55,7 @@ const useTimer = (): UseTimer => {
     useInterval(
         () => {
             if (remainingTime <= 0) {
-                timerEndHandler();
+                handleTimerEnd();
                 resetTimer();
                 return;
             }
@@ -72,12 +67,7 @@ const useTimer = (): UseTimer => {
 
     // set the timer whenever timer setting or timer mode change
     useEffect(() => {
-        setTimer();
-
-        function setTimer() {
-            const time = minutesToSeconds(timerSettings[timerMode]);
-            setInitialTime(time);
-        }
+        setInitialTime(minutesToSeconds(timerSettings[timerMode]));
     }, [timerMode, timerSettings]);
 
     //  Reset timer if todo changes and timer is running
@@ -91,7 +81,26 @@ const useTimer = (): UseTimer => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedTodoId]);
 
-    function timerEndHandler() {
+    function toggleTimer() {
+        setStatus((status) => {
+            if (status === 'running') {
+                return 'idle';
+            }
+            return 'running';
+        });
+    }
+
+    function resetTimer() {
+        setStatus('idle');
+        setTimeElapsed(0);
+    }
+
+    function changeTimerMode(mode: TimerMode) {
+        setTimerMode(mode);
+        resetTimer();
+    }
+
+    function handleTimerEnd() {
         incrementTodoPomodoro();
         updateLongBreakInterval();
         toggleTimerMode();
@@ -138,25 +147,6 @@ const useTimer = (): UseTimer => {
                 setLongBreakInterval(LONG_BREAK_INTERVAL_START_INDEX);
             }
         }
-    }
-
-    function toggleTimer() {
-        setStatus((status) => {
-            if (status === 'running') {
-                return 'idle';
-            }
-            return 'running';
-        });
-    }
-
-    function resetTimer() {
-        setStatus('idle');
-        setTimeElapsed(0);
-    }
-
-    function changeTimerMode(mode: TimerMode) {
-        setTimerMode(mode);
-        resetTimer();
     }
 
     const actions: TimerActions = {

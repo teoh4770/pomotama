@@ -1,18 +1,23 @@
 import { useEffect, useRef } from 'react';
 
-// the enhance setInterval allows user to adjust the delay dynamically
+/**
+ * Custom hook for creating intervals with adjustable delay.
+ * @param callback Function to be executed at each interval.
+ * @param delay Time (in milliseconds) between intervals. Pass null to stop the interval.
+ * @returns A mutable ref object holding the interval ID.
+ */
 const useInterval = (callback: () => void, delay: number | null) => {
     const intervalRef: React.MutableRefObject<ReturnType<
         typeof setInterval
     > | null> = useRef(null);
     const savedCallback = useRef(callback);
 
-    // remember the latest callback
+    // Remember the latest callback
     useEffect(() => {
         savedCallback.current = callback;
     }, [callback]);
-
-    // setup the interval
+    
+    // Setup the interval
     useEffect(() => {
         function tick() {
             savedCallback.current();
