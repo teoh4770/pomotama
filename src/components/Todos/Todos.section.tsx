@@ -1,11 +1,17 @@
 import { useState } from 'react';
 import { useTodos } from '../../hooks';
 
+import { Todo } from '../../types';
+
 import { TodoForm, TodoList } from '.';
 
 const Todos = () => {
-    const { todos, todoActions } = useTodos();
+    const { todos, selectedTodoId, todoActions } = useTodos();
     const [openAddTaskForm, setOpenAddTaskForm] = useState(false);
+
+    const selectedTodo = todos.find(
+        (todo) => todo.id === selectedTodoId
+    ) as Todo;
 
     function showAddTaskForm() {
         setOpenAddTaskForm(true);
@@ -26,11 +32,19 @@ const Todos = () => {
     return (
         <section className="tasks-section mx-auto max-w-[30rem]">
             <div className="mt-4">
-                <div className="display-current-todo py-4 text-center text-white">
-                    <p>#2</p>
-                    <p className="text-lg">
-                        Prepare for Microprocessor Midterm
-                    </p>
+                <div className="current-todo-message py-4 text-center text-white">
+                    {selectedTodo ? (
+                        <>
+                            <p className="text-slate-300">
+                                Current focusing on
+                            </p>
+                            <p className="text-lg">{selectedTodo.title}</p>
+                        </>
+                    ) : (
+                        <p className="text-lg text-slate-300">
+                            You currently have no tasks 🥱
+                        </p>
+                    )}
                 </div>
             </div>
 
@@ -52,10 +66,10 @@ const Todos = () => {
                     className="add-task-button w-full border-2 border-dashed bg-slate-700/50 p-4 font-bold text-white/80 hover:text-white"
                     onClick={showAddTaskForm}
                 >
-                    (icon)Add Task
+                    ⭐ Add Task
                 </button>
             )}
-            
+
             <div className="mt-4 flex justify-between">
                 <button
                     type="button"
