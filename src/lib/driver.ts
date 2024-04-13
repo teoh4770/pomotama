@@ -8,7 +8,7 @@ const driverObj = driver({
             popover: {
                 title: 'Welcome to Pomotama',
                 description:
-                    'Pomotama: Your customizable Pomodoro timer for desktop and mobile browsers. It helped you stay focus on tasks like studying, writing, or coding.',
+                    '<p>Pomotama: Your customizable Pomodoro timer for desktop and mobile browsers. It helped you stay focus on tasks like studying, writing, or coding.</p><p style="margin-top: 1rem;">To leave the tutorial, you can also click on <mark>esc</mark> key.</p>',
             },
         },
         {
@@ -58,12 +58,6 @@ const driverObj = driver({
             },
         },
     ],
-    // onDestroyStarted is called when the user tries to exit the tour
-    onDestroyStarted: () => {
-        if (!driverObj.hasNextStep() || confirm('Are you sure?')) {
-            driverObj.destroy();
-        }
-    },
 });
 
 const runTour = () => {

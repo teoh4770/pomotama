@@ -1,11 +1,13 @@
-import { runTour } from './services';
+import { runTour } from './lib';
 import { Setting, Timer, Todos } from './components';
 
 const App = () => {
     return (
         <main className="px-3 sm:px-4">
-            <header className="mx-auto flex gap-2 max-w-2xl items-center py-4">
-                <h1 className="mr-auto text-2xl font-bold text-white ">Pomotama</h1>
+            <header className="mx-auto flex max-w-2xl items-center gap-2 py-4">
+                <h1 className="mr-auto text-2xl font-bold text-white ">
+                    Pomotama
+                </h1>
 
                 <button
                     type="button"
