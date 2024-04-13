@@ -104,6 +104,10 @@ const useTodos = (): UseTodos => {
         setTodos(updatedTodos);
     }
 
+    function find(id: string) {
+        return todos.find((todo) => todo.id === id);
+    }
+
     const todoActions: TodoActions = {
         add,
         edit,
@@ -112,6 +116,7 @@ const useTodos = (): UseTodos => {
         clearAll,
         clearCompleted,
         incrementPomodoro,
+        find,
     };
 
     return { todos, selectedTodoId, setSelectedTodoId, todoActions };

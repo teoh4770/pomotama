@@ -1,17 +1,13 @@
 import { useState } from 'react';
 import { useTodos } from '../../hooks';
 
-import { Todo } from '../../types';
-
 import { TodoForm, TodoList } from '.';
 
 const Todos = () => {
     const { todos, selectedTodoId, todoActions } = useTodos();
     const [openAddTaskForm, setOpenAddTaskForm] = useState(false);
 
-    const selectedTodo = todos.find(
-        (todo) => todo.id === selectedTodoId
-    ) as Todo;
+    const selectedTodo = todoActions.find(selectedTodoId);
 
     function showAddTaskForm() {
         setOpenAddTaskForm(true);

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import { useAtomValue } from 'jotai';
 import { longBreakIntervalAtom, timerSettingsAtom } from '../lib';
@@ -34,19 +34,19 @@ const useTimer = (): UseTimer => {
     const timerSettings = useAtomValue(timerSettingsAtom);
     const userLongBreakInterval = useAtomValue(longBreakIntervalAtom);
 
-    const [initialTime, setInitialTime] = useState(
-        minutesToSeconds(timerSettings['pomodoroDuration'])
-    );
     const [timeElapsed, setTimeElapsed] = useState(0);
     const [status, setStatus] = useState<Status>('idle');
+    const [timerMode, setTimerMode] = useState<TimerMode>('pomodoroDuration');
     const [longBreakInterval, setLongBreakInterval] = useState(
         LONG_BREAK_INTERVAL_START_INDEX
     );
-    const [timerMode, setTimerMode] = useState<TimerMode>('pomodoroDuration');
 
     const { todos, selectedTodoId, todoActions } = useTodos();
 
     // calculated variables
+    const initialTime = useMemo(() => {
+        return minutesToSeconds(timerSettings[timerMode]);
+    }, [timerSettings, timerMode]);
     const remainingTime = initialTime - timeElapsed;
     const percentageToCompletion = timeElapsed / initialTime;
     const targetInterval = userLongBreakInterval - 1;
@@ -64,11 +64,6 @@ const useTimer = (): UseTimer => {
         },
         status === 'running' ? 1000 : null
     );
-
-    // set the timer whenever timer setting or timer mode change
-    useEffect(() => {
-        setInitialTime(minutesToSeconds(timerSettings[timerMode]));
-    }, [timerMode, timerSettings]);
 
     //  Reset timer if todo changes and timer is running
     useEffect(() => {
