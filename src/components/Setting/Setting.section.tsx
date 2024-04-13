@@ -59,6 +59,7 @@ const Setting = () => {
             <button
                 type="button"
                 className="button"
+                id="setting-button"
                 data-type="secondary"
                 data-size="small"
                 aria-label="setting button"

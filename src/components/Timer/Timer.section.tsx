@@ -23,7 +23,9 @@ const Timer = () => {
                 percentage={percentageToCompletion}
             />
 
-            <article className="timer mx-auto max-w-[30rem] space-y-6 rounded-lg bg-white/10 px-4 py-6 text-center text-white sm:space-y-8 sm:py-8">
+            <article
+                className="timer mx-auto max-w-[30rem] space-y-6 rounded-lg bg-white/10 px-4 py-6 text-center text-white sm:space-y-8 sm:py-8"
+            >
                 <Tabs
                     items={[
                         {

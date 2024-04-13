@@ -30,7 +30,7 @@ const Todos = () => {
     }
 
     return (
-        <section className="tasks-section mx-auto max-w-[30rem]">
+        <section id="tasks" className="tasks-section mx-auto max-w-[30rem]">
             <div className="mt-4">
                 <div className="current-todo-message py-4 text-center text-white">
                     {selectedTodo ? (
@@ -42,7 +42,7 @@ const Todos = () => {
                         </>
                     ) : (
                         <p className="text-lg text-slate-300">
-                            You currently have no tasks 🥱
+                            You didn't select any tasks 🥱
                         </p>
                     )}
                 </div>
