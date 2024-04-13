@@ -31,6 +31,17 @@ body:has(dialog[open]) {
     overflow: hidden;
 }
 
+mark {
+    background: linear-gradient(
+        -100deg,
+        hsla(48, 92%, 75%, 0.3),
+        hsla(48, 92%, 75%, 0.7) 95%,
+        hsla(48, 92%, 75%, 0.1)
+    );
+    border-radius: 1rem 0;
+    padding: 0.25rem;
+}
+
 /* Composition */
 /* Stack */
 .stack {
