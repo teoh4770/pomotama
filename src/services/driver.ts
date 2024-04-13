@@ -27,18 +27,27 @@ const driverObj = driver({
         },
         {
             element: '#tasks',
-            popover: { title: 'Todo List', description: 'Create your task by clicking on "Add Task" button.' },
+            popover: {
+                title: 'Todo List',
+                description:
+                    'Create your task by clicking on "Add Task" button.',
+            },
         },
         {
             element: '#timer-section',
-            popover: { title: 'Timer', description: 'Start your timer here. The timer mode will change to short break once a pomodoro has finished.' },
+            popover: {
+                title: 'Timer',
+                description:
+                    'Start your timer here. The timer mode will change to short break once a pomodoro has finished.',
+            },
         },
 
         {
             element: '#setting-button',
             popover: {
                 title: 'Setting Button',
-                description: 'Change timer setting like the duration of pomodoro and break periods here.',
+                description:
+                    'Change timer setting like the duration of pomodoro and break periods here.',
             },
         },
         {
@@ -57,8 +66,8 @@ const driverObj = driver({
     },
 });
 
-function runTour() {
+const runTour = () => {
     driverObj.drive();
-}
+};
 
 export { runTour };
