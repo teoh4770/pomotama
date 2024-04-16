@@ -21,7 +21,7 @@ interface TodoActions {
     clearAll: () => void;
     clearCompleted: () => void;
     incrementPomodoro: (id: string) => void;
-    find: (id: string) => Todo;
+    find: (id: string) => Todo | undefined;
 }
 
 export type { Todo, TodoFormData, TodoActions };
