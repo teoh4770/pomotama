@@ -19,6 +19,7 @@
         "noUnusedLocals": true,
         "noUnusedParameters": true,
         "noFallthroughCasesInSwitch": true,
+        "forceConsistentCasingInFileNames": true,
         "types": ["@testing-library/jest-dom", "vitest/globals"]
     },
     "include": ["src"],
