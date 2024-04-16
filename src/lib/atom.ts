@@ -14,4 +14,9 @@ const todos = JSON.parse(fetchUserTodos() ?? '[]');
 const todosAtom = atom(todos);
 const selectedTodoIdAtom = atom(fetchSelectedTodoId() ?? '');
 
-export { timerSettingsAtom, longBreakIntervalAtom, todosAtom, selectedTodoIdAtom };
+export {
+    timerSettingsAtom,
+    longBreakIntervalAtom,
+    todosAtom,
+    selectedTodoIdAtom,
+};

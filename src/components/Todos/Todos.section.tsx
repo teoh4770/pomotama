@@ -32,9 +32,10 @@ const Todos = () => {
                     {selectedTodo ? (
                         <>
                             <p className="text-slate-300">
-                                Current focusing on
+                                Currently focusing on:
+                                <br />
+                                <b className="text-lg">{selectedTodo.title}</b>
                             </p>
-                            <p className="text-lg">{selectedTodo.title}</p>
                         </>
                     ) : (
                         <p className="text-lg text-slate-300">
@@ -65,25 +66,26 @@ const Todos = () => {
                     ⭐ Add Task
                 </button>
             )}
-
-            <div className="mt-4 flex justify-between">
-                <button
-                    type="button"
-                    className="button"
-                    data-type="primary"
-                    onClick={handleClearAll}
-                >
-                    Clear All Tasks
-                </button>
-                <button
-                    type="button"
-                    className="button"
-                    data-type="primary"
-                    onClick={handleClearCompleted}
-                >
-                    Clear Finished Tasks
-                </button>
-            </div>
+            {todos.length > 0 && (
+                <div className="mt-4 flex justify-between">
+                    <button
+                        type="button"
+                        className="button"
+                        data-type="primary"
+                        onClick={handleClearAll}
+                    >
+                        Clear All Tasks
+                    </button>
+                    <button
+                        type="button"
+                        className="button"
+                        data-type="primary"
+                        onClick={handleClearCompleted}
+                    >
+                        Clear Finished Tasks
+                    </button>
+                </div>
+            )}
         </section>
     );
 };

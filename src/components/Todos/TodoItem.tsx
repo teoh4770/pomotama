@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Todo, TodoActions, TodoFormData } from '../../types';
 
 import { TodoForm } from './Form';
-import { Checkbox } from '../Checkbox';
+import { Checkbox } from '../ui';
 
 interface TodoProps {
     todo: Todo;
@@ -62,9 +62,11 @@ const TodoItem = ({
 
     return (
         <li>
-            <div
+            <button
+                title="Click to focus on this task"
+                type="button"
                 id={todo.id}
-                className={`todo ${isFocus && 'focus'} flex cursor-pointer items-center rounded-lg bg-white px-5 py-4`}
+                className={`todo ${isFocus && 'focus'} flex w-full cursor-pointer items-center rounded-lg bg-white px-5 py-4`}
                 onClick={focusTodo}
             >
                 <div className="todo__input mr-auto flex">
@@ -102,6 +104,7 @@ const TodoItem = ({
                     </div>
 
                     <button
+                        title="Click to edit this task"
                         className="button border border-slate-300 !text-black/60 hover:bg-black/10"
                         data-type="secondary"
                         data-size="small"
@@ -114,7 +117,7 @@ const TodoItem = ({
                         Options
                     </button>
                 </div>
-            </div>
+            </button>
         </li>
     );
 };
