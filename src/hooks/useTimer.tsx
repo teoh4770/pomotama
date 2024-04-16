@@ -9,6 +9,11 @@ import { useTodos } from './useTodos';
 
 type Status = 'idle' | 'running';
 
+enum StatusEnum {
+    Idle = 'idle',
+    Running = 'running',
+}
+
 type TimerMode =
     | 'pomodoroDuration'
     | 'shortBreakDuration'
@@ -35,7 +40,7 @@ const useTimer = (): UseTimer => {
     const userLongBreakInterval = useAtomValue(longBreakIntervalAtom);
 
     const [timeElapsed, setTimeElapsed] = useState(0);
-    const [status, setStatus] = useState<Status>('idle');
+    const [status, setStatus] = useState<Status>(StatusEnum.Idle);
     const [timerMode, setTimerMode] = useState<TimerMode>('pomodoroDuration');
     const [longBreakInterval, setLongBreakInterval] = useState(
         LONG_BREAK_INTERVAL_START_INDEX
@@ -62,13 +67,13 @@ const useTimer = (): UseTimer => {
 
             setTimeElapsed((timeElapsed) => timeElapsed + 1);
         },
-        status === 'running' ? 1000 : null
+        status === StatusEnum.Running ? 1000 : null
     );
 
     //  Reset timer if todo changes and timer is running
     useEffect(() => {
         const isTimerRunningDuringPomodoro =
-            status === 'running' && timerMode === 'pomodoroDuration';
+            status === StatusEnum.Running && timerMode === 'pomodoroDuration';
 
         if (isTimerRunningDuringPomodoro) {
             resetTimer();
@@ -78,15 +83,15 @@ const useTimer = (): UseTimer => {
 
     function toggleTimer() {
         setStatus((status) => {
-            if (status === 'running') {
-                return 'idle';
+            if (status === StatusEnum.Running) {
+                return StatusEnum.Idle;
             }
-            return 'running';
+            return StatusEnum.Running;
         });
     }
 
     function resetTimer() {
-        setStatus('idle');
+        setStatus(StatusEnum.Running);
         setTimeElapsed(0);
     }
 
