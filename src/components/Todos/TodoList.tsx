@@ -29,17 +29,23 @@ const TodoList = ({ todos, todoActions }: TodoListProps) => {
 
     return (
         <ol id="todo-list" className="todo-list mb-3 mt-5 grid gap-2">
-            {todos.map((todo) => (
-                <TodoItem
-                    key={todo.id}
-                    todo={todo}
-                    todoActions={todoActions}
-                    isActive={activeIndex === todo.id}
-                    isFocus={selectedTodoId === todo.id}
-                    showTodo={handleShowTodo(todo.id)}
-                    focusTodo={handleFocusTodo(todo.id)}
-                />
-            ))}
+            {todos?.length ? (
+                todos.map((todo) => (
+                    <TodoItem
+                        key={todo.id}
+                        todo={todo}
+                        todoActions={todoActions}
+                        isActive={activeIndex === todo.id}
+                        isFocus={selectedTodoId === todo.id}
+                        showTodo={handleShowTodo(todo.id)}
+                        focusTodo={handleFocusTodo(todo.id)}
+                    />
+                ))
+            ) : (
+                <p className="mb-5 text-center text-lg text-slate-300">
+                    No tasks added yet 🥱
+                </p>
+            )}
         </ol>
     );
 };
