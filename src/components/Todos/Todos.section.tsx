@@ -38,7 +38,9 @@ const Todos = () => {
                         </>
                     ) : (
                         <p className="text-lg text-slate-300">
-                            You didn't select any tasks 🥱
+                            {todos.length > 0
+                                ? "You didn't select any tasks 🥱"
+                                : "You don't have any todos 🥱"}
                         </p>
                     )}
                 </div>
