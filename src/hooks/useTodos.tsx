@@ -104,7 +104,7 @@ const useTodos = (): UseTodos => {
         setTodos(updatedTodos);
     }
 
-    function find(id: string) {
+    function find(id: string): Todo | undefined {
         return todos.find((todo) => todo.id === id);
     }
 

@@ -23,36 +23,26 @@ const App = () => {
             </header>
             <Timer />
             <Todos />
-            <div id="instruction" className="mt-10 bg-slate-300">
-                <h2 className="text-xl font-bold">
+            <div
+                id="instruction"
+                className="my-10 rounded-lg bg-white p-6 shadow"
+            >
+                <h2 className="text-xl font-bold text-gray-900">
                     How to use the Pomodoro Timer?
                 </h2>
-                <ol className="ml-10 list-decimal grid gap-1">
+                <ol className="prose mt-4 list-decimal space-y-2 pl-5 text-gray-700">
+                    <li>Add tasks to work on today</li>
                     <li>
-                        <mark>Add tasks</mark> to work on today
+                        Set estimate pomodoros (1 = 25min of work) for each task
                     </li>
-                    <li>
-                        <mark>Set estimate pomodoros</mark> (1 = 25min of work)
-                        for each tasks
-                    </li>
-                    <li>
-                        <mark>Select a task</mark> to work on
-                    </li>
-                    <li>
-                        <mark>Start timer</mark> and focus on the task for 25
-                        minutes
-                    </li>
-                    <li>
-                        <mark>Take a break</mark> for 5 minutes when the alarm
-                        ring
-                    </li>
-                    <li>
-                        <mark>Iterate</mark> 3-5 until you finish the tasks
-                    </li>
+                    <li>Select a task to work on</li>
+                    <li>Start timer and focus on the task for 25 minutes</li>
+                    <li>Take a break for 5 minutes when the alarm rings</li>
+                    <li>Iterate 3-5 until you finish the tasks</li>
                 </ol>
-                <p className="mt-2">
-                💡Tip: The selected task will update its est.pomodoro number
-                    once the pomodoro timer has finished!
+                <p className="mt-4 text-sm text-gray-600">
+                    💡 Tip: The selected task will update its est.pomodoro
+                    number once the pomodoro timer has finished!
                 </p>
             </div>
         </main>
