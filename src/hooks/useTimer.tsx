@@ -91,7 +91,7 @@ const useTimer = (): UseTimer => {
     }
 
     function resetTimer() {
-        setStatus(StatusEnum.Running);
+        setStatus(StatusEnum.Idle);
         setTimeElapsed(0);
     }
 
