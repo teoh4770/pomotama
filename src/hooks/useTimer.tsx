@@ -7,28 +7,19 @@ import { useInterval } from './useInterval';
 import { minutesToSeconds } from '../utils';
 import { useTodos } from './useTodos';
 
-enum TimerStatus {
-    IDLE = 'idle',
-    RUNNING = 'running',
-}
-
-enum TimerMode {
-    POMODORO = 'pomodoroDuration',
-    SHORT_BREAK = 'shortBreakDuration',
-    LONG_BREAK = 'longBreakDuration',
-}
+import { TimerModeEnum, TimerStatusEnum } from '../types';
 
 interface TimerActions {
     toggleTimer: () => void;
     resetTimer: () => void;
-    changeTimerMode: (mode: TimerMode) => void;
+    changeTimerMode: (mode: TimerModeEnum) => void;
 }
 
 interface UseTimer {
-    status: TimerStatus;
+    status: TimerStatusEnum;
     remainingTime: number;
     percentageToCompletion: number;
-    timerMode: TimerMode;
+    timerMode: TimerModeEnum;
     actions: TimerActions;
 }
 
@@ -39,8 +30,8 @@ const useTimer = (): UseTimer => {
     const userLongBreakInterval = useAtomValue(longBreakIntervalAtom);
 
     const [timeElapsed, setTimeElapsed] = useState(0);
-    const [status, setStatus] = useState(TimerStatus.IDLE);
-    const [timerMode, setTimerMode] = useState(TimerMode.POMODORO);
+    const [status, setStatus] = useState(TimerStatusEnum.IDLE);
+    const [timerMode, setTimerMode] = useState(TimerModeEnum.POMODORO);
     const [longBreakInterval, setLongBreakInterval] = useState(
         LONG_BREAK_INTERVAL_START_INDEX
     );
@@ -65,13 +56,14 @@ const useTimer = (): UseTimer => {
 
             setTimeElapsed((timeElapsed) => timeElapsed + 1);
         },
-        status === TimerStatus.RUNNING ? 1000 : null
+        status === TimerStatusEnum.RUNNING ? 1000 : null
     );
 
     //  Reset timer if todo changes and timer is running
     useEffect(() => {
         const isTimerRunningDuringPomodoro =
-            status === TimerStatus.RUNNING && timerMode === TimerMode.POMODORO;
+            status === TimerStatusEnum.RUNNING &&
+            timerMode === TimerModeEnum.POMODORO;
 
         if (isTimerRunningDuringPomodoro) {
             resetTimer();
@@ -81,19 +73,19 @@ const useTimer = (): UseTimer => {
 
     function toggleTimer() {
         setStatus((status) => {
-            if (status === TimerStatus.RUNNING) {
-                return TimerStatus.IDLE;
+            if (status === TimerStatusEnum.RUNNING) {
+                return TimerStatusEnum.IDLE;
             }
-            return TimerStatus.RUNNING;
+            return TimerStatusEnum.RUNNING;
         });
     }
 
     function resetTimer() {
-        setStatus(TimerStatus.IDLE);
+        setStatus(TimerStatusEnum.IDLE);
         setTimeElapsed(0);
     }
 
-    function changeTimerMode(mode: TimerMode) {
+    function changeTimerMode(mode: TimerModeEnum) {
         setTimerMode(mode);
         resetTimer();
     }
@@ -116,7 +108,7 @@ const useTimer = (): UseTimer => {
         }
 
         function updateLongBreakInterval() {
-            if (timerMode === TimerMode.POMODORO) {
+            if (timerMode === TimerModeEnum.POMODORO) {
                 setLongBreakInterval((prev) => prev + 1);
                 return;
             }
@@ -124,21 +116,21 @@ const useTimer = (): UseTimer => {
 
         function toggleTimerMode() {
             if (
-                timerMode === TimerMode.POMODORO &&
+                timerMode === TimerModeEnum.POMODORO &&
                 longBreakInterval >= targetInterval
             ) {
-                setTimerMode(TimerMode.LONG_BREAK);
+                setTimerMode(TimerModeEnum.LONG_BREAK);
                 resetLongBreakInterval();
                 return;
             }
 
             if (
-                timerMode === TimerMode.SHORT_BREAK ||
-                timerMode === TimerMode.LONG_BREAK
+                timerMode === TimerModeEnum.SHORT_BREAK ||
+                timerMode === TimerModeEnum.LONG_BREAK
             ) {
-                setTimerMode(TimerMode.POMODORO);
+                setTimerMode(TimerModeEnum.POMODORO);
             } else {
-                setTimerMode(TimerMode.SHORT_BREAK);
+                setTimerMode(TimerModeEnum.SHORT_BREAK);
             }
 
             function resetLongBreakInterval() {

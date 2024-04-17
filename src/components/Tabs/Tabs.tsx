@@ -17,26 +17,25 @@
  */
 import { useEffect, useState } from 'react';
 
-type TimerMode =
-    | 'pomodoroDuration'
-    | 'shortBreakDuration'
-    | 'longBreakDuration';
+import { TimerModeEnum } from '../../types';
 
 interface TabItemProp {
-    name: TimerMode;
+    name: TimerModeEnum;
     label: string;
     value: number;
 }
 
 interface TabsProps {
     items: TabItemProp[];
-    defaultValue?: TimerMode;
-    timerMode: TimerMode;
-    handler: (name: TimerMode) => void;
+    defaultValue?: TimerModeEnum;
+    timerMode: TimerModeEnum;
+    handler: (name: TimerModeEnum) => void;
 }
 
 const Tabs: React.FC<TabsProps> = ({ timerMode, items, handler }) => {
-    const [activeTab, setActiveTab] = useState<TimerMode>('pomodoroDuration');
+    const [activeTab, setActiveTab] = useState<TimerModeEnum>(
+        TimerModeEnum.POMODORO
+    );
 
     // when the timermode is updated, tab is also get updated as well
     useEffect(() => {

@@ -6,6 +6,8 @@ import { useTimer } from '../../hooks';
 import { Time, Indicator, TimerControls } from '.';
 import { Tabs } from '../Tabs';
 
+import { TimerModeEnum } from '../../types';
+
 const Timer = () => {
     const timerSettings = useAtomValue(timerSettingsAtom);
     const {
@@ -27,17 +29,17 @@ const Timer = () => {
                 <Tabs
                     items={[
                         {
-                            name: 'pomodoroDuration',
+                            name: TimerModeEnum.POMODORO,
                             label: 'Pomodoro',
                             value: timerSettings.pomodoroDuration,
                         },
                         {
-                            name: 'shortBreakDuration',
+                            name: TimerModeEnum.SHORT_BREAK,
                             label: 'Short Break',
                             value: timerSettings.shortBreakDuration,
                         },
                         {
-                            name: 'longBreakDuration',
+                            name: TimerModeEnum.LONG_BREAK,
                             label: 'Long Break',
                             value: timerSettings.longBreakDuration,
                         },
