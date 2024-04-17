@@ -7,26 +7,25 @@ import { useInterval } from './useInterval';
 import { minutesToSeconds } from '../utils';
 import { useTodos } from './useTodos';
 
-type Status = 'idle' | 'running';
-
-enum StatusEnum {
-    Idle = 'idle',
-    Running = 'running',
+enum TimerStatus {
+    IDLE = 'idle',
+    RUNNING = 'running',
 }
 
-type TimerMode =
-    | 'pomodoroDuration'
-    | 'shortBreakDuration'
-    | 'longBreakDuration';
+enum TimerMode {
+    POMODORO = 'pomodoroDuration',
+    SHORT_BREAK = 'shortBreakDuration',
+    LONG_BREAK = 'longBreakDuration',
+}
 
 interface TimerActions {
     toggleTimer: () => void;
     resetTimer: () => void;
-    changeTimerMode: (name: TimerMode) => void;
+    changeTimerMode: (mode: TimerMode) => void;
 }
 
 interface UseTimer {
-    status: Status;
+    status: TimerStatus;
     remainingTime: number;
     percentageToCompletion: number;
     timerMode: TimerMode;
@@ -40,15 +39,14 @@ const useTimer = (): UseTimer => {
     const userLongBreakInterval = useAtomValue(longBreakIntervalAtom);
 
     const [timeElapsed, setTimeElapsed] = useState(0);
-    const [status, setStatus] = useState<Status>(StatusEnum.Idle);
-    const [timerMode, setTimerMode] = useState<TimerMode>('pomodoroDuration');
+    const [status, setStatus] = useState(TimerStatus.IDLE);
+    const [timerMode, setTimerMode] = useState(TimerMode.POMODORO);
     const [longBreakInterval, setLongBreakInterval] = useState(
         LONG_BREAK_INTERVAL_START_INDEX
     );
 
     const { todos, selectedTodoId, todoActions } = useTodos();
 
-    // calculated variables
     const initialTime = useMemo(() => {
         return minutesToSeconds(timerSettings[timerMode]);
     }, [timerSettings, timerMode]);
@@ -67,13 +65,13 @@ const useTimer = (): UseTimer => {
 
             setTimeElapsed((timeElapsed) => timeElapsed + 1);
         },
-        status === StatusEnum.Running ? 1000 : null
+        status === TimerStatus.RUNNING ? 1000 : null
     );
 
     //  Reset timer if todo changes and timer is running
     useEffect(() => {
         const isTimerRunningDuringPomodoro =
-            status === StatusEnum.Running && timerMode === 'pomodoroDuration';
+            status === TimerStatus.RUNNING && timerMode === TimerMode.POMODORO;
 
         if (isTimerRunningDuringPomodoro) {
             resetTimer();
@@ -83,15 +81,15 @@ const useTimer = (): UseTimer => {
 
     function toggleTimer() {
         setStatus((status) => {
-            if (status === StatusEnum.Running) {
-                return StatusEnum.Idle;
+            if (status === TimerStatus.RUNNING) {
+                return TimerStatus.IDLE;
             }
-            return StatusEnum.Running;
+            return TimerStatus.RUNNING;
         });
     }
 
     function resetTimer() {
-        setStatus(StatusEnum.Idle);
+        setStatus(TimerStatus.IDLE);
         setTimeElapsed(0);
     }
 
@@ -118,7 +116,7 @@ const useTimer = (): UseTimer => {
         }
 
         function updateLongBreakInterval() {
-            if (timerMode === 'pomodoroDuration') {
+            if (timerMode === TimerMode.POMODORO) {
                 setLongBreakInterval((prev) => prev + 1);
                 return;
             }
@@ -126,21 +124,21 @@ const useTimer = (): UseTimer => {
 
         function toggleTimerMode() {
             if (
-                timerMode === 'pomodoroDuration' &&
+                timerMode === TimerMode.POMODORO &&
                 longBreakInterval >= targetInterval
             ) {
-                setTimerMode('longBreakDuration');
+                setTimerMode(TimerMode.LONG_BREAK);
                 resetLongBreakInterval();
                 return;
             }
 
             if (
-                timerMode === 'shortBreakDuration' ||
-                timerMode === 'longBreakDuration'
+                timerMode === TimerMode.SHORT_BREAK ||
+                timerMode === TimerMode.LONG_BREAK
             ) {
-                setTimerMode('pomodoroDuration');
+                setTimerMode(TimerMode.POMODORO);
             } else {
-                setTimerMode('shortBreakDuration');
+                setTimerMode(TimerMode.SHORT_BREAK);
             }
 
             function resetLongBreakInterval() {
