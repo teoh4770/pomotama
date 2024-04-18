@@ -62,9 +62,10 @@ const TodoItem = ({
 
     return (
         <li>
-            <button
+            <div
                 title="Click to focus on this task"
-                type="button"
+                tabIndex={0}
+                role="button"
                 id={todo.id}
                 className={`todo ${isFocus && 'focus'} flex w-full cursor-pointer items-center rounded-lg bg-white px-5 py-4`}
                 onClick={focusTodo}
@@ -119,7 +120,7 @@ const TodoItem = ({
                         Edit
                     </Button>
                 </div>
-            </button>
+            </div>
         </li>
     );
 };

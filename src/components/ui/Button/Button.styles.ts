@@ -5,7 +5,7 @@ import { twMerge } from 'tailwind-merge';
 const buttonStyles = cva(
     [
         'space-x-1 py-1 px-3 text-center capitalize rounded-md',
-        'focus-visible:outline focus-visible:outline-1 focus-visible:outline-white',
+        'focus-visible:outline focus-visible:outline-4 focus-visible:outline-black',
         'disabled:cursor-not-allowed disabled:opacity-50',
     ],
     {
