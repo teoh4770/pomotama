@@ -18,6 +18,7 @@
 import { useEffect, useState } from 'react';
 
 import { TimerModeEnum } from '../../types';
+import { Button } from '../ui';
 
 interface TabItemProp {
     name: TimerModeEnum;
@@ -43,13 +44,14 @@ const Tabs: React.FC<TabsProps> = ({ timerMode, items, handler }) => {
     }, [timerMode]);
 
     return (
-        <div className="center | w-fit flex-row">
+        <div className="center | flex w-fit flex-row">
             {items.map(({ name, label, value }) => (
-                <button
+                <Button
                     key={name}
                     type="button"
-                    data-type="naked"
-                    className={`button ${name === activeTab ? 'active' : ''}`}
+                    intent="naked"
+                    size="small"
+                    className={`text-base ${name === activeTab ? 'active' : ''}`}
                     onClick={() => {
                         handler(name);
                         setActiveTab(name);
@@ -57,7 +59,7 @@ const Tabs: React.FC<TabsProps> = ({ timerMode, items, handler }) => {
                     value={value}
                 >
                     {label}
-                </button>
+                </Button>
             ))}
         </div>
     );

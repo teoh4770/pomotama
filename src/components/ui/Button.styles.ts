@@ -4,23 +4,54 @@ import { twMerge } from 'tailwind-merge';
 
 const buttonStyles = cva(
     [
-        'rounded-lg px-5 py-2 text-sm font-semibold transition border-[#22565b] border relative',
-        'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-tbrand',
-        'disabled:cursor-not-allowed disabled:after:hidden',
-        'after:absolute after:bg-black after:top-0 after:left-0 after:-z-10 after:rounded-lg after:w-full after:h-full', // "solid shadow" shape
-        'after:translate-x-0.75 after:translate-y-0.75', // "solid shadow" positioning
+        'flex gap-1 items-center py-1 px-3 text-center capitalize rounded-md',
+        'focus-visible:outline focus-visible:outline-1 focus-visible:outline-white',
+        'disabled:cursor-not-allowed disabled:opacity-50',
     ],
     {
         variants: {
             intent: {
-                primary:
-                    'bg-tbrand text-white hover:bg-[#3f9098] disabled:hover:bg-tbrand active:bg-[#214b4f]',
-                secondary:
-                    'bg-white text-tbrand hover:bg-[#ebebeb] disabled:hover:bg-white active:bg-[#d9d9d9]',
+                primary: [
+                    'text-primary bg-white -translate-y-[0.25rem] shadow-[#ebebeb] shadow-[0_4px_0px_0px]',
+                    'active:translate-y-0 active:shadow-none',
+                ],
+                secondary: [
+                    // i feel like confirm button is just secondary color with different background
+                    'text-white bg-white/20 opacity-90',
+                    'hover:opacity-100',
+                    'focus-visible:opacity-100',
+                    'active:translate-y-[0.125rem]',
+                ], // focus state, tabs, header buttons, transparent
+                naked: [
+                    'bg-transparent',
+                    'hover:opacity-95', // hover state, focus state
+                    'focus-visible:opacity-70',
+                    'active:translate-y-[0.125rem]',
+                ],
+                confirm: [
+                    'text-white bg-black opacity-90', // font size can add later
+                    'hover:opacity-100',
+                    'focus-visible:opacity-100',
+                    'active:font-bold active:translate-y-[0.125rem]',
+                ],
+                addTask: [], // note that the background is transparent
+            },
+            size: {
+                small: 'text-sm py-1 px-3',
+                medium: 'px-6 py-3 text-base',
+                large: 'px-16 py-4 text-[1.375rem]',
             },
         },
+        compoundVariants: [
+            {
+                intent: 'primary',
+                size: 'large',
+                className: 'uppercase font-bold',
+            },
+        ],
         defaultVariants: {
             intent: 'primary',
+            size: 'medium',
         },
     }
 );

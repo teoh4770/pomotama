@@ -1,3 +1,5 @@
+import { Button } from '../ui';
+
 interface ControlsProps {
     status: string;
     toggleTimer: () => void;
@@ -6,17 +8,19 @@ interface ControlsProps {
 
 const TimerControls = ({ status, toggleTimer }: ControlsProps) => {
     const timerIsRunning = status === 'running';
-    const buttonText = timerIsRunning ? 'stop' : 'start';
+    const buttonText = timerIsRunning ? 'pause' : 'start';
 
     return (
-        <div className="flex-row">
-            <button
-                className="button | !uppercase [--fs:1.375rem] [--px:3rem] [--py:0.75rem] sm:[--px:4rem]"
+        <div className="flex justify-center">
+            <Button
+                intent="primary"
+                size="large"
+                type="button"
+                className={`${timerIsRunning ? 'translate-y-0 shadow-none' : ''}`}
                 onClick={toggleTimer}
-                data-type="primary"
             >
                 {buttonText}
-            </button>
+            </Button>
             {/* temporarily remove the  */}
             {/* <button className="button !bg-black" onClick={resetTimer}>
                 Reset

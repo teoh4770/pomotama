@@ -8,7 +8,7 @@
 /* Link: https://cube-css-with-tailwind.netlify.app/ */
 /* Link: https://andy-bell.co.uk/i-used-tailwind-for-the-u-in-cube-css-and-i-liked-it/ */
 :root {
-    --custom-color: rgb(57, 112, 151);
+    --primary-color: rgb(57, 112, 151);
     /* the color issue i will put it later */
 }
 
@@ -21,7 +21,7 @@ body {
         'Noto Color Emoji';
 
     /* Colors */
-    background-color: var(--custom-color);
+    background-color: var(--primary-color);
 
     /* Others */
     -webkit-tap-highlight-color: transparent;
@@ -83,13 +83,13 @@ mark {
 }
 
 /* !should fix */
-.flex-row {
+/* .flex-row {
     display: flex;
     gap: var(--gap);
     flex-direction: row;
     justify-content: center;
     align-items: center;
-}
+} */
 
 /* Utility */
 .to-right {
@@ -98,6 +98,16 @@ mark {
 
 .to-left {
     margin-right: auto;
+}
+
+.active {
+    background-color: rgb(0 0 0 / 0.15);
+    font-weight: bold;
+    opacity: 1;
+}
+
+.text-primary {
+    color: var(--primary-color);
 }
 
 /* Block */
@@ -142,9 +152,9 @@ button[data-reverse="true"] - row reverse the content
 }
 
 .button[data-type='primary'] {
-    --color: var(--custom-color);
+    --color: var(--primary-color);
     --bg: white;
-    box-shadow: 0 0.375rem var(--box-shadow, rgb(235, 235, 235));
+    box-shadow: 0 0.375rem var(--box-shadow, #ebebeb);
 }
 
 .button[data-type='secondary'] {

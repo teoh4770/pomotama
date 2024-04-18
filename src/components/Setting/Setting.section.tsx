@@ -3,6 +3,7 @@ import { useAtom } from 'jotai';
 import { longBreakIntervalAtom, timerSettingsAtom } from '../../lib';
 
 import { TimerSettingInputs } from './TimerSettingInputs';
+import { Button } from '../ui';
 
 interface SettingFormTimerData {
     pomodoroDuration: number;
@@ -56,23 +57,21 @@ const Setting = () => {
 
     return (
         <>
-            <button
+            <Button
+                intent="secondary"
+                size="small"
                 type="button"
-                className="button"
-                id="setting-button"
-                data-type="secondary"
-                data-size="small"
                 aria-label="setting button"
                 onClick={showModal}
             >
                 <span>❤️</span>
                 <span>Settings</span>
-            </button>
+            </Button>
 
             {/* link about dialog html component: https://blog.webdevsimplified.com/2023-04/html-dialog/ */}
             <dialog ref={dialog} className="dialog | box">
                 <form method="dialog" onSubmit={handleSubmit}>
-                    <header className="dialog__header | box | flex-row">
+                    <header className="dialog__header | box | flex items-center">
                         <h2 className="font-bold uppercase">Setting</h2>
                         <button
                             type="reset"

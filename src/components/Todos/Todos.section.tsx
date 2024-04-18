@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useTodos } from '../../hooks';
 
 import { TodoForm, TodoList } from '.';
+import { Button } from '../ui';
 
 const Todos = () => {
     const { todos, selectedTodoId, todoActions } = useTodos();
@@ -61,31 +62,38 @@ const Todos = () => {
                     onClose={hideAddTaskForm}
                 />
             ) : (
-                <button
-                    className="add-task-button w-full border-2 border-dashed bg-slate-700/50 p-4 font-bold text-white/80 hover:text-white"
+                <Button
+                    intent="secondary"
+                    size="medium"
+                    type="button"
+                    className="w-full border-2 border-dashed bg-slate-700/50 py-4 font-bold text-white/80 hover:text-white"
+                    aria-label="Add task button"
                     onClick={showAddTaskForm}
                 >
-                    ⭐ Add Task
-                </button>
+                    <span className="mx-auto">⭐ Add Task</span>
+                </Button>
             )}
             {todos.length > 0 && (
                 <div className="mt-4 flex justify-between">
-                    <button
+                    <Button
+                        intent="secondary"
+                        size="small"
                         type="button"
-                        className="button"
-                        data-type="primary"
+                        aria-label="Clear all tasks button"
                         onClick={handleClearAll}
                     >
                         Clear All Tasks
-                    </button>
-                    <button
+                    </Button>
+
+                    <Button
+                        intent="secondary"
+                        size="small"
                         type="button"
-                        className="button"
-                        data-type="primary"
+                        aria-label="Clear all completed tasks button"
                         onClick={handleClearCompleted}
                     >
                         Clear Finished Tasks
-                    </button>
+                    </Button>
                 </div>
             )}
         </section>

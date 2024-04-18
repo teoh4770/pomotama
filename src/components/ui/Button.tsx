@@ -8,11 +8,15 @@ type ButtonProps = ButtonStylesProps &
 export const Button: React.FC<ButtonProps> = ({
     children,
     intent,
+    size,
     className,
     ...props
 }) => {
     return (
-        <button className={getButtonStyles({ intent, className })} {...props}>
+        <button
+            className={getButtonStyles({ intent, size, className })}
+            {...props}
+        >
             {children}
         </button>
     );

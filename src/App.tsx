@@ -1,31 +1,32 @@
 import { runTour } from './lib';
 import { Setting, Timer, Todos } from './components';
+import { Button } from './components/ui';
 
 const App = () => {
     return (
-        <main>
-            <section aria-label="app" className="px-3 sm:px-4">
-                <header className="mx-auto flex max-w-2xl items-center gap-2 py-4">
+        <main className="[&>*]:px-3 sm:[&>*]:px-4">
+            <section aria-label="app">
+                <header className="mx-auto flex max-w-2xl gap-2 py-4">
                     <h1 className="mr-auto text-2xl font-bold text-white ">
                         Pomotama
                     </h1>
-                    <button
+                    <Button
+                        intent="secondary"
+                        size="small"
                         type="button"
-                        className="button"
-                        data-type="secondary"
-                        data-size="small"
-                        aria-label="tutorial button"
+                        aria-label="Tutorial button"
                         onClick={runTour}
                     >
                         Tutorial
-                    </button>
+                    </Button>
                     <Setting />
                 </header>
                 <Timer />
                 <Todos />
             </section>
+
             <section aria-label="description" className="mt-10 bg-white/85">
-                <div id="instruction" className="mx-auto max-w-2xl p-6">
+                <div id="instruction" className="center p-6 [--max:42rem]">
                     <h2 className="text-xl font-bold text-gray-900">
                         How to use the Pomodoro Timer?
                     </h2>
