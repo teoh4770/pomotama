@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import { Button } from '../ui';
+
 interface NumberInputExtraProps {
     completedPomodoro?: number;
 }
@@ -71,11 +73,12 @@ const NumberInput: React.FC<NumberInputProps> = ({
                         onChange={handleChange}
                     />
 
-                    <div className="flex">
-                        <button
+                    <div className="flex gap-[2px] [&>*]:border [&>*]:p-4">
+                        <Button
+                            intent="primary"
+                            size="small"
                             type="button"
-                            aria-label="increment pomodoros amount by 1"
-                            className="increment-btn border p-4"
+                            aria-label="Increment button"
                             onClick={increment}
                         >
                             <svg
@@ -90,12 +93,13 @@ const NumberInput: React.FC<NumberInputProps> = ({
                                     fill="black"
                                 />
                             </svg>
-                        </button>
+                        </Button>
 
-                        <button
+                        <Button
+                            intent="primary"
+                            size="small"
                             type="button"
-                            aria-label="decrement pomodoros amount by 1"
-                            className="decrement-btn border p-4"
+                            aria-label="Decrement button"
                             onClick={decrement}
                         >
                             <svg
@@ -110,7 +114,7 @@ const NumberInput: React.FC<NumberInputProps> = ({
                                     fill="black"
                                 />
                             </svg>
-                        </button>
+                        </Button>
                     </div>
                 </div>
             </label>

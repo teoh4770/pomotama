@@ -72,8 +72,8 @@ const Setting = () => {
             <dialog ref={dialog} className="dialog | box">
                 <form method="dialog" onSubmit={handleSubmit}>
                     <header className="dialog__header | box | flex items-center">
-                        <h2 className="font-bold uppercase">Setting</h2>
-                        <button
+                        <h2 className="text-lg font-bold">Setting</h2>
+                        {/* <button
                             type="reset"
                             className="button to-right"
                             data-type="naked"
@@ -81,7 +81,17 @@ const Setting = () => {
                             onClick={hideModal}
                         >
                             Cancel/Close
-                        </button>
+                        </button> */}
+                        <Button
+                            intent="naked"
+                            size="small"
+                            type="reset"
+                            className="to-right hover:text-black/100"
+                            aria-label="close button"
+                            onClick={hideModal}
+                        >
+                            Cancel/Close
+                        </Button>
                     </header>
 
                     <div className="dialog__content | box">
@@ -98,15 +108,15 @@ const Setting = () => {
                         {/* setting 3 */}
                     </div>
 
-                    <div className="dialog__footer | box">
-                        <button
+                    <div className="dialog__footer | box | flex">
+                        <Button
+                            intent="confirm"
+                            size="medium"
                             type="submit"
-                            className="button to-right"
-                            data-type="confirm"
-                            data-size="medium"
+                            className="to-right min-w-20"
                         >
-                            OK
-                        </button>
+                            Ok
+                        </Button>
                     </div>
                 </form>
             </dialog>

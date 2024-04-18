@@ -14,8 +14,8 @@ interface TimerSettingProps {
 const TimerSettingInputs = ({ timerSetting }: TimerSettingProps) => {
     return (
         <div className="timer-setting">
-            <h3 className="setting-title py-4 font-semibold uppercase text-gray-400">
-                ⌛ TIMER
+            <h3 className="setting-title py-4 font-semibold capitalize text-gray-400">
+                ⌛ Timer
             </h3>
             <div className="stack">
                 <div>

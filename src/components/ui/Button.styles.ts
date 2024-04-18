@@ -4,7 +4,7 @@ import { twMerge } from 'tailwind-merge';
 
 const buttonStyles = cva(
     [
-        'flex gap-1 items-center py-1 px-3 text-center capitalize rounded-md',
+        'space-x-1 py-1 px-3 text-center capitalize rounded-md',
         'focus-visible:outline focus-visible:outline-1 focus-visible:outline-white',
         'disabled:cursor-not-allowed disabled:opacity-50',
     ],
@@ -34,11 +34,10 @@ const buttonStyles = cva(
                     'focus-visible:opacity-100',
                     'active:font-bold active:translate-y-[0.125rem]',
                 ],
-                addTask: [], // note that the background is transparent
             },
             size: {
-                small: 'text-sm py-1 px-3',
-                medium: 'px-6 py-3 text-base',
+                small: 'text-sm px-3 py-1',
+                medium: 'px-6 py-2 text-base',
                 large: 'px-16 py-4 text-[1.375rem]',
             },
         },

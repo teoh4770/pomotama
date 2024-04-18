@@ -3,6 +3,7 @@ import { FormEvent, useEffect, useRef } from 'react';
 import { Todo, TodoFormData } from '../../types';
 import { moveCursorToTheEnd } from '../../utils';
 import { NumberInput } from '../NumberInput';
+import { Button } from '../ui';
 
 interface FormProps {
     mode: 'addTodo' | 'editTodo';
@@ -79,37 +80,38 @@ const TodoForm = ({
 
             <div className="todo-actions flex justify-between bg-slate-300 px-5 py-3">
                 {mode === 'editTodo' ? (
-                    <button
+                    <Button
+                        intent="naked"
+                        size="small"
                         type="button"
-                        className="button"
-                        data-type="naked"
+                        aria-label="Delete button"
                         onClick={onDelete}
-                        aria-label="Delete"
                     >
                         Delete
-                    </button>
+                    </Button>
                 ) : (
                     <div></div>
                 )}
 
                 <div className="flex">
-                    <button
+                    <Button
+                        intent="naked"
+                        size="small"
                         type="button"
-                        className="button"
-                        data-type="naked"
+                        aria-label="Cancel button"
                         onClick={onCancel}
-                        aria-label="Cancel"
                     >
                         Cancel
-                    </button>
-                    <button
+                    </Button>
+
+                    <Button
+                        intent="confirm"
+                        size="small"
                         type="submit"
-                        className="button"
-                        data-type="confirm"
-                        aria-label="Save"
+                        aria-label="Confirm button"
                     >
                         Save
-                    </button>
+                    </Button>
                 </div>
             </div>
         </form>

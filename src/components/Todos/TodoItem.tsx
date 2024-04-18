@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Todo, TodoActions, TodoFormData } from '../../types';
 
 import { TodoForm } from './Form';
-import { Checkbox } from '../ui';
+import { Button, Checkbox } from '../ui';
 
 interface TodoProps {
     todo: Todo;
@@ -45,7 +45,7 @@ const TodoItem = ({
         todoActions.toggleState(todo.id);
     }
 
-    // the logic is a bit confusing
+    // !the logic is a bit confusing
     if (isActive && isEditing) {
         return (
             <li>
@@ -103,19 +103,21 @@ const TodoItem = ({
                         </span>
                     </div>
 
-                    <button
+                    <Button
+                        intent="secondary"
+                        size="small"
+                        type="button"
+                        className="border border-slate-300 !text-black/60 hover:bg-black/10"
                         title="Click to edit this task"
-                        className="button border border-slate-300 !text-black/60 hover:bg-black/10"
-                        data-type="secondary"
-                        data-size="small"
+                        aria-label="Edit button"
                         onClick={(e) => {
                             e.stopPropagation();
                             showTodo();
                             openForm();
                         }}
                     >
-                        Options
-                    </button>
+                        Edit
+                    </Button>
                 </div>
             </button>
         </li>
