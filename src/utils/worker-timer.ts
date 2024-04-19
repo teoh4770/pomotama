@@ -1,3 +1,5 @@
+import Worker from './timer-worker.ts?worker';
+
 const createWorkerTimer = (worker: Worker) => {
     let id = 0;
     const callbacks: Record<number, { fn: () => void; context?: unknown }> = {};
@@ -42,7 +44,7 @@ const createWorkerTimer = (worker: Worker) => {
     };
 };
 
-const worker = new Worker('src/utils/timer-worker.ts');
+const worker = new Worker();
 const workerTimer = createWorkerTimer(worker);
 
 export { workerTimer };

@@ -22,6 +22,6 @@
         "forceConsistentCasingInFileNames": true,
         "types": ["@testing-library/jest-dom", "vitest/globals"]
     },
-    "include": ["src"],
+    "include": ["src", "src/utils/timer-worker.ts"],
     "references": [{ "path": "./tsconfig.node.json" }]
 }
