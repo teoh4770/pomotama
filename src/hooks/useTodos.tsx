@@ -78,12 +78,18 @@ const useTodos = (): UseTodos => {
     function clearAll() {
         setTodos([]);
         updateUserTodos([]);
+        setSelectedTodoId('');
     }
 
     function clearCompleted() {
         const updatedTodos = todos.filter((todo) => !todo.completed);
-
         setTodos(updatedTodos);
+
+        if (updatedTodos.length > 0) {
+            setSelectedTodoId(updatedTodos[0].id);
+        } else {
+            setSelectedTodoId('');
+        }
     }
 
     function incrementPomodoro(id: string) {

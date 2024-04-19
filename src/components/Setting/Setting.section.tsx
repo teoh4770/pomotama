@@ -73,15 +73,6 @@ const Setting = () => {
                 <form method="dialog" onSubmit={handleSubmit}>
                     <header className="dialog__header | box | flex items-center">
                         <h2 className="text-lg font-bold">Setting</h2>
-                        {/* <button
-                            type="reset"
-                            className="button to-right"
-                            data-type="naked"
-                            aria-label="close button"
-                            onClick={hideModal}
-                        >
-                            Cancel/Close
-                        </button> */}
                         <Button
                             intent="naked"
                             size="small"

@@ -25,3 +25,9 @@ export {
  */
 import { moveCursorToTheEnd } from './dom';
 export { moveCursorToTheEnd };
+
+/**
+ * worker-timer.js
+ */
+import { workerTimer } from './worker-timer';
+export { workerTimer };

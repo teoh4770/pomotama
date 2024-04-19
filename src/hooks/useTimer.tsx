@@ -3,8 +3,12 @@ import { useEffect, useMemo, useState } from 'react';
 import { useAtomValue } from 'jotai';
 import { longBreakIntervalAtom, timerSettingsAtom } from '../lib';
 
-import { useInterval } from './useInterval';
-import { minutesToSeconds } from '../utils';
+import {
+    formattedTimes,
+    getTimes,
+    minutesToSeconds,
+    workerTimer,
+} from '../utils';
 import { useTodos } from './useTodos';
 
 import { TimerModeEnum, TimerStatusEnum } from '../types';
@@ -37,6 +41,10 @@ const useTimer = (): UseTimer => {
     );
 
     const { todos, selectedTodoId, todoActions } = useTodos();
+    const currentTodo = useMemo(() => {
+        return todoActions.find(selectedTodoId);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [selectedTodoId]);
 
     const initialTime = useMemo(() => {
         return minutesToSeconds(timerSettings[timerMode]);
@@ -45,19 +53,35 @@ const useTimer = (): UseTimer => {
     const percentageToCompletion = timeElapsed / initialTime;
     const targetInterval = userLongBreakInterval - 1;
 
-    // runs the timer once status is set to "running"
-    useInterval(
-        () => {
-            if (remainingTime <= 0) {
-                handleTimerEnd();
-                resetTimer();
-                return;
-            }
+    const { minutes, seconds } = getTimes(remainingTime);
+    const formattedMinutes = formattedTimes(minutes);
+    const formattedSeconds = formattedTimes(seconds);
+    const timeString = `${formattedMinutes}:${formattedSeconds}`;
 
-            setTimeElapsed((timeElapsed) => timeElapsed + 1);
-        },
-        status === TimerStatusEnum.RUNNING ? 1000 : null
-    );
+    // update the tab title
+    useEffect(() => {
+        const todoTitle = currentTodo ? currentTodo.title : 'Time to focus!';
+
+        document.title = `${timeString} - ${todoTitle}`;
+    }, [timeString, currentTodo]);
+
+    useEffect(() => {
+        const intervalId = workerTimer.setInterval(
+            () => {
+                if (remainingTime <= 1) {
+                    handleTimerEnd();
+                    resetTimer();
+                    return;
+                }
+
+                setTimeElapsed((timeElapsed) => timeElapsed + 1);
+            },
+            status === TimerStatusEnum.RUNNING ? 1000 : null
+        );
+
+        return () => workerTimer.clearInterval(intervalId);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [status, remainingTime]);
 
     //  Reset timer if todo changes and timer is running
     useEffect(() => {
