@@ -8,7 +8,7 @@ import { Button, Checkbox } from '../ui';
 interface TodoProps {
     todo: Todo;
     todoActions: TodoActions;
-    isActive: boolean;
+    isTodoActive: boolean;
     isFocus: boolean;
     showTodo: () => void;
     focusTodo: () => void;
@@ -17,19 +17,19 @@ interface TodoProps {
 const TodoItem = ({
     todo,
     todoActions,
-    isActive,
+    isTodoActive,
     isFocus,
     showTodo,
     focusTodo,
 }: TodoProps) => {
-    const [isEditing, setIsEditing] = useState(false);
+    const [isEditingTodo, setIsEditingTodo] = useState(false);
 
     function openForm() {
-        setIsEditing(true);
+        setIsEditingTodo(true);
     }
 
     function closeForm() {
-        setIsEditing(false);
+        setIsEditingTodo(false);
     }
 
     function saveTodo(todoFormData: TodoFormData) {
@@ -46,7 +46,7 @@ const TodoItem = ({
     }
 
     // !the logic is a bit confusing
-    if (isActive && isEditing) {
+    if (isTodoActive && isEditingTodo) {
         return (
             <li>
                 <TodoForm
@@ -71,21 +71,17 @@ const TodoItem = ({
                 onClick={focusTodo}
             >
                 <div className="todo__input mr-auto flex">
-                    <label
-                        className="form-control"
-                        onClick={(e) => {
-                            e.stopPropagation();
-                        }}
-                    >
+                    <span className="form-control">
                         <Checkbox
-                            id={todo.id}
+                            type="checkbox"
                             name={'todo-' + todo.id}
+                            id={todo.id}
                             checked={todo.completed}
                             onChange={toggleTodo}
+                            onClick={(e) => e.stopPropagation()}
                         />
-
-                        {todo.title}
-                    </label>
+                        <label htmlFor={todo.id}>{todo.title}</label>
+                    </span>
                 </div>
 
                 <div className="flex items-center gap-4">

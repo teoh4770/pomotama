@@ -34,7 +34,7 @@ const TodoList = ({ todos, todoActions }: TodoListProps) => {
                     key={todo.id}
                     todo={todo}
                     todoActions={todoActions}
-                    isActive={activeIndex === todo.id}
+                    isTodoActive={activeIndex === todo.id}
                     isFocus={selectedTodoId === todo.id}
                     showTodo={handleShowTodo(todo.id)}
                     focusTodo={handleFocusTodo(todo.id)}
