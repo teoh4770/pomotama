@@ -124,7 +124,7 @@ const useTimer = (): UseTimer => {
                 (todoItem) => todoItem.id === selectedTodoId
             );
 
-            if (todo) {
+            if (todo && timerMode === TimerModeEnum.POMODORO) {
                 todoActions.incrementPomodoro(selectedTodoId);
             } else {
                 throw new Error('Todo does not exist');
