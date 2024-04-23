@@ -8,16 +8,16 @@ export { getTimes, formattedTimes, minutesToSeconds, clipTime };
  * localStorage.ts
  */
 import {
-    fetchUserTodos,
-    updateUserTodos,
-    fetchSelectedTodoId,
-    updateSelectedTodoId,
+    fetchUserTodosFromStorage,
+    updateUserTodosFromStorage,
+    fetchSelectedTodoIdFromStorage,
+    updateSelectedTodoIdFromStorage,
 } from './localStorage';
 export {
-    fetchUserTodos,
-    updateUserTodos,
-    fetchSelectedTodoId,
-    updateSelectedTodoId,
+    fetchUserTodosFromStorage,
+    updateUserTodosFromStorage,
+    fetchSelectedTodoIdFromStorage,
+    updateSelectedTodoIdFromStorage,
 };
 
 /**

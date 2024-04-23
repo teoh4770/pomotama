@@ -3,24 +3,24 @@ import { Todo } from '../types';
 const TodosKey = 'todos';
 const SelectedTodoIdKey = 'selectedTodoId';
 
-const fetchUserTodos = () => {
+const fetchUserTodosFromStorage = () => {
     return localStorage.getItem(TodosKey);
 };
-const updateUserTodos = (value: Todo[]) => {
+const updateUserTodosFromStorage = (value: Todo[]) => {
     localStorage.setItem(TodosKey, JSON.stringify(value));
 };
 
-const fetchSelectedTodoId = () => {
+const fetchSelectedTodoIdFromStorage = () => {
     return localStorage.getItem(SelectedTodoIdKey);
 };
 
-const updateSelectedTodoId = (selectedTodoId: string) => {
+const updateSelectedTodoIdFromStorage = (selectedTodoId: string) => {
     localStorage.setItem(SelectedTodoIdKey, selectedTodoId);
 };
 
 export {
-    fetchUserTodos,
-    updateUserTodos,
-    fetchSelectedTodoId,
-    updateSelectedTodoId,
+    fetchUserTodosFromStorage,
+    updateUserTodosFromStorage,
+    fetchSelectedTodoIdFromStorage,
+    updateSelectedTodoIdFromStorage,
 };

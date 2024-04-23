@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useAtom } from 'jotai';
 
 import { Todo, TodoFormData, TodoActions } from '../types';
-import { updateSelectedTodoId, updateUserTodos } from '../utils';
+import { updateSelectedTodoIdFromStorage, updateUserTodosFromStorage } from '../utils';
 import { selectedTodoIdAtom, todosAtom } from '../lib';
 
 interface UseTodos {
@@ -16,15 +16,12 @@ const useTodos = (): UseTodos => {
     const [todos, setTodos] = useAtom<Todo[]>(todosAtom);
     const [selectedTodoId, setSelectedTodoId] = useAtom(selectedTodoIdAtom);
 
-    // update the todos in localstorage
     useEffect(() => {
-        updateUserTodos(todos);
+        updateUserTodosFromStorage(todos);
     }, [todos]);
 
-    // update the selected todoId in localstorage
     useEffect(() => {
-        // localstorage update
-        updateSelectedTodoId(selectedTodoId);
+        updateSelectedTodoIdFromStorage(selectedTodoId);
     }, [selectedTodoId]);
 
     function add(formData: TodoFormData) {
@@ -77,7 +74,6 @@ const useTodos = (): UseTodos => {
 
     function clearAll() {
         setTodos([]);
-        updateUserTodos([]);
         setSelectedTodoId('');
     }
 

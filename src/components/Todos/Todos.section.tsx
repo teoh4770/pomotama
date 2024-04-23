@@ -18,17 +18,10 @@ const Todos = () => {
         setOpenAddTaskForm(false);
     }
 
-    function handleClearAll() {
-        todoActions.clearAll();
-    }
-
-    function handleClearCompleted() {
-        todoActions.clearCompleted();
-    }
-
     return (
         <section id="tasks" className="tasks-section mx-auto max-w-[30rem]">
             <div className="mt-4">
+                {/* current focus todo label */}
                 <div className="current-todo-message py-4 text-center text-white">
                     {selectedTodo ? (
                         <>
@@ -47,13 +40,15 @@ const Todos = () => {
                     )}
                 </div>
             </div>
-
+            
+            {/* header of todo list */}
             <header className="flex justify-between border-b-2 py-4">
                 <h2 className="text-lg font-bold text-white">Tasks</h2>
             </header>
-
+            
             <TodoList todos={todos} todoActions={todoActions} />
-
+            
+            {/* Add task button */}
             {openAddTaskForm ? (
                 <TodoForm
                     mode="addTodo"
@@ -73,6 +68,8 @@ const Todos = () => {
                     <span className="mx-auto">⭐ Add Task</span>
                 </Button>
             )}
+
+            {/* action buttons for todo list */}
             {todos.length > 0 && (
                 <div className="mt-4 flex justify-between">
                     <Button
@@ -80,7 +77,7 @@ const Todos = () => {
                         size="small"
                         type="button"
                         aria-label="Clear all tasks button"
-                        onClick={handleClearAll}
+                        onClick={() => todoActions.clearAll()}
                     >
                         Clear All Tasks
                     </Button>
@@ -90,7 +87,7 @@ const Todos = () => {
                         size="small"
                         type="button"
                         aria-label="Clear all completed tasks button"
-                        onClick={handleClearCompleted}
+                        onClick={() => todoActions.clearCompleted()}
                     >
                         Clear Finished Tasks
                     </Button>

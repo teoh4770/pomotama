@@ -25,8 +25,6 @@ const TodoForm = ({
     const titleInput = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
-        // Focuses on the input element when the component mounts
-        // and moves the cursor to the end of the input field
         const input = titleInput.current as HTMLInputElement;
 
         input.focus();

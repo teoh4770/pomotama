@@ -1,3 +1,5 @@
+// reference: https://react.dev/learn/sharing-state-between-components
+
 import { useState } from 'react';
 
 import { Todo, TodoActions, TodoFormData } from '../../types';
@@ -9,32 +11,33 @@ interface TodoProps {
     todo: Todo;
     todoActions: TodoActions;
     isTodoActive: boolean;
-    isFocus: boolean;
-    showTodo: () => void;
-    focusTodo: () => void;
+    isTodoSelected: boolean;
+    onShow: () => void;
+    onSelect: () => void;
 }
 
 const TodoItem = ({
     todo,
     todoActions,
     isTodoActive,
-    isFocus,
-    showTodo,
-    focusTodo,
+    isTodoSelected,
+    onShow,
+    onSelect,
 }: TodoProps) => {
     const [isEditingTodo, setIsEditingTodo] = useState(false);
 
-    function openForm() {
+    function openTodoEditor() {
+        onShow();
         setIsEditingTodo(true);
     }
 
-    function closeForm() {
+    function closeTodoEditor() {
         setIsEditingTodo(false);
     }
 
     function saveTodo(todoFormData: TodoFormData) {
         todoActions.edit(todo.id, todoFormData);
-        closeForm();
+        closeTodoEditor();
     }
 
     function deleteTodo() {
@@ -45,16 +48,15 @@ const TodoItem = ({
         todoActions.toggleState(todo.id);
     }
 
-    // !the logic is a bit confusing
-    if (isTodoActive && isEditingTodo) {
+    if (isEditingTodo && isTodoActive) {
         return (
             <li>
                 <TodoForm
                     mode="editTodo"
                     todo={todo}
                     onSave={saveTodo}
-                    onCancel={closeForm}
                     onDelete={deleteTodo}
+                    onCancel={closeTodoEditor}
                 />
             </li>
         );
@@ -67,8 +69,8 @@ const TodoItem = ({
                 tabIndex={0}
                 role="button"
                 id={todo.id}
-                className={`todo ${isFocus && 'focus'} flex w-full cursor-pointer items-center rounded-lg bg-white px-5 py-4`}
-                onClick={focusTodo}
+                className={`todo ${isTodoSelected && 'focus'} flex w-full cursor-pointer items-center rounded-lg bg-white px-5 py-4`}
+                onClick={onSelect}
             >
                 <div className="todo__input mr-auto flex">
                     <span className="form-control">
@@ -109,8 +111,7 @@ const TodoItem = ({
                         aria-label="Edit button"
                         onClick={(e) => {
                             e.stopPropagation();
-                            showTodo();
-                            openForm();
+                            openTodoEditor();
                         }}
                     >
                         Edit

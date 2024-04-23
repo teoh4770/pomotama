@@ -1,5 +1,8 @@
 import { atom } from 'jotai';
-import { fetchSelectedTodoId, fetchUserTodos } from '../utils';
+import {
+    fetchSelectedTodoIdFromStorage,
+    fetchUserTodosFromStorage,
+} from '../utils';
 
 // timer global variables
 const timerSettingsAtom = atom({
@@ -10,9 +13,9 @@ const timerSettingsAtom = atom({
 const longBreakIntervalAtom = atom(2);
 
 // todos global variables
-const todos = JSON.parse(fetchUserTodos() ?? '[]');
+const todos = JSON.parse(fetchUserTodosFromStorage() ?? '[]');
 const todosAtom = atom(todos);
-const selectedTodoIdAtom = atom(fetchSelectedTodoId() ?? '');
+const selectedTodoIdAtom = atom(fetchSelectedTodoIdFromStorage() ?? '');
 
 export {
     timerSettingsAtom,
