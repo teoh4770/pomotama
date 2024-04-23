@@ -1,8 +1,11 @@
 import { runTour } from './lib';
-import { Setting, Timer, Todos } from './components';
 import { Button } from './components/ui';
+import { Setting, Timer, Todos } from './components';
+import { useTimer } from './hooks';
 
 const App = () => {
+    const timer = useTimer();
+
     return (
         <main className="[&>*]:px-3 sm:[&>*]:px-4">
             <section aria-label="app">
@@ -21,8 +24,8 @@ const App = () => {
                     </Button>
                     <Setting />
                 </header>
-                <Timer />
-                <Todos />
+                <Timer {...timer} />
+                <Todos {...timer} />
             </section>
 
             <section aria-label="description" className="mt-10 bg-white/85">

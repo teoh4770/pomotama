@@ -4,7 +4,19 @@ import { useTodos } from '../../hooks';
 import { TodoForm, TodoList } from '.';
 import { Button } from '../ui';
 
-const Todos = () => {
+import { TimerModeEnum } from '../../types';
+
+interface TimerActions {
+    toggleTimer: () => void;
+    resetTimer: () => void;
+    changeTimerMode: (mode: TimerModeEnum) => void;
+}
+
+interface TodosProps {
+    actions: TimerActions;
+}
+
+const Todos = ({ actions }: TodosProps) => {
     const { todos, selectedTodoId, todoActions } = useTodos();
     const [openAddTaskForm, setOpenAddTaskForm] = useState(false);
 
@@ -40,14 +52,18 @@ const Todos = () => {
                     )}
                 </div>
             </div>
-            
+
             {/* header of todo list */}
             <header className="flex justify-between border-b-2 py-4">
                 <h2 className="text-lg font-bold text-white">Tasks</h2>
             </header>
-            
-            <TodoList todos={todos} todoActions={todoActions} />
-            
+
+            <TodoList
+                todos={todos}
+                todoActions={todoActions}
+                timerCallback={actions.resetTimer}
+            />
+
             {/* Add task button */}
             {openAddTaskForm ? (
                 <TodoForm

@@ -1,8 +1,11 @@
 import { useEffect, useMemo, useState } from 'react';
-
-import { useAtomValue } from 'jotai';
-import { longBreakIntervalAtom, timerSettingsAtom } from '../lib';
-
+import { useAtom, useAtomValue } from 'jotai';
+import {
+    longBreakIntervalAtom,
+    timerSettingsAtom,
+    timerModeAtom,
+    timerStatusAtom,
+} from '../lib';
 import {
     formattedTimes,
     getTimes,
@@ -10,7 +13,6 @@ import {
     workerTimer,
 } from '../utils';
 import { useTodos } from './useTodos';
-
 import { TimerModeEnum, TimerStatusEnum } from '../types';
 
 interface TimerActions {
@@ -30,22 +32,26 @@ interface UseTimer {
 const LONG_BREAK_INTERVAL_START_INDEX = 0;
 
 const useTimer = (): UseTimer => {
+    // global
     const timerSettings = useAtomValue(timerSettingsAtom);
     const userLongBreakInterval = useAtomValue(longBreakIntervalAtom);
 
+    // useTimer states
     const [timeElapsed, setTimeElapsed] = useState(0);
-    const [status, setStatus] = useState(TimerStatusEnum.IDLE);
-    const [timerMode, setTimerMode] = useState(TimerModeEnum.POMODORO);
+    const [status, setStatus] = useAtom(timerStatusAtom);
+    const [timerMode, setTimerMode] = useAtom(timerModeAtom);
     const [longBreakInterval, setLongBreakInterval] = useState(
         LONG_BREAK_INTERVAL_START_INDEX
     );
 
+    // Todo variables
     const { todos, selectedTodoId, todoActions } = useTodos();
     const currentTodo = useMemo(() => {
         return todoActions.find(selectedTodoId);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedTodoId]);
 
+    // derived variables
     const initialTime = useMemo(() => {
         return minutesToSeconds(timerSettings[timerMode]);
     }, [timerSettings, timerMode]);
@@ -53,18 +59,17 @@ const useTimer = (): UseTimer => {
     const percentageToCompletion = timeElapsed / initialTime;
     const targetInterval = userLongBreakInterval - 1;
 
+    // Time variables
     const { minutes, seconds } = getTimes(remainingTime);
-    const formattedMinutes = formattedTimes(minutes);
-    const formattedSeconds = formattedTimes(seconds);
-    const timeString = `${formattedMinutes}:${formattedSeconds}`;
+    const timeString = `${formattedTimes(minutes)}:${formattedTimes(seconds)}`;
 
-    // update the tab title
+    // update the document title
     useEffect(() => {
         const todoTitle = currentTodo ? currentTodo.title : 'Time to focus!';
-
         document.title = `${timeString} - ${todoTitle}`;
     }, [timeString, currentTodo]);
 
+    // update the timer based on status and remaining
     useEffect(() => {
         const intervalId = workerTimer.setInterval(
             () => {
@@ -82,18 +87,6 @@ const useTimer = (): UseTimer => {
         return () => workerTimer.clearInterval(intervalId);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [status, remainingTime]);
-
-    //  Reset timer if todo changes and timer is running
-    useEffect(() => {
-        const isTimerRunningDuringPomodoro =
-            status === TimerStatusEnum.RUNNING &&
-            timerMode === TimerModeEnum.POMODORO;
-
-        if (isTimerRunningDuringPomodoro) {
-            resetTimer();
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [selectedTodoId]);
 
     function toggleTimer() {
         setStatus((status) => {
