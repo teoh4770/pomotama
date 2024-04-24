@@ -9,29 +9,11 @@ import { TodoItem } from './TodoItem';
 interface TodoListProps {
     todos: Todo[];
     todoActions: TodoActions;
-    timerCallback: () => void;
 }
 
-const TodoList = ({ todos, todoActions, timerCallback }: TodoListProps) => {
-    const isTimerRunningDuringPomodoro = useAtomValue(
-        isTimerRunningDuringPomodoroAtom
-    );
-
+const TodoList = ({ todos, todoActions }: TodoListProps) => {
     const [activeTodoId, setActiveTodoId] = useState('');
-
     const { selectedTodoId, setSelectedTodoId } = useTodos();
-
-    function selectCallback(id: string) {
-        if (isTimerRunningDuringPomodoro) {
-            // stop the timer
-            // check with user to see if they wanna reset the timer
-            // if confirm then reset and go to the selectedTodo
-            // otherwise, stay at the
-            timerCallback();
-        }
-
-        setSelectedTodoId(id);
-    }
 
     return (
         <ol id="todo-list" className="todo-list mb-3 mt-5 grid gap-2">
@@ -43,7 +25,7 @@ const TodoList = ({ todos, todoActions, timerCallback }: TodoListProps) => {
                     isTodoActive={activeTodoId === todo.id}
                     onShow={() => setActiveTodoId(todo.id)}
                     isTodoSelected={selectedTodoId === todo.id}
-                    onSelect={() => selectCallback(todo.id)}
+                    onSelect={() => setSelectedTodoId(todo.id)}
                 />
             ))}
         </ol>

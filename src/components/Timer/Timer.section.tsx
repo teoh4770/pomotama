@@ -1,33 +1,22 @@
 import { useAtomValue } from 'jotai';
 import { timerSettingsAtom } from '../../lib/atom';
 
+import { useTimer } from '../../hooks';
+
 import { Time, Indicator, TimerControls } from '.';
 import { Tabs } from '../Tabs';
 
-import { TimerStatusEnum, TimerModeEnum } from '../../types';
+import { TimerModeEnum } from '../../types';
 
-interface TimerActions {
-    toggleTimer: () => void;
-    resetTimer: () => void;
-    changeTimerMode: (mode: TimerModeEnum) => void;
-}
-
-interface TimerProps {
-    status: TimerStatusEnum;
-    remainingTime: number;
-    percentageToCompletion: number;
-    timerMode: TimerModeEnum;
-    actions: TimerActions;
-}
-
-const Timer = ({
-    percentageToCompletion,
-    remainingTime,
-    actions,
-    status,
-    timerMode,
-}: TimerProps) => {
+const Timer = () => {
     const timerSettings = useAtomValue(timerSettingsAtom);
+    const {
+        percentageToCompletion,
+        remainingTime,
+        actions,
+        status,
+        timerMode,
+    } = useTimer();
 
     return (
         <section id="timer-section" className="timer-section">
