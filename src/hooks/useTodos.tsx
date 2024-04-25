@@ -2,7 +2,10 @@ import { useEffect } from 'react';
 import { useAtom } from 'jotai';
 
 import { Todo, TodoFormData, TodoActions } from '../types';
-import { updateSelectedTodoIdFromStorage, updateUserTodosFromStorage } from '../utils';
+import {
+    updateSelectedTodoIdFromStorage,
+    updateUserTodosFromStorage,
+} from '../utils';
 import { selectedTodoIdAtom, todosAtom } from '../lib';
 
 interface UseTodos {
@@ -24,6 +27,12 @@ const useTodos = (): UseTodos => {
         updateSelectedTodoIdFromStorage(selectedTodoId);
     }, [selectedTodoId]);
 
+    function selectFirstTodoIfOnlyOneExists(todos: Todo[]) {
+        if (todos.length === 1) {
+            setSelectedTodoId(todos[0].id);
+        }
+    }
+
     function add(formData: TodoFormData) {
         const updatedTodos = [
             ...todos,
@@ -36,6 +45,7 @@ const useTodos = (): UseTodos => {
             },
         ];
 
+        selectFirstTodoIfOnlyOneExists(updatedTodos);
         setTodos(updatedTodos);
     }
 
@@ -55,6 +65,7 @@ const useTodos = (): UseTodos => {
     function remove(id: string) {
         const updatedTodos = todos.filter((todo) => todo.id !== id);
 
+        selectFirstTodoIfOnlyOneExists(updatedTodos);
         setTodos(updatedTodos);
     }
 
