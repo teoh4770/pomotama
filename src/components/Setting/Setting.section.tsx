@@ -58,6 +58,7 @@ const Setting = () => {
     return (
         <>
             <Button
+                id="setting-button"
                 intent="secondary"
                 size="small"
                 type="button"
