@@ -5,6 +5,9 @@ import {
     timerModeAtom,
     timerSettingsAtom,
 } from '../lib';
+
+import ringSound from '../assets/ring.mp3';
+
 import {
     formattedTimes,
     getTimes,
@@ -73,6 +76,8 @@ const useTimer = (): UseTimer => {
         const intervalId = workerTimer.setInterval(
             () => {
                 if (remainingTime <= 1) {
+                    // timesup play ding
+                    playSound();
                     handleTimerEnd();
                     resetTimer();
                     return;
@@ -155,6 +160,11 @@ const useTimer = (): UseTimer => {
                 setLongBreakInterval(LONG_BREAK_INTERVAL_START_INDEX);
             }
         }
+    }
+
+    function playSound() {
+        const ding = new Audio(ringSound);
+        ding.play();
     }
 
     const actions: TimerActions = {

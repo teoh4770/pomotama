@@ -1,3 +1,5 @@
+import selectSound from '../../assets/select.mp3';
+
 import { Button } from '../ui';
 
 interface ControlsProps {
@@ -10,6 +12,11 @@ const TimerControls = ({ status, toggleTimer }: ControlsProps) => {
     const timerIsRunning = status === 'running';
     const buttonText = timerIsRunning ? 'pause' : 'start';
 
+    function playSound() {
+        const click = new Audio(selectSound);
+        click.play();
+    }
+
     return (
         <div className="flex justify-center">
             <Button
@@ -17,7 +24,10 @@ const TimerControls = ({ status, toggleTimer }: ControlsProps) => {
                 size="large"
                 type="button"
                 className={`${timerIsRunning ? 'translate-y-0 shadow-none' : ''}`}
-                onClick={toggleTimer}
+                onClick={() => {
+                    toggleTimer();
+                    playSound();
+                }}
             >
                 {buttonText}
             </Button>
