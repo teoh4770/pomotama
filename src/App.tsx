@@ -1,8 +1,12 @@
 import { runTour } from './lib';
 import { Button } from './components/ui';
 import { Setting, Timer, Todos } from './components';
+import { useTimer } from './hooks';
 
 const App = () => {
+    const timer = useTimer();
+    const resetTimer = timer.actions.resetTimer;
+
     return (
         <main className="[&>*]:px-3 sm:[&>*]:px-4">
             <section aria-label="app">
@@ -21,11 +25,14 @@ const App = () => {
                     </Button>
                     <Setting />
                 </header>
-                <Timer />
-                <Todos />
+                <Timer timer={timer} />
+                <Todos timerCallback={resetTimer} />
             </section>
 
-            <section aria-label="description" className="mt-10 bg-white/85">
+            <section
+                aria-label="pomodoro timer user manual"
+                className="mt-10 bg-white/85"
+            >
                 <div id="instruction" className="center p-6 [--max:42rem]">
                     <h2 className="text-xl font-bold text-gray-900">
                         How to use the Pomodoro Timer?

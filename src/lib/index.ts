@@ -1,21 +1,15 @@
 import {
     timerSettingsAtom,
-    longBreakIntervalAtom,
-    elapsedTimeAtom,
-    timerStatusAtom,
     timerModeAtom,
-    isTimerRunningDuringPomodoroAtom,
+    longBreakIntervalAtom,
     todosAtom,
     selectedTodoIdAtom,
 } from './atom';
 
 export {
     timerSettingsAtom,
-    longBreakIntervalAtom,
-    elapsedTimeAtom,
-    timerStatusAtom,
     timerModeAtom,
-    isTimerRunningDuringPomodoroAtom,
+    longBreakIntervalAtom,
     todosAtom,
     selectedTodoIdAtom,
 };

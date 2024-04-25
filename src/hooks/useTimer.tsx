@@ -2,9 +2,8 @@ import { useEffect, useMemo, useState } from 'react';
 import { useAtom, useAtomValue } from 'jotai';
 import {
     longBreakIntervalAtom,
-    timerSettingsAtom,
     timerModeAtom,
-    timerStatusAtom,
+    timerSettingsAtom,
 } from '../lib';
 import {
     formattedTimes,
@@ -38,7 +37,7 @@ const useTimer = (): UseTimer => {
 
     // useTimer states
     const [timeElapsed, setTimeElapsed] = useState(0);
-    const [status, setStatus] = useAtom(timerStatusAtom);
+    const [status, setStatus] = useState(TimerStatusEnum.IDLE);
     const [timerMode, setTimerMode] = useAtom(timerModeAtom);
     const [longBreakInterval, setLongBreakInterval] = useState(
         LONG_BREAK_INTERVAL_START_INDEX

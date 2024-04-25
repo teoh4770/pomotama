@@ -1,28 +1,37 @@
 import { useAtomValue } from 'jotai';
 import { timerSettingsAtom } from '../../lib/atom';
 
-import { useTimer } from '../../hooks';
-
 import { Time, Indicator, TimerControls } from '.';
 import { Tabs } from '../Tabs';
 
-import { TimerModeEnum } from '../../types';
+import { TimerModeEnum, TimerStatusEnum } from '../../types';
 
-const Timer = () => {
+interface TimerActions {
+    toggleTimer: () => void;
+    resetTimer: () => void;
+    changeTimerMode: (mode: TimerModeEnum) => void;
+}
+
+interface UseTimer {
+    status: TimerStatusEnum;
+    remainingTime: number;
+    percentageToCompletion: number;
+    timerMode: TimerModeEnum;
+    actions: TimerActions;
+}
+
+interface TimerProps {
+    timer: UseTimer;
+}
+
+const Timer = ({ timer }: TimerProps) => {
     const timerSettings = useAtomValue(timerSettingsAtom);
-    const {
-        percentageToCompletion,
-        remainingTime,
-        actions,
-        status,
-        timerMode,
-    } = useTimer();
 
     return (
         <section id="timer-section" className="timer-section">
             <Indicator
                 className="mx-auto mb-8 h-1 w-full max-w-2xl bg-slate-500"
-                percentage={percentageToCompletion}
+                percentage={timer.percentageToCompletion}
             />
 
             <article className="timer mx-auto max-w-[30rem] space-y-6 rounded-lg bg-white/10 px-4 py-6 text-center text-white sm:space-y-8 sm:py-8">
@@ -44,16 +53,16 @@ const Timer = () => {
                             value: timerSettings.longBreakDuration,
                         },
                     ]}
-                    handler={actions.changeTimerMode}
-                    timerMode={timerMode}
+                    handler={timer.actions.changeTimerMode}
+                    timerMode={timer.timerMode}
                 />
 
-                <Time remainingTime={remainingTime} />
+                <Time remainingTime={timer.remainingTime} />
 
                 <TimerControls
-                    status={status}
-                    toggleTimer={actions.toggleTimer}
-                    resetTimer={actions.resetTimer}
+                    status={timer.status}
+                    toggleTimer={timer.actions.toggleTimer}
+                    resetTimer={timer.actions.resetTimer}
                 />
             </article>
         </section>

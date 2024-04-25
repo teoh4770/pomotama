@@ -4,7 +4,11 @@ import { useTodos } from '../../hooks';
 import { TodoForm, TodoList } from '.';
 import { Button } from '../ui';
 
-const Todos = () => {
+interface TodosProps {
+    timerCallback: () => void;
+}
+
+const Todos = ({ timerCallback }: TodosProps) => {
     const { todos, selectedTodoId, todoActions } = useTodos();
     const [openAddTaskForm, setOpenAddTaskForm] = useState(false);
 
@@ -46,7 +50,11 @@ const Todos = () => {
                 <h2 className="text-lg font-bold text-white">Tasks</h2>
             </header>
 
-            <TodoList todos={todos} todoActions={todoActions} />
+            <TodoList
+                todos={todos}
+                todoActions={todoActions}
+                timerCallback={timerCallback}
+            />
 
             {/* Add task button */}
             {openAddTaskForm ? (
