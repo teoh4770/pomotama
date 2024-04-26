@@ -8,11 +8,11 @@
 /* Link: https://cube-css-with-tailwind.netlify.app/ */
 /* Link: https://andy-bell.co.uk/i-used-tailwind-for-the-u-in-cube-css-and-i-liked-it/ */
 :root {
-    --bg-color-1: rgb(171 68 28);
+    --bg-color-1: rgb(186 73 73);
     --bg-color-2: rgb(56 133 138);
     --bg-color-3: rgb(57 112 151);
 
-    --primary-color: var(--bg-color-2);
+    --primary-color: var(--bg-color-1);
 }
 
 body {
