@@ -25,14 +25,15 @@ const Todos = ({ timerCallback }: TodosProps) => {
     return (
         <section id="tasks" className="tasks-section mx-auto max-w-[30rem]">
             <div className="mt-4">
-                {/* current focus todo label */}
-                <div className="current-todo-message py-4 text-center text-white">
+                <div className="current-todo-message py-4 text-center">
                     {selectedTodo ? (
                         <>
                             <p className="text-slate-300">
                                 Currently focusing on:
                                 <br />
-                                <b className="text-lg">{selectedTodo.title}</b>
+                                <b className="text-lg text-white">
+                                    {selectedTodo.title}
+                                </b>
                             </p>
                         </>
                     ) : (
@@ -69,7 +70,7 @@ const Todos = ({ timerCallback }: TodosProps) => {
                     intent="secondary"
                     size="medium"
                     type="button"
-                    className="w-full border-2 border-dashed bg-slate-700/50 py-4 font-bold text-white/80 hover:text-white"
+                    className="w-full border-2 border-dashed bg-black/10 py-4 font-bold text-white/80 hover:text-white"
                     aria-label="Add task button"
                     onClick={showAddTaskForm}
                 >

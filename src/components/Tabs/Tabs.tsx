@@ -33,6 +33,12 @@ interface TabsProps {
     handler: (name: TimerModeEnum) => void;
 }
 
+const BACKGROUND_COLORS = {
+    [TimerModeEnum.POMODORO]: 'var(--bg-color-1)',
+    [TimerModeEnum.SHORT_BREAK]: 'var(--bg-color-2)',
+    [TimerModeEnum.LONG_BREAK]: 'var(--bg-color-3)',
+};
+
 const Tabs: React.FC<TabsProps> = ({ timerMode, items, handler }) => {
     const [activeTab, setActiveTab] = useState<TimerModeEnum>(
         TimerModeEnum.POMODORO
@@ -40,8 +46,14 @@ const Tabs: React.FC<TabsProps> = ({ timerMode, items, handler }) => {
 
     // when the timermode is updated, tab is also get updated as well
     useEffect(() => {
+        setPrimaryColor(timerMode);
         setActiveTab(timerMode);
     }, [timerMode]);
+
+    function setPrimaryColor(activeTab: TimerModeEnum) {
+        const root = document.documentElement;
+        root.style.setProperty('--primary-color', BACKGROUND_COLORS[activeTab]);
+    }
 
     return (
         <div className="center | flex w-fit flex-row">

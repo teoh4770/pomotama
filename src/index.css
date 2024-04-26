@@ -8,8 +8,11 @@
 /* Link: https://cube-css-with-tailwind.netlify.app/ */
 /* Link: https://andy-bell.co.uk/i-used-tailwind-for-the-u-in-cube-css-and-i-liked-it/ */
 :root {
-    --primary-color: rgb(57, 112, 151);
-    /* the color issue i will put it later */
+    --bg-color-1: rgb(156, 67, 67);
+    --bg-color-2: rgb(56 133 138);
+    --bg-color-3: rgb(57 112 151);
+
+    --primary-color: var(--bg-color-2);
 }
 
 body {
@@ -81,15 +84,6 @@ mark {
     /* ↓ Apply the minimum horizontal space */
     padding-inline: var(--s1);
 }
-
-/* !should fix */
-/* .flex-row {
-    display: flex;
-    gap: var(--gap);
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-} */
 
 /* Utility */
 .to-right {

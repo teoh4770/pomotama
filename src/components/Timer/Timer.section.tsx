@@ -30,7 +30,7 @@ const Timer = ({ timer }: TimerProps) => {
     return (
         <section id="timer-section" className="timer-section">
             <Indicator
-                className="mx-auto mb-8 h-1 w-full max-w-2xl bg-slate-500"
+                className="mx-auto mb-8 h-[0.125rem] w-full max-w-2xl bg-black/10"
                 percentage={timer.percentageToCompletion}
             />
 

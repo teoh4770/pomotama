@@ -15,8 +15,7 @@ const longBreakIntervalAtom = atom(2);
 const timerModeAtom = atom(TimerModeEnum.POMODORO);
 
 // todos global variables
-const todos = JSON.parse(fetchUserTodosFromStorage() ?? '[]');
-const todosAtom = atom(todos);
+const todosAtom = atom(JSON.parse(fetchUserTodosFromStorage() ?? '[]'));
 const selectedTodoIdAtom = atom(fetchSelectedTodoIdFromStorage() ?? '');
 
 export {
