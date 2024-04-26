@@ -4,6 +4,7 @@ import {
     longBreakIntervalAtom,
     todosAtom,
     selectedTodoIdAtom,
+    themeSettingsAtom
 } from './atom';
 
 export {
@@ -12,6 +13,7 @@ export {
     longBreakIntervalAtom,
     todosAtom,
     selectedTodoIdAtom,
+    themeSettingsAtom
 };
 
 import { runTour } from './driver';

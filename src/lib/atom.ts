@@ -18,10 +18,16 @@ const timerModeAtom = atom(TimerModeEnum.POMODORO);
 const todosAtom = atom(JSON.parse(fetchUserTodosFromStorage() ?? '[]'));
 const selectedTodoIdAtom = atom(fetchSelectedTodoIdFromStorage() ?? '');
 
+// Theme settings
+const themeSettingsAtom = atom({
+    darkModeWhenRunning: true,
+});
+
 export {
     timerSettingsAtom,
     longBreakIntervalAtom,
     timerModeAtom,
     todosAtom,
     selectedTodoIdAtom,
+    themeSettingsAtom
 };

@@ -1,8 +1,10 @@
 import { FormEvent, useRef } from 'react';
 import { useAtom } from 'jotai';
-import { longBreakIntervalAtom, timerSettingsAtom } from '../../lib';
+import { longBreakIntervalAtom, timerSettingsAtom, themeSettingsAtom } from '../../lib';
 
 import { TimerSettingInputs } from './TimerSettingInputs';
+import { ThemeSettingInputs } from './ThemeSettingInputs';
+
 import { Button } from '../ui';
 
 interface SettingFormTimerData {
@@ -17,6 +19,7 @@ const Setting = () => {
     const [longBreakInterval, setLongBreakInterval] = useAtom(
         longBreakIntervalAtom
     );
+    const [themeSetting, setThemeSetting] = useAtom(themeSettingsAtom); 
 
     const dialog = useRef<HTMLDialogElement | null>(null);
 
@@ -95,7 +98,11 @@ const Setting = () => {
                             }}
                         />
 
-                        {/* setting 2 */}
+                        {/* Theme Settings: Where Color Themes, Hour Format, and Dark Mode would live */}
+                        <ThemeSettingInputs
+                            themeSetting={themeSetting}
+                            setThemeSetting={setThemeSetting}
+                        />
 
                         {/* setting 3 */}
                     </div>
