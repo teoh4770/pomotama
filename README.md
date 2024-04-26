@@ -19,7 +19,7 @@ Here's what Pomotama offers:
 - **Timer Indicators**: Keep an eye on your time with handy indicators.
 - **Customise Settings**: Tailor your focus and break times to your liking.
 - **Track Daily Tasks**: Manage your to-dos effortlessly - add, remove, edit, and toggle tasks as needed.
-- **Estimate Finish Time**: Get an estimate of the time required to complete your daily tasks.
+- **Estimate Finish Time**: Get an estimate of the time required to complete your daily tasks. (In progress)
 
 ## 🤔 How to use a Pomodoro timer?
 
