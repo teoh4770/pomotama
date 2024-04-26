@@ -33,10 +33,19 @@ interface TabsProps {
     handler: (name: TimerModeEnum) => void;
 }
 
-const BACKGROUND_COLORS = {
-    [TimerModeEnum.POMODORO]: 'var(--bg-color-1)',
-    [TimerModeEnum.SHORT_BREAK]: 'var(--bg-color-2)',
-    [TimerModeEnum.LONG_BREAK]: 'var(--bg-color-3)',
+const ACTIVE_TABS = {
+    [TimerModeEnum.POMODORO]: {
+        color: 'var(--bg-color-1)',
+        icon: '/favicon-red.svg',
+    },
+    [TimerModeEnum.SHORT_BREAK]: {
+        color: 'var(--bg-color-2)',
+        icon: '/favicon-green.svg',
+    },
+    [TimerModeEnum.LONG_BREAK]: {
+        color: 'var(--bg-color-3)',
+        icon: '/favicon-blue.svg',
+    },
 };
 
 const Tabs: React.FC<TabsProps> = ({ timerMode, items, handler }) => {
@@ -47,12 +56,23 @@ const Tabs: React.FC<TabsProps> = ({ timerMode, items, handler }) => {
     // when the timermode is updated, tab is also get updated as well
     useEffect(() => {
         setPrimaryColor(timerMode);
+        changeIcon(timerMode);
         setActiveTab(timerMode);
     }, [timerMode]);
 
     function setPrimaryColor(activeTab: TimerModeEnum) {
         const root = document.documentElement;
-        root.style.setProperty('--primary-color', BACKGROUND_COLORS[activeTab]);
+        root.style.setProperty('--primary-color', ACTIVE_TABS[activeTab].color);
+    }
+
+    function changeIcon(activeTab: TimerModeEnum) {
+        const link = document.querySelector(
+            "link[rel~='icon']"
+        ) as HTMLAnchorElement;
+
+        if (link) {
+            link.href = ACTIVE_TABS[activeTab].icon;
+        }
     }
 
     return (
