@@ -1,23 +1,11 @@
-import { useAtomValue } from 'jotai';
-
 import { Button } from './components/ui';
-import { Setting, Timer, Todos } from './components';
+import { Setting, Timer, Todos, Summary } from './components';
 import { useTimer } from './hooks';
-import {
-    getUpdatedTimeAtom,
-    getTotalSessionsAtom,
-    finishedSessionsAtom,
-    runTour,
-} from './lib';
-import { formattedTimes } from './utils';
+import { runTour } from './lib';
 
 const App = () => {
     const timer = useTimer();
     const resetTimer = timer.actions.resetTimer;
-
-    const finishedSessions = useAtomValue(finishedSessionsAtom);
-    const totalSessions = useAtomValue(getTotalSessionsAtom);
-    const { hours, minutes } = useAtomValue(getUpdatedTimeAtom);
 
     return (
         <main className="[&>*]:px-3 sm:[&>*]:px-4">
@@ -39,24 +27,7 @@ const App = () => {
                 </header>
                 <Timer timer={timer} />
                 <Todos timerCallback={resetTimer} />
-
-                {/* hide it when there's no todo */}
-                <div className="mx-auto mt-6 max-w-[30rem] border-t bg-white/10 p-4 text-white">
-                    <p>
-                        <span className="text-white/70">Pomodoros:</span>
-                        <span className="text-xl">{finishedSessions}</span>
-                        <span>/</span>
-                        <span className="text-xl">{totalSessions}</span>
-                    </p>
-                    <p>
-                        <span className="text-white/70">Finish At:</span>
-                        <span className="text-xl">{formattedTimes(hours)}</span>
-                        <span>:</span>
-                        <span className="text-xl">
-                            {formattedTimes(minutes)}
-                        </span>
-                    </p>
-                </div>
+                <Summary className="mx-auto mt-6 max-w-[30rem] border-t-2 bg-white/10 py-5 px-3 text-white" />
             </section>
 
             <section

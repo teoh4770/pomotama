@@ -3,22 +3,12 @@ import { useTodos } from '../../hooks';
 
 import { TodoForm, TodoList } from '.';
 import { Button } from '../ui';
-import { useAtomValue } from 'jotai';
-import {
-    getTotalTimeInMinutesAtom,
-    getUnfinishedSessionsAtom,
-    unfininishedTodoTotalAmountAtom,
-} from '../../lib';
 
 interface TodosProps {
     timerCallback: () => void;
 }
 
 const Todos = ({ timerCallback }: TodosProps) => {
-    // const totalTimeInMinutes = useAtomValue(getTotalTimeInMinutesAtom);
-    // const unfininishedTodoTotal = useAtomValue(unfininishedTodoTotalAmountAtom);
-    // const unfinishedSessions = useAtomValue(getUnfinishedSessionsAtom);
-
     const { todos, selectedTodoId, todoActions } = useTodos();
     const [openAddTaskForm, setOpenAddTaskForm] = useState(false);
 
