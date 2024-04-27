@@ -1,4 +1,4 @@
-import { getTimes, formattedTimes, clipTime } from '../time';
+import { getTimes, formattedTimes, clipTime, updatedTime } from '../time';
 
 describe('getTimes', () => {
     it('should return minutes and seconds for a given time in seconds', () => {
@@ -73,5 +73,48 @@ describe('clipTime', () => {
 
         const result = clipTime(time);
         expect(result).toBe(expectedTime);
+    });
+});
+
+describe('updatedTime', () => {
+    it('should add additional minutes to the given time', () => {
+        const baseTime = { hours: 21, minutes: 30 };
+        const additionalMinutes = 30;
+
+        const result = updatedTime(baseTime, additionalMinutes);
+        expect(result).toStrictEqual({ hours: 22, minutes: 0 });
+    });
+
+    it('should wrap hours within 0 to 23 range when exceeding 24 hours', () => {
+        const baseTime = { hours: 23, minutes: 30 };
+        const additionalMinutes = 60;
+
+        const result = updatedTime(baseTime, additionalMinutes);
+        expect(result).toStrictEqual({ hours: 0, minutes: 30 });
+    });
+
+    it('should handle large amounts of additional minutes and wrap hours correctly', () => {
+        const baseTime = { hours: 23, minutes: 30 };
+        const additionalMinutes = 1500; // 25 hours (1500 minutes)
+
+        const result = updatedTime(baseTime, additionalMinutes);
+        expect(result).toEqual({ hours: 0, minutes: 30 });
+    });
+
+    it('should return the base time if additionalMinutes are 0', () => {
+        const baseTime = { hours: 21, minutes: 30 };
+        const additionalMinutes = 0;
+
+        const result = updatedTime(baseTime, additionalMinutes);
+        expect(result).toStrictEqual(baseTime);
+    });
+
+    it('should throw an error if additionalMinutes input is negative', () => {
+        const baseTime = { hours: 23, minutes: 30 };
+        const additionalMinutes = -60;
+
+        expect(() => updatedTime(baseTime, additionalMinutes)).toThrow(
+            'additionalMinutes cannot accept negative values...'
+        );
     });
 });

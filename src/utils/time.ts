@@ -1,3 +1,8 @@
+interface Time {
+    hours: number;
+    minutes: number;
+}
+
 const getTimes = (timeInSeconds: number) => {
     if (timeInSeconds < 0) return { minutes: 0, seconds: 0 };
 
@@ -21,4 +26,28 @@ const clipTime = (time: number) => {
     return Math.min(Math.max(0, time), 999);
 };
 
-export { getTimes, formattedTimes, minutesToSeconds, clipTime };
+// assume that time is {new Date().getHours(), new Date().getMinutes()};
+// example:
+/**
+  time: {
+    hours: new Date().getHours(),
+    minutes: new Date().getMinutes(),
+  }
+ */
+const updatedTime = (time: Time, additionalMinutes: number): Time => {
+    if (additionalMinutes < 0) {
+        throw new Error('additionalMinutes cannot accept negative values...');
+    }
+
+    const timeInMinutes = time.hours * 60 + time.minutes + additionalMinutes;
+    const minutes = timeInMinutes % 60;
+    let hours = Math.floor(timeInMinutes / 60);
+
+    if (hours >= 24) {
+        hours %= 24;
+    }
+
+    return { hours, minutes };
+};
+
+export { getTimes, formattedTimes, minutesToSeconds, clipTime, updatedTime };
