@@ -1,12 +1,12 @@
 import { useEffect } from 'react';
-import { useAtom } from 'jotai';
+import { useAtom, useAtomValue } from 'jotai';
 
+import { selectedTodoIdAtom, timerSettingsAtom, todosAtom } from '../lib';
 import { Todo, TodoFormData, TodoActions } from '../types';
 import {
     updateSelectedTodoIdFromStorage,
     updateUserTodosFromStorage,
 } from '../utils';
-import { selectedTodoIdAtom, todosAtom } from '../lib';
 
 interface UseTodos {
     todos: Todo[];
@@ -15,9 +15,30 @@ interface UseTodos {
     todoActions: TodoActions;
 }
 
+
+/*
+
+const getTotalMinutesBasedOnUnfinishedTodo = () => {
+
+}
+
+const getUnfinishedTodoAmount = (todos: Todo[]) => {
+
+}
+
+ [X] getUnfinishedTodoAmount
+ [X] getSessions based on todo sessions - pomodoro, shortbreak, longbreak 
+ getTotalMinutesBasedOnSessions
+ estimateFinishTime based on total minutes (in 24 hour form)
+
+note: gethours will get hours 
+
+*/
+
 const useTodos = (): UseTodos => {
     const [todos, setTodos] = useAtom<Todo[]>(todosAtom);
     const [selectedTodoId, setSelectedTodoId] = useAtom(selectedTodoIdAtom);
+    useAtomValue(timerSettingsAtom)
 
     useEffect(() => {
         updateUserTodosFromStorage(todos);

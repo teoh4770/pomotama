@@ -26,14 +26,6 @@ const clipTime = (time: number) => {
     return Math.min(Math.max(0, time), 999);
 };
 
-// assume that time is {new Date().getHours(), new Date().getMinutes()};
-// example:
-/**
-  time: {
-    hours: new Date().getHours(),
-    minutes: new Date().getMinutes(),
-  }
- */
 const updatedTime = (time: Time, additionalMinutes: number): Time => {
     if (additionalMinutes < 0) {
         throw new Error('additionalMinutes cannot accept negative values...');
