@@ -22,9 +22,10 @@ interface UseTimer {
 
 interface TimerProps {
     timer: UseTimer;
+    hiddenClass: string;
 }
 
-const Timer = ({ timer }: TimerProps) => {
+const Timer = ({ timer, hiddenClass  }: TimerProps) => {
     const timerSettings = useAtomValue(timerSettingsAtom);
 
     return (
@@ -35,6 +36,7 @@ const Timer = ({ timer }: TimerProps) => {
             />
 
             <article className="timer mx-auto max-w-[30rem] space-y-6 rounded-lg bg-white/10 px-4 py-6 text-center text-white sm:space-y-8 sm:py-8">
+                <div className={`${hiddenClass}`}>
                 <Tabs
                     items={[
                         {
@@ -56,7 +58,7 @@ const Timer = ({ timer }: TimerProps) => {
                     handler={timer.actions.changeTimerMode}
                     timerMode={timer.timerMode}
                 />
-
+                </div>
                 <Time remainingTime={timer.remainingTime} />
 
                 <TimerControls

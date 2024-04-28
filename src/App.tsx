@@ -2,16 +2,25 @@ import { runTour } from './lib';
 import { Button } from './components/ui';
 import { Setting, Timer, Todos } from './components';
 import { useTimer } from './hooks';
+import { useAtomValue } from 'jotai';
+import { themeSettingsAtom } from './lib/atom';
 
 const App = () => {
     const timer = useTimer();
     const resetTimer = timer.actions.resetTimer;
+    const themeSettings = useAtomValue(themeSettingsAtom);
+    const isDarkModeWhenRunning = themeSettings.darkModeWhenRunning;
+
+    // Determine if the timer is idle
+    const isIdle = timer.status === 'idle';
+
+    const hiddenClass = !isIdle && isDarkModeWhenRunning ? 'transition-invisibility' : 'opacity-100 transition ease-in duration-500 visible';
 
     return (
         <main className="[&>*]:px-3 sm:[&>*]:px-4">
-            <section aria-label="app">
+            <section aria-label="app" className='min-h-screen'>
                 <header className="mx-auto flex max-w-2xl gap-2 py-4">
-                    <h1 className="mr-auto text-2xl font-bold text-white ">
+                    <h1 className={`mr-auto text-2xl font-bold text-white ${hiddenClass}`}>
                         Pomotama
                     </h1>
                     <Button
@@ -25,8 +34,8 @@ const App = () => {
                     </Button>
                     <Setting />
                 </header>
-                <Timer timer={timer} />
-                <Todos timerCallback={resetTimer} />
+                <Timer timer={timer} hiddenClass={hiddenClass}  />
+                <Todos timerCallback={resetTimer} hiddenClass={hiddenClass}  />
             </section>
 
             <section
