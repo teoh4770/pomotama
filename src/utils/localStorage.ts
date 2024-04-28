@@ -1,21 +1,46 @@
 import { Todo } from '../types';
+import { TimerModeEnum } from '../types';
 
-const TodosKey = 'todos';
-const SelectedTodoIdKey = 'selectedTodoId';
+interface TimerSettings {
+    [TimerModeEnum.POMODORO]: number;
+    [TimerModeEnum.SHORT_BREAK]: number;
+    [TimerModeEnum.LONG_BREAK]: number;
+}
+
+const TODOS_KEY = 'todos';
+const SELECTED_TODO_ID_KEY = 'selectedTodoId';
+const TIMER_SETTINGS_KEY = 'timerSettings';
+const LONG_BREAK_INTERVAL = 'longBreakInterval';
 
 const fetchUserTodosFromStorage = () => {
-    return localStorage.getItem(TodosKey);
+    return localStorage.getItem(TODOS_KEY);
 };
 const updateUserTodosFromStorage = (value: Todo[]) => {
-    localStorage.setItem(TodosKey, JSON.stringify(value));
+    localStorage.setItem(TODOS_KEY, JSON.stringify(value));
 };
 
 const fetchSelectedTodoIdFromStorage = () => {
-    return localStorage.getItem(SelectedTodoIdKey);
+    return localStorage.getItem(SELECTED_TODO_ID_KEY);
 };
 
 const updateSelectedTodoIdFromStorage = (selectedTodoId: string) => {
-    localStorage.setItem(SelectedTodoIdKey, selectedTodoId);
+    localStorage.setItem(SELECTED_TODO_ID_KEY, selectedTodoId);
+};
+
+const fetchTimerSettingsFromStorage = () => {
+    return localStorage.getItem(TIMER_SETTINGS_KEY);
+};
+
+const updateTimerSettingsFromStorage = (value: TimerSettings) => {
+    localStorage.setItem(TIMER_SETTINGS_KEY, JSON.stringify(value));
+};
+
+const fetchLongBreakIntervalFromStorage = () => {
+    return localStorage.getItem(LONG_BREAK_INTERVAL);
+};
+
+const updateLongBreakIntervalFromStorage = (value: number) => {
+    localStorage.setItem(LONG_BREAK_INTERVAL, String(value));
 };
 
 export {
@@ -23,4 +48,8 @@ export {
     updateUserTodosFromStorage,
     fetchSelectedTodoIdFromStorage,
     updateSelectedTodoIdFromStorage,
+    fetchTimerSettingsFromStorage,
+    updateTimerSettingsFromStorage,
+    fetchLongBreakIntervalFromStorage,
+    updateLongBreakIntervalFromStorage,
 };

@@ -1,21 +1,35 @@
 import { atom } from 'jotai';
 import {
+    fetchLongBreakIntervalFromStorage,
     fetchSelectedTodoIdFromStorage,
+    fetchTimerSettingsFromStorage,
     fetchUserTodosFromStorage,
     updatedTime,
 } from '../utils';
 import { TimerModeEnum, Todo } from '../types';
 
-// timer global variables
-const timerSettingsAtom = atom({
+// Timer global variables
+const defaultTimerSettings = {
     [TimerModeEnum.POMODORO]: 25,
     [TimerModeEnum.SHORT_BREAK]: 5,
     [TimerModeEnum.LONG_BREAK]: 20,
-});
-const longBreakIntervalAtom = atom(2);
+};
+const timerSettingsAtom = atom(
+    JSON.parse(
+        fetchTimerSettingsFromStorage() ?? JSON.stringify(defaultTimerSettings)
+    )
+);
+
+const defaultLongBreakInterval = '2';
+const longBreakIntervalAtom = atom(
+    Number.parseInt(
+        fetchLongBreakIntervalFromStorage() ?? defaultLongBreakInterval
+    )
+);
+
 const timerModeAtom = atom(TimerModeEnum.POMODORO);
 
-// todos global variables
+// Todo global variables
 const todosAtom = atom(JSON.parse(fetchUserTodosFromStorage() ?? '[]'));
 
 const unfininishedTodoTotalAmountAtom = atom((get) => {

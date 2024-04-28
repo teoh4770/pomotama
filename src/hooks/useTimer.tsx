@@ -1,17 +1,18 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useAtom, useAtomValue } from 'jotai';
+
 import {
     longBreakIntervalAtom,
     timerModeAtom,
     timerSettingsAtom,
 } from '../lib';
-
 import ringSound from '../assets/ring.mp3';
-
 import {
     formattedTimes,
     getTimes,
     minutesToSeconds,
+    updateLongBreakIntervalFromStorage,
+    updateTimerSettingsFromStorage,
     workerTimer,
 } from '../utils';
 import { useTodos } from './useTodos';
@@ -36,13 +37,13 @@ const LONG_BREAK_INTERVAL_START_INDEX = 0;
 const useTimer = (): UseTimer => {
     // global
     const timerSettings = useAtomValue(timerSettingsAtom);
-    const userLongBreakInterval = useAtomValue(longBreakIntervalAtom);
+    const longBreakInterval = useAtomValue(longBreakIntervalAtom);
 
     // useTimer states
     const [timeElapsed, setTimeElapsed] = useState(0);
     const [status, setStatus] = useState(TimerStatusEnum.IDLE);
     const [timerMode, setTimerMode] = useAtom(timerModeAtom);
-    const [longBreakInterval, setLongBreakInterval] = useState(
+    const [longBreakIntervalCount, setLongBreakIntervalCount] = useState(
         LONG_BREAK_INTERVAL_START_INDEX
     );
 
@@ -59,7 +60,7 @@ const useTimer = (): UseTimer => {
     }, [timerSettings, timerMode]);
     const remainingTime = initialTime - timeElapsed;
     const percentageToCompletion = timeElapsed / initialTime;
-    const targetInterval = userLongBreakInterval - 1;
+    const targetInterval = longBreakInterval - 1;
 
     // Time variables
     const { minutes, seconds } = getTimes(remainingTime);
@@ -70,6 +71,15 @@ const useTimer = (): UseTimer => {
         const todoTitle = currentTodo ? currentTodo.title : 'Time to focus!';
         document.title = `${timeString} - ${todoTitle}`;
     }, [timeString, currentTodo]);
+
+    // update local storage
+    useEffect(() => {
+        updateTimerSettingsFromStorage(timerSettings);
+    }, [timerSettings]);
+
+    useEffect(() => {
+        updateLongBreakIntervalFromStorage(longBreakInterval);
+    }, [longBreakInterval]);
 
     // update the timer based on status and remaining
     useEffect(() => {
@@ -113,7 +123,7 @@ const useTimer = (): UseTimer => {
 
     function handleTimerEnd() {
         incrementTodoPomodoro();
-        updateLongBreakInterval();
+        updateLongBreakIntervalCount();
         toggleTimerMode();
 
         function incrementTodoPomodoro() {
@@ -130,9 +140,9 @@ const useTimer = (): UseTimer => {
             }
         }
 
-        function updateLongBreakInterval() {
+        function updateLongBreakIntervalCount() {
             if (timerMode === TimerModeEnum.POMODORO) {
-                setLongBreakInterval((prev) => prev + 1);
+                setLongBreakIntervalCount((prev) => prev + 1);
                 return;
             }
         }
@@ -140,10 +150,10 @@ const useTimer = (): UseTimer => {
         function toggleTimerMode() {
             if (
                 timerMode === TimerModeEnum.POMODORO &&
-                longBreakInterval >= targetInterval
+                longBreakIntervalCount >= targetInterval
             ) {
                 setTimerMode(TimerModeEnum.LONG_BREAK);
-                resetLongBreakInterval();
+                resetLongBreakIntervalCount();
                 return;
             }
 
@@ -156,8 +166,8 @@ const useTimer = (): UseTimer => {
                 setTimerMode(TimerModeEnum.SHORT_BREAK);
             }
 
-            function resetLongBreakInterval() {
-                setLongBreakInterval(LONG_BREAK_INTERVAL_START_INDEX);
+            function resetLongBreakIntervalCount() {
+                setLongBreakIntervalCount(LONG_BREAK_INTERVAL_START_INDEX);
             }
         }
     }

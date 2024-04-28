@@ -18,12 +18,20 @@ import {
     updateUserTodosFromStorage,
     fetchSelectedTodoIdFromStorage,
     updateSelectedTodoIdFromStorage,
+    fetchTimerSettingsFromStorage,
+    updateTimerSettingsFromStorage,
+    fetchLongBreakIntervalFromStorage,
+    updateLongBreakIntervalFromStorage,
 } from './localStorage';
 export {
     fetchUserTodosFromStorage,
     updateUserTodosFromStorage,
     fetchSelectedTodoIdFromStorage,
     updateSelectedTodoIdFromStorage,
+    fetchTimerSettingsFromStorage,
+    updateTimerSettingsFromStorage,
+    fetchLongBreakIntervalFromStorage,
+    updateLongBreakIntervalFromStorage,
 };
 
 /**

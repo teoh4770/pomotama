@@ -15,26 +15,6 @@ interface UseTodos {
     todoActions: TodoActions;
 }
 
-
-/*
-
-const getTotalMinutesBasedOnUnfinishedTodo = () => {
-
-}
-
-const getUnfinishedTodoAmount = (todos: Todo[]) => {
-
-}
-
- [X] getUnfinishedTodoAmount
- [X] getSessions based on todo sessions - pomodoro, shortbreak, longbreak 
- getTotalMinutesBasedOnSessions
- estimateFinishTime based on total minutes (in 24 hour form)
-
-note: gethours will get hours 
-
-*/
-
 const useTodos = (): UseTodos => {
     const [todos, setTodos] = useAtom<Todo[]>(todosAtom);
     const [selectedTodoId, setSelectedTodoId] = useAtom(selectedTodoIdAtom);
