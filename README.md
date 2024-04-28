@@ -19,7 +19,7 @@ Here's what Pomotama offers:
 - **Timer Indicators**: Keep an eye on your time with handy indicators.
 - **Customise Settings**: Tailor your focus and break times to your liking.
 - **Track Daily Tasks**: Manage your to-dos effortlessly - add, remove, edit, and toggle tasks as needed.
-- **Estimate Finish Time**: Get an estimate of the time required to complete your daily tasks. (In progress)
+- **Estimate Finish Time**: Get an estimate of the time required to complete your daily tasks.
 
 ## 🤔 How to use a Pomodoro timer?
 
@@ -51,7 +51,6 @@ Here's what Pomotama offers:
 
 - Enable customisation of background color for different timer mode
 - Enable customisation of sound
-- Add estimate finish time to estimate completion of daily tasks
 - Implement user authentication for access across devices
 - Introduce a reward or punishment system to incentivize focus and facilitate mindfulness
 
@@ -65,4 +64,6 @@ To run the project in your local environment, follow these steps:
 
 ## 🍿 Video
 
-[In progress]
+https://github.com/teoh4770/Pomotama/assets/98545971/5a662891-d78b-418b-83fb-d1fe68f5ef4a
+
+
