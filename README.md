@@ -64,4 +64,6 @@ To run the project in your local environment, follow these steps:
 
 ## 🍿 Video
 
-[In progress]
+https://github.com/teoh4770/Pomotama/assets/98545971/5a662891-d78b-418b-83fb-d1fe68f5ef4a
+
+
