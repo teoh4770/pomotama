@@ -24,11 +24,10 @@ body {
         'Noto Color Emoji';
 
     /* Colors */
-    background-color: var(--primary-color);
+    background-color: var(--primary-color, rgb(186 73 73));
 
     /* Others */
     -webkit-tap-highlight-color: transparent;
-    transition: background-color 500ms ease;
 }
 
 body:has(dialog[open]) {

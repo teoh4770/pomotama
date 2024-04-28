@@ -3,6 +3,12 @@ import {
     timerModeAtom,
     longBreakIntervalAtom,
     todosAtom,
+    unfininishedTodoTotalAmountAtom,
+    finishedSessionsAtom,
+    getTotalSessionsAtom,
+    getUnfinishedSessionsAtom,
+    getTotalTimeInMinutesAtom,
+    getUpdatedTimeAtom,
     selectedTodoIdAtom,
     themeSettingsAtom
 } from './atom';
@@ -12,6 +18,12 @@ export {
     timerModeAtom,
     longBreakIntervalAtom,
     todosAtom,
+    unfininishedTodoTotalAmountAtom,
+    finishedSessionsAtom,
+    getTotalSessionsAtom,
+    getUnfinishedSessionsAtom,
+    getTotalTimeInMinutesAtom,
+    getUpdatedTimeAtom,
     selectedTodoIdAtom,
     themeSettingsAtom
 };

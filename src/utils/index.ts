@@ -1,8 +1,14 @@
 /**
  * time.ts
  */
-import { getTimes, formattedTimes, minutesToSeconds, clipTime } from './time';
-export { getTimes, formattedTimes, minutesToSeconds, clipTime };
+import {
+    getTimes,
+    formattedTimes,
+    minutesToSeconds,
+    clipTime,
+    updatedTime,
+} from './time';
+export { getTimes, formattedTimes, minutesToSeconds, clipTime, updatedTime };
 
 /**
  * localStorage.ts

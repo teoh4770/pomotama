@@ -1,7 +1,7 @@
-import { runTour } from './lib';
 import { Button } from './components/ui';
-import { Setting, Timer, Todos } from './components';
+import { Setting, Timer, Todos, Summary } from './components';
 import { useTimer } from './hooks';
+import { runTour } from './lib';
 import { useAtomValue } from 'jotai';
 import { themeSettingsAtom } from './lib/atom';
 
@@ -36,6 +36,7 @@ const App = () => {
                 </header>
                 <Timer timer={timer} hiddenClass={hiddenClass}  />
                 <Todos timerCallback={resetTimer} hiddenClass={hiddenClass}  />
+                <Summary className="mx-auto mt-6 max-w-[30rem] border-t-2 bg-white/10 py-5 px-3 text-white" />
             </section>
 
             <section
