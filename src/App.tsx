@@ -11,10 +11,11 @@ const App = () => {
     const themeSettings = useAtomValue(themeSettingsAtom);
     const isDarkModeWhenRunning = themeSettings.darkModeWhenRunning;
 
-    // Determine if the timer is idle
-    const isIdle = timer.status === 'idle';
+    // Determine if the timer is running
+    const isRunning = timer.status === 'running';
 
-    const hiddenClass = !isIdle && isDarkModeWhenRunning ? 'transition-invisibility' : 'opacity-100 transition ease-in duration-500 visible';
+    // if timer is running and isDarkModeWhenRunning setting is on, add hiddenClass
+    const hiddenClass = isRunning && isDarkModeWhenRunning ? 'transition-invisibility' : 'opacity-100 transition ease-in duration-500 visible';
 
     return (
         <main className="[&>*]:px-3 sm:[&>*]:px-4">
@@ -36,7 +37,7 @@ const App = () => {
                 </header>
                 <Timer timer={timer} hiddenClass={hiddenClass}  />
                 <Todos timerCallback={resetTimer} hiddenClass={hiddenClass}  />
-                <Summary className="mx-auto mt-6 max-w-[30rem] border-t-2 bg-white/10 py-5 px-3 text-white" />
+                <Summary className={`mx-auto mt-6 max-w-[30rem] border-t-2 bg-white/10 py-5 px-3 text-white ${hiddenClass}`} />
             </section>
 
             <section
