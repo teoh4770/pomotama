@@ -11,7 +11,7 @@ const Time = ({ remainingTime }: TimeProps) => {
     const timeString = `${formattedMinutes}:${formattedSeconds}`;
     
     return (
-        <p className="seen text-[6.25rem] font-extrabold leading-none sm:text-[7.5rem]">
+        <p className="visible text-[6.25rem] font-extrabold leading-none sm:text-[7.5rem]">
             {timeString}
         </p>
     );
