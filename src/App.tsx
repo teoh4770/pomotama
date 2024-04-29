@@ -18,7 +18,7 @@ const App = () => {
 
     // if timer is running and isDarkModeWhenRunning setting is on, add hiddenClass
     const hiddenClass =
-        isRunning && isDarkModeWhenRunning ? 'transition-invisibility' : 'opacity-100 transition ease-in duration-500 visible';
+        isRunning && isDarkModeWhenRunning ? 'invisible' : 'opacity-100 transition ease-in duration-500 visible';
 
     useEffect(() => {
         if (isRunning && isDarkModeWhenRunning) {
