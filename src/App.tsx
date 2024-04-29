@@ -18,21 +18,27 @@ const App = () => {
 
     // if timer is running and isDarkModeWhenRunning setting is on, add hiddenClass
     const hiddenClass =
-        isRunning && isDarkModeWhenRunning ? 'invisible' : 'opacity-100 transition ease-in duration-500 visible';
+        isRunning && isDarkModeWhenRunning
+            ? 'invisible delay-1000'
+            : 'opacity-100 transition ease-in duration-500 visible';
 
     useEffect(() => {
+        const bodyClass = ['bg-black', 'delay-1000'];
+
         if (isRunning && isDarkModeWhenRunning) {
-            document.body.style.backgroundColor = "black"
+            document.body.classList.add(...bodyClass);
         } else {
-            document.body.style.backgroundColor = ""
+            document.body.classList.remove(...bodyClass);
         }
-    }, [isRunning, isDarkModeWhenRunning])
+    }, [isRunning, isDarkModeWhenRunning]);
 
     return (
-        <main className={`${hiddenClass} [&>*]:px-3 sm:[&>*]:px-4`}>
-            <section aria-label="app" className='min-h-screen'>
+        <main className="[&>*]:px-3 sm:[&>*]:px-4">
+            <section aria-label="app" className={`${hiddenClass} min-h-screen`}>
                 <header className="mx-auto flex max-w-2xl gap-2 py-4">
-                    <h1 className={`mr-auto text-2xl font-bold text-white ${hiddenClass}`}>
+                    <h1
+                        className={`mr-auto text-2xl font-bold text-white ${hiddenClass}`}
+                    >
                         Pomotama
                     </h1>
                     <Button
@@ -47,13 +53,15 @@ const App = () => {
                     <Setting />
                 </header>
                 <Timer timer={timer} />
-                <Todos timerCallback={resetTimer}  />
-                <Summary className={`mx-auto mt-6 max-w-[30rem] border-t-2 bg-white/10 py-5 px-3 text-white`} />
+                <Todos timerCallback={resetTimer} />
+                <Summary
+                    className={`mx-auto mt-6 max-w-[30rem] border-t-2 bg-white/10 px-3 py-5 text-white`}
+                />
             </section>
 
             <section
-                aria-label="pomodoro timer user manual"
                 className="mt-10 bg-white/85"
+                aria-label="pomodoro timer user manual"
             >
                 <div id="instruction" className="center p-6 [--max:42rem]">
                     <h2 className="text-xl font-bold text-gray-900">

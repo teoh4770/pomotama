@@ -11,6 +11,9 @@ interface ControlsProps {
 const TimerControls = ({ status, toggleTimer }: ControlsProps) => {
     const timerIsRunning = status === 'running';
     const buttonText = timerIsRunning ? 'pause' : 'start';
+    const activeButtonClass = timerIsRunning
+        ? 'translate-y-0 text-black shadow-none transition-[color] delay-1000'
+        : '';
 
     function playSound() {
         const click = new Audio(selectSound);
@@ -18,12 +21,12 @@ const TimerControls = ({ status, toggleTimer }: ControlsProps) => {
     }
 
     return (
-        <div className="flex justify-center visible">
+        <div className="visible flex justify-center">
             <Button
                 intent="primary"
                 size="large"
                 type="button"
-                className={`${timerIsRunning ? 'translate-y-0 shadow-none' : ''}`}
+                className={activeButtonClass}
                 onClick={() => {
                     toggleTimer();
                     playSound();
