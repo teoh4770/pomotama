@@ -105,13 +105,6 @@ mark {
     color: var(--primary-color);
 }
 
-.transition-invisibility * {
-    visibility: hidden;
-}
-
-.seen, .seen * {
-    visibility: visible;
-}
 /* Block */
 
 /* Input
