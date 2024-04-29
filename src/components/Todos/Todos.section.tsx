@@ -8,7 +8,7 @@ interface TodosProps {
     timerCallback: () => void;
 }
 
-const Todos = ({ timerCallback}: TodosProps) => {
+const Todos = ({ timerCallback }: TodosProps) => {
     const { todos, selectedTodoId, todoActions } = useTodos();
     const [openAddTaskForm, setOpenAddTaskForm] = useState(false);
 
@@ -25,7 +25,7 @@ const Todos = ({ timerCallback}: TodosProps) => {
     return (
         <section id="tasks" className="tasks-section mx-auto max-w-[30rem]">
             <div className="mt-4">
-                <div className="seen current-todo-message py-4 text-center">
+                <div className="visible current-todo-message py-4 text-center">
                     {selectedTodo ? (
                         <>
                             <p className="text-slate-300">
