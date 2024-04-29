@@ -109,6 +109,11 @@ const getUpdatedTimeAtom = atom((get) => {
 
 const selectedTodoIdAtom = atom(fetchSelectedTodoIdFromStorage() ?? '');
 
+// Theme settings
+const themeSettingsAtom = atom({
+    darkModeWhenRunning: true,
+});
+
 export {
     timerSettingsAtom,
     longBreakIntervalAtom,
@@ -121,4 +126,5 @@ export {
     getTotalTimeInMinutesAtom,
     getUpdatedTimeAtom,
     selectedTodoIdAtom,
+    themeSettingsAtom
 };

@@ -10,6 +10,7 @@ import {
     getTotalTimeInMinutesAtom,
     getUpdatedTimeAtom,
     selectedTodoIdAtom,
+    themeSettingsAtom
 } from './atom';
 
 export {
@@ -24,6 +25,7 @@ export {
     getTotalTimeInMinutesAtom,
     getUpdatedTimeAtom,
     selectedTodoIdAtom,
+    themeSettingsAtom
 };
 
 import { runTour } from './driver';

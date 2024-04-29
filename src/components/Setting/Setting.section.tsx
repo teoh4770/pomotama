@@ -1,8 +1,10 @@
 import { FormEvent, useRef } from 'react';
 import { useAtom } from 'jotai';
-import { longBreakIntervalAtom, timerSettingsAtom } from '../../lib';
+import { longBreakIntervalAtom, timerSettingsAtom, themeSettingsAtom } from '../../lib';
 
 import { TimerSettingInputs } from './TimerSettingInputs';
+import { ThemeSettingInputs } from './ThemeSettingInputs';
+
 import { Button } from '../ui';
 
 interface SettingFormTimerData {
@@ -17,6 +19,7 @@ const Setting = () => {
     const [longBreakInterval, setLongBreakInterval] = useAtom(
         longBreakIntervalAtom
     );
+    const [themeSetting, setThemeSetting] = useAtom(themeSettingsAtom); 
 
     const dialog = useRef<HTMLDialogElement | null>(null);
 
@@ -64,13 +67,14 @@ const Setting = () => {
                 type="button"
                 aria-label="setting button"
                 onClick={showModal}
+                className='visible'
             >
                 <span>❤️</span>
                 <span>Settings</span>
             </Button>
 
             {/* link about dialog html component: https://blog.webdevsimplified.com/2023-04/html-dialog/ */}
-            <dialog ref={dialog} className="dialog | box">
+            <dialog ref={dialog} className="dialog | box | visible">
                 <form method="dialog" onSubmit={handleSubmit}>
                     <header className="dialog__header | box | flex items-center">
                         <h2 className="text-lg font-bold">Setting</h2>
@@ -95,7 +99,11 @@ const Setting = () => {
                             }}
                         />
 
-                        {/* setting 2 */}
+                        {/* Theme Settings: Where Color Themes, Hour Format, and Dark Mode would live */}
+                        <ThemeSettingInputs
+                            themeSetting={themeSetting}
+                            setThemeSetting={setThemeSetting}
+                        />
 
                         {/* setting 3 */}
                     </div>

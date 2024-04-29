@@ -25,6 +25,7 @@ body {
 
     /* Colors */
     background-color: var(--primary-color, rgb(186 73 73));
+    transition: background-color 500ms ease;
 
     /* Others */
     -webkit-tap-highlight-color: transparent;

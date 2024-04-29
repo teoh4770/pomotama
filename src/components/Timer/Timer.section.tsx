@@ -56,7 +56,7 @@ const Timer = ({ timer }: TimerProps) => {
                     handler={timer.actions.changeTimerMode}
                     timerMode={timer.timerMode}
                 />
-
+                
                 <Time remainingTime={timer.remainingTime} />
 
                 <TimerControls
