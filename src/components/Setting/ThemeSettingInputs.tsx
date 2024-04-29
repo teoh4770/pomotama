@@ -17,7 +17,7 @@ const ThemeSettingInputs = ({ themeSetting, setThemeSetting }: ThemeSettingInput
 
     return (
         <div className="theme-setting">
-            <h3 className="setting-title capita py-4 font-semibold text-gray-400">
+            <h3 className="setting-title capitalize py-4 font-semibold text-gray-400">
                 🎨 Theme
             </h3>
             <label className="inline-flex items-center justify-between cursor-pointer w-full">
