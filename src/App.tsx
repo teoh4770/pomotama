@@ -20,7 +20,7 @@ const App = () => {
     const hiddenClass =
         isRunning && isDarkModeWhenRunning
             ? 'invisible delay-1000'
-            : 'opacity-100 transition ease-in duration-500 visible';
+            : '';
 
     useEffect(() => {
         const bodyClass = ['bg-black', 'delay-1000'];
