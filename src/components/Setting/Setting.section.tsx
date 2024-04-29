@@ -67,13 +67,14 @@ const Setting = () => {
                 type="button"
                 aria-label="setting button"
                 onClick={showModal}
+                className='seen'
             >
                 <span>❤️</span>
                 <span>Settings</span>
             </Button>
 
             {/* link about dialog html component: https://blog.webdevsimplified.com/2023-04/html-dialog/ */}
-            <dialog ref={dialog} className="dialog | box">
+            <dialog ref={dialog} className="seen dialog | box">
                 <form method="dialog" onSubmit={handleSubmit}>
                     <header className="dialog__header | box | flex items-center">
                         <h2 className="text-lg font-bold">Setting</h2>

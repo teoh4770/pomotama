@@ -21,7 +21,7 @@ const ThemeSettingInputs = ({ themeSetting, setThemeSetting }: ThemeSettingInput
                 🎨 Theme
             </h3>
             <label className="inline-flex items-center justify-between cursor-pointer w-full">
-                <span className="timer-setting__title font-bold">Dark Mode</span>
+                <span className="timer-setting__title font-bold">Dark Mode When Running</span>
                 <input
                     type="checkbox"
                     checked={themeSetting.darkModeWhenRunning}

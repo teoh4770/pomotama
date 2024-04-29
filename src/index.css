@@ -25,6 +25,7 @@ body {
 
     /* Colors */
     background-color: var(--primary-color, rgb(186 73 73));
+    transition: background-color 500ms ease;
 
     /* Others */
     -webkit-tap-highlight-color: transparent;
@@ -104,12 +105,13 @@ mark {
     color: var(--primary-color);
 }
 
-.transition-invisibility {
+.transition-invisibility * {
     visibility: hidden;
-    opacity: 0;
-    transition: opacity 500ms ease-in, visibility 0ms ease-in 500ms;
 }
 
+.seen, .seen * {
+    visibility: visible;
+}
 /* Block */
 
 /* Input

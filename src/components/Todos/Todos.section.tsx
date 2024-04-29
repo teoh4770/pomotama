@@ -6,10 +6,9 @@ import { Button } from '../ui';
 
 interface TodosProps {
     timerCallback: () => void;
-    hiddenClass: string;
 }
 
-const Todos = ({ timerCallback, hiddenClass }: TodosProps) => {
+const Todos = ({ timerCallback}: TodosProps) => {
     const { todos, selectedTodoId, todoActions } = useTodos();
     const [openAddTaskForm, setOpenAddTaskForm] = useState(false);
 
@@ -26,7 +25,7 @@ const Todos = ({ timerCallback, hiddenClass }: TodosProps) => {
     return (
         <section id="tasks" className="tasks-section mx-auto max-w-[30rem]">
             <div className="mt-4">
-                <div className="current-todo-message py-4 text-center">
+                <div className="seen current-todo-message py-4 text-center">
                     {selectedTodo ? (
                         <>
                             <p className="text-slate-300">
@@ -47,7 +46,6 @@ const Todos = ({ timerCallback, hiddenClass }: TodosProps) => {
                 </div>
             </div>
 
-            <div className={`${hiddenClass}`}>
                     {/* header of todo list */}
                     <header className="flex justify-between border-b-2 py-4">
                         <h2 className="text-lg font-bold text-white">Tasks</h2>
@@ -104,7 +102,6 @@ const Todos = ({ timerCallback, hiddenClass }: TodosProps) => {
                             </Button>
                         </div>
                     )}
-                </div>
         </section>
     );
 };

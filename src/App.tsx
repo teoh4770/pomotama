@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Button } from './components/ui';
 import { Setting, Timer, Todos, Summary } from './components';
 import { useTimer } from './hooks';
@@ -8,17 +9,27 @@ import { themeSettingsAtom } from './lib/atom';
 const App = () => {
     const timer = useTimer();
     const resetTimer = timer.actions.resetTimer;
+
+    // state
     const themeSettings = useAtomValue(themeSettingsAtom);
     const isDarkModeWhenRunning = themeSettings.darkModeWhenRunning;
 
-    // Determine if the timer is running
     const isRunning = timer.status === 'running';
 
     // if timer is running and isDarkModeWhenRunning setting is on, add hiddenClass
-    const hiddenClass = isRunning && isDarkModeWhenRunning ? 'transition-invisibility' : 'opacity-100 transition ease-in duration-500 visible';
+    const hiddenClass =
+        isRunning && isDarkModeWhenRunning ? 'transition-invisibility' : 'opacity-100 transition ease-in duration-500 visible';
+
+    useEffect(() => {
+        if (isRunning && isDarkModeWhenRunning) {
+            document.body.style.backgroundColor = "black"
+        } else {
+            document.body.style.backgroundColor = ""
+        }
+    }, [isRunning, isDarkModeWhenRunning])
 
     return (
-        <main className="[&>*]:px-3 sm:[&>*]:px-4">
+        <main className={`${hiddenClass} [&>*]:px-3 sm:[&>*]:px-4`}>
             <section aria-label="app" className='min-h-screen'>
                 <header className="mx-auto flex max-w-2xl gap-2 py-4">
                     <h1 className={`mr-auto text-2xl font-bold text-white ${hiddenClass}`}>
@@ -35,9 +46,9 @@ const App = () => {
                     </Button>
                     <Setting />
                 </header>
-                <Timer timer={timer} hiddenClass={hiddenClass}  />
-                <Todos timerCallback={resetTimer} hiddenClass={hiddenClass}  />
-                <Summary className={`mx-auto mt-6 max-w-[30rem] border-t-2 bg-white/10 py-5 px-3 text-white ${hiddenClass}`} />
+                <Timer timer={timer} />
+                <Todos timerCallback={resetTimer}  />
+                <Summary className={`mx-auto mt-6 max-w-[30rem] border-t-2 bg-white/10 py-5 px-3 text-white`} />
             </section>
 
             <section
