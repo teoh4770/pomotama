@@ -18,7 +18,7 @@ const TimerControls = ({ status, toggleTimer }: ControlsProps) => {
     }
 
     return (
-        <div className="flex justify-center seen">
+        <div className="flex justify-center visible">
             <Button
                 intent="primary"
                 size="large"
