@@ -11,9 +11,12 @@ interface TodosProps {
 const Todos = ({ timerCallback }: TodosProps) => {
     const { todos, selectedTodoId, todoActions } = useTodos();
     const [openAddTaskForm, setOpenAddTaskForm] = useState(false);
-
+    const [showCompletedTasks, setShowCompletedTasks] = useState(false);
     const selectedTodo = todoActions.find(selectedTodoId);
 
+    /*
+     TODO: refactor these functions as toggle functions
+    */
     function showAddTaskForm() {
         setOpenAddTaskForm(true);
     }
@@ -22,10 +25,18 @@ const Todos = ({ timerCallback }: TodosProps) => {
         setOpenAddTaskForm(false);
     }
 
+    function showCompletedTodos() {
+        setShowCompletedTasks(true);
+    }
+
+    function hideCompletedTodos() {
+        setShowCompletedTasks(false);
+    }
+
     return (
         <section id="tasks" className="tasks-section mx-auto max-w-[30rem]">
             <div className="mt-4">
-                <div className="visible current-todo-message py-4 text-center">
+                <div className="current-todo-message visible py-4 text-center">
                     {selectedTodo ? (
                         <>
                             <p className="text-slate-300">
@@ -52,7 +63,11 @@ const Todos = ({ timerCallback }: TodosProps) => {
             </header>
 
             <TodoList
-                todos={todos}
+                todos={
+                    showCompletedTasks
+                        ? todos.filter((todo) => todo.completed)
+                        : todos
+                }
                 todoActions={todoActions}
                 timerCallback={timerCallback}
             />
@@ -99,6 +114,20 @@ const Todos = ({ timerCallback }: TodosProps) => {
                         onClick={() => todoActions.clearCompleted()}
                     >
                         Clear Finished Tasks
+                    </Button>
+
+                    <Button
+                        intent="secondary"
+                        size="small"
+                        type="button"
+                        aria-label="Show/Hide all completed tasks button"
+                        onClick={
+                            showCompletedTasks
+                                ? hideCompletedTodos
+                                : showCompletedTodos
+                        }
+                    >
+                        {showCompletedTasks ? 'Hide' : 'Show'} Finished Tasks
                     </Button>
                 </div>
             )}
