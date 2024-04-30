@@ -68,10 +68,10 @@ const Todos = ({ timerCallback }: TodosProps) => {
                 <section
                     role="region"
                     aria-label="Todos controls"
-                    className="mt-4 grid gap-[0.375rem]"
+                    className="mt-4 grid gap-2"
                 >
-                    <div className="filters flex flex-wrap items-center">
-                        <span className="mr-2 min-w-[3.125rem] text-sm text-white">
+                    <div className="filters flex">
+                        <span className="mr-2 min-w-[3.125rem] translate-y-[3.5px] text-sm text-white">
                             Filters:
                         </span>
 
@@ -110,10 +110,11 @@ const Todos = ({ timerCallback }: TodosProps) => {
                         />
                     </div>
 
-                    <div className="actions flex flex-wrap items-center">
-                        <span className="mr-2 max-w-[3.125rem] text-sm text-white">
+                    <div className="actions flex">
+                        <span className="mr-2 max-w-[3.125rem] translate-y-[3.5px] text-sm text-white">
                             Actions:
                         </span>
+
                         <div className="flex flex-wrap gap-1">
                             <Button
                                 className=""
