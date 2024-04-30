@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
-import { useAtom, useAtomValue } from 'jotai';
+import { useAtom } from 'jotai';
 
-import { selectedTodoIdAtom, timerSettingsAtom, todosAtom } from '../lib';
+import { selectedTodoIdAtom, todosAtom } from '../lib';
 import { Todo, TodoFormData, TodoActions } from '../types';
 import {
     updateSelectedTodoIdFromStorage,
@@ -18,7 +18,6 @@ interface UseTodos {
 const useTodos = (): UseTodos => {
     const [todos, setTodos] = useAtom<Todo[]>(todosAtom);
     const [selectedTodoId, setSelectedTodoId] = useAtom(selectedTodoIdAtom);
-    useAtomValue(timerSettingsAtom)
 
     useEffect(() => {
         updateUserTodosFromStorage(todos);

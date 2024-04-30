@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useTodos } from '../../hooks';
 
 import { TodoForm, TodoList } from '.';
-import { Button } from '../ui';
+import { Button, Tabs } from '../ui';
+import { TodosFilterEnum } from '../../types';
 
 interface TodosProps {
     timerCallback: () => void;
@@ -11,26 +12,25 @@ interface TodosProps {
 const Todos = ({ timerCallback }: TodosProps) => {
     const { todos, selectedTodoId, todoActions } = useTodos();
     const [openAddTaskForm, setOpenAddTaskForm] = useState(false);
-    const [showCompletedTasks, setShowCompletedTasks] = useState(false);
-    const selectedTodo = todoActions.find(selectedTodoId);
+    const [filterType, setFilterType] = useState<TodosFilterEnum>(
+        TodosFilterEnum.ALL
+    );
 
-    /*
-     TODO: refactor these functions as toggle functions
-    */
+    const selectedTodo = todoActions.find(selectedTodoId);
+    const filteredTodos = useMemo(() => {
+        return {
+            [TodosFilterEnum.ALL]: todos,
+            [TodosFilterEnum.ACTIVE]: todos.filter((todo) => !todo.completed),
+            [TodosFilterEnum.COMPLETED]: todos.filter((todo) => todo.completed),
+        };
+    }, [todos]);
+
     function showAddTaskForm() {
         setOpenAddTaskForm(true);
     }
 
     function hideAddTaskForm() {
         setOpenAddTaskForm(false);
-    }
-
-    function showCompletedTodos() {
-        setShowCompletedTasks(true);
-    }
-
-    function hideCompletedTodos() {
-        setShowCompletedTasks(false);
     }
 
     return (
@@ -62,12 +62,86 @@ const Todos = ({ timerCallback }: TodosProps) => {
                 <h2 className="text-lg font-bold text-white">Tasks</h2>
             </header>
 
+            {/* action buttons for todo list */}
+            {todos.length > 0 && (
+                <section
+                    role="region"
+                    aria-label="Todos controls"
+                    className="mt-4 grid gap-[0.375rem]"
+                >
+                    <div className="filters flex flex-wrap items-center">
+                        <span className="mr-2 min-w-[3.125rem] text-sm text-white">
+                            Filters:
+                        </span>
+
+                        <Tabs
+                            tabListClassName="flex flex-wrap gap-1"
+                            defaultValue={TodosFilterEnum.ALL}
+                            items={[
+                                {
+                                    name: TodosFilterEnum.ALL,
+                                    label: 'Show All',
+                                    value: TodosFilterEnum.ALL,
+                                    ariaLabel: 'Show all tasks button',
+                                    handleClick: () =>
+                                        setFilterType(TodosFilterEnum.ALL),
+                                },
+                                {
+                                    name: TodosFilterEnum.ACTIVE,
+                                    label: 'Show Active',
+                                    value: TodosFilterEnum.ACTIVE,
+                                    ariaLabel: 'Show all active tasks button',
+                                    handleClick: () =>
+                                        setFilterType(TodosFilterEnum.ACTIVE),
+                                },
+                                {
+                                    name: TodosFilterEnum.COMPLETED,
+                                    label: 'Show Completed',
+                                    value: TodosFilterEnum.COMPLETED,
+                                    ariaLabel:
+                                        'Show all completed tasks button',
+                                    handleClick: () =>
+                                        setFilterType(
+                                            TodosFilterEnum.COMPLETED
+                                        ),
+                                },
+                            ]}
+                        />
+                    </div>
+
+                    <div className="actions flex flex-wrap items-center">
+                        <span className="mr-2 max-w-[3.125rem] text-sm text-white">
+                            Actions:
+                        </span>
+                        <div className="flex flex-wrap gap-1">
+                            <Button
+                                className=""
+                                intent="secondary"
+                                size="small"
+                                type="button"
+                                aria-label="Clear all tasks button"
+                                onClick={() => todoActions.clearAll()}
+                            >
+                                Clear All
+                            </Button>
+                            {/* if got no completed task, then hide it */}
+                            <Button
+                                className=""
+                                intent="secondary"
+                                size="small"
+                                type="button"
+                                aria-label="Clear all completed tasks button"
+                                onClick={() => todoActions.clearCompleted()}
+                            >
+                                Clear Completed
+                            </Button>
+                        </div>
+                    </div>
+                </section>
+            )}
+
             <TodoList
-                todos={
-                    showCompletedTasks
-                        ? todos.filter((todo) => todo.completed)
-                        : todos
-                }
+                todos={filteredTodos[filterType]}
                 todoActions={todoActions}
                 timerCallback={timerCallback}
             />
@@ -91,45 +165,6 @@ const Todos = ({ timerCallback }: TodosProps) => {
                 >
                     <span className="mx-auto">⭐ Add Task</span>
                 </Button>
-            )}
-
-            {/* action buttons for todo list */}
-            {todos.length > 0 && (
-                <div className="mt-4 flex justify-between">
-                    <Button
-                        intent="secondary"
-                        size="small"
-                        type="button"
-                        aria-label="Clear all tasks button"
-                        onClick={() => todoActions.clearAll()}
-                    >
-                        Clear All Tasks
-                    </Button>
-
-                    <Button
-                        intent="secondary"
-                        size="small"
-                        type="button"
-                        aria-label="Clear all completed tasks button"
-                        onClick={() => todoActions.clearCompleted()}
-                    >
-                        Clear Finished Tasks
-                    </Button>
-
-                    <Button
-                        intent="secondary"
-                        size="small"
-                        type="button"
-                        aria-label="Show/Hide all completed tasks button"
-                        onClick={
-                            showCompletedTasks
-                                ? hideCompletedTodos
-                                : showCompletedTodos
-                        }
-                    >
-                        {showCompletedTasks ? 'Hide' : 'Show'} Finished Tasks
-                    </Button>
-                </div>
             )}
         </section>
     );

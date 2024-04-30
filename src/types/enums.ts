@@ -9,4 +9,10 @@ enum TimerModeEnum {
     LONG_BREAK = 'longBreakDuration',
 }
 
-export { TimerStatusEnum, TimerModeEnum };
+enum TodosFilterEnum {
+    ALL = 'all',
+    ACTIVE = 'active',
+    COMPLETED = 'completed',
+}
+
+export { TimerStatusEnum, TimerModeEnum, TodosFilterEnum };
