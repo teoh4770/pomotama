@@ -78,11 +78,17 @@ const TodoItem = ({
                             type="checkbox"
                             name={'todo-' + todo.id}
                             id={todo.id}
+                            className="peer"
                             checked={todo.completed}
                             onChange={toggleTodo}
                             onClick={(e) => e.stopPropagation()}
                         />
-                        <label htmlFor={todo.id}>{todo.title}</label>
+                        <label
+                            className="peer-checked:line-through"
+                            htmlFor={todo.id}
+                        >
+                            {todo.title}
+                        </label>
                     </span>
                 </div>
 
