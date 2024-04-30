@@ -16,6 +16,7 @@ const Todos = ({ timerCallback }: TodosProps) => {
         TodosFilterEnum.ALL
     );
 
+    const hasCompletedTodo = todos.find((todo) => todo.completed) !== undefined;
     const selectedTodo = todoActions.find(selectedTodoId);
     const filteredTodos = useMemo(() => {
         return {
@@ -124,17 +125,19 @@ const Todos = ({ timerCallback }: TodosProps) => {
                             >
                                 Clear All
                             </Button>
-                            {/* if got no completed task, then hide it */}
-                            <Button
-                                className=""
-                                intent="secondary"
-                                size="small"
-                                type="button"
-                                aria-label="Clear all completed tasks button"
-                                onClick={() => todoActions.clearCompleted()}
-                            >
-                                Clear Completed
-                            </Button>
+
+                            {hasCompletedTodo && (
+                                <Button
+                                    className=""
+                                    intent="secondary"
+                                    size="small"
+                                    type="button"
+                                    aria-label="Clear all completed tasks button"
+                                    onClick={() => todoActions.clearCompleted()}
+                                >
+                                    Clear Completed
+                                </Button>
+                            )}
                         </div>
                     </div>
                 </section>
