@@ -15,7 +15,7 @@ const Todos = ({ timerCallback }: TodosProps) => {
     const selectedTodo = todoActions.find(selectedTodoId);
 
     /*
-     TODO: refactor these functions  as toggle functions
+     TODO: refactor these functions as toggle functions
     */
     function showAddTaskForm() {
         setOpenAddTaskForm(true);
@@ -120,7 +120,7 @@ const Todos = ({ timerCallback }: TodosProps) => {
                         intent="secondary"
                         size="small"
                         type="button"
-                        aria-label="Clear all completed tasks button"
+                        aria-label="Show/Hide all completed tasks button"
                         onClick={
                             showCompletedTasks
                                 ? hideCompletedTodos
