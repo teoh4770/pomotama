@@ -19,7 +19,7 @@ const NumberInput: React.FC<NumberInputProps> = ({
         defaultValue ? Number(defaultValue) : 1
     );
 
-    const spanText = `${completedPomodoro !== undefined ? 'Act / Est. Pomodoro' : 'Est. Pomodoro'}`;
+    const spanText = `${completedPomodoro !== undefined ? 'Act / Est. Pomodoro' : 'Est. Pomodoro (round)'}`;
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
         const value = +e.currentTarget.value;
