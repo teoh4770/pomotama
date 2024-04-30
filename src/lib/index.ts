@@ -3,14 +3,14 @@ import {
     timerModeAtom,
     longBreakIntervalAtom,
     todosAtom,
-    unfininishedTodoTotalAmountAtom,
+    unfininishedTodoSessionsAmountAtom,
     finishedSessionsAtom,
     getTotalSessionsAtom,
-    getUnfinishedSessionsAtom,
+    getUnfinishedSessionsForEachTimerModeAtom,
     getTotalTimeInMinutesAtom,
     getUpdatedTimeAtom,
     selectedTodoIdAtom,
-    themeSettingsAtom
+    themeSettingsAtom,
 } from './atom';
 
 export {
@@ -18,14 +18,14 @@ export {
     timerModeAtom,
     longBreakIntervalAtom,
     todosAtom,
-    unfininishedTodoTotalAmountAtom,
+    unfininishedTodoSessionsAmountAtom,
     finishedSessionsAtom,
     getTotalSessionsAtom,
-    getUnfinishedSessionsAtom,
+    getUnfinishedSessionsForEachTimerModeAtom,
     getTotalTimeInMinutesAtom,
     getUpdatedTimeAtom,
     selectedTodoIdAtom,
-    themeSettingsAtom
+    themeSettingsAtom,
 };
 
 import { runTour } from './driver';

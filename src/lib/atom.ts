@@ -32,22 +32,6 @@ const timerModeAtom = atom(TimerModeEnum.POMODORO);
 // Todo global variables
 const todosAtom = atom(JSON.parse(fetchUserTodosFromStorage() ?? '[]'));
 
-const unfininishedTodoTotalAmountAtom = atom((get) => {
-    const todos = get(todosAtom);
-    const unfinishedTodoTotal = todos.reduce(
-        (accumulator: number, todo: Todo) => {
-            const unfinishedTodoOfTodo = Math.max(
-                todo.targetPomodoro - todo.completedPomodoro,
-                0
-            );
-            return accumulator + unfinishedTodoOfTodo;
-        },
-        0
-    );
-
-    return unfinishedTodoTotal;
-});
-
 const finishedSessionsAtom = atom((get) => {
     const todos = get(todosAtom);
     const finishedSessions = todos.reduce((accumulator: number, todo: Todo) => {
@@ -60,14 +44,38 @@ const finishedSessionsAtom = atom((get) => {
 const getTotalSessionsAtom = atom((get) => {
     const todos = get(todosAtom);
     const totalSessions = todos.reduce((accumulator: number, todo: Todo) => {
+        if (todo.completed) {
+            return accumulator;
+        }
+
         return accumulator + todo.targetPomodoro;
     }, 0);
 
     return totalSessions;
 });
 
-const getUnfinishedSessionsAtom = atom((get) => {
-    const unfinishedTodoTotal = get(unfininishedTodoTotalAmountAtom);
+const unfininishedTodoSessionsAmountAtom = atom((get) => {
+    const todos = get(todosAtom);
+    const unfinishedTodoSessionsTotal = todos.reduce(
+        (accumulator: number, todo: Todo) => {
+            if (todo.completed) {
+                return accumulator;
+            }
+
+            const unfinishedTodoSessions = Math.max(
+                todo.targetPomodoro - todo.completedPomodoro,
+                0
+            );
+            return accumulator + unfinishedTodoSessions;
+        },
+        0
+    );
+
+    return unfinishedTodoSessionsTotal;
+});
+
+const getUnfinishedSessionsForEachTimerModeAtom = atom((get) => {
+    const unfinishedTodoTotal = get(unfininishedTodoSessionsAmountAtom);
     const longbreakInterval = get(longBreakIntervalAtom);
 
     const pomodoroSessions = unfinishedTodoTotal;
@@ -85,7 +93,7 @@ const getUnfinishedSessionsAtom = atom((get) => {
 
 const getTotalTimeInMinutesAtom = atom((get) => {
     const timerSettings = get(timerSettingsAtom);
-    const unfinishedSessions = get(getUnfinishedSessionsAtom);
+    const unfinishedSessions = get(getUnfinishedSessionsForEachTimerModeAtom);
     const timerModeKeys = Object.keys(timerSettings) as TimerModeEnum[];
     let totalTime = 0;
 
@@ -119,12 +127,12 @@ export {
     longBreakIntervalAtom,
     timerModeAtom,
     todosAtom,
-    unfininishedTodoTotalAmountAtom,
+    unfininishedTodoSessionsAmountAtom,
     finishedSessionsAtom,
     getTotalSessionsAtom,
-    getUnfinishedSessionsAtom,
+    getUnfinishedSessionsForEachTimerModeAtom,
     getTotalTimeInMinutesAtom,
     getUpdatedTimeAtom,
     selectedTodoIdAtom,
-    themeSettingsAtom
+    themeSettingsAtom,
 };

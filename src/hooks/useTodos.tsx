@@ -84,8 +84,14 @@ const useTodos = (): UseTodos => {
     }
 
     function clearAll() {
-        setTodos([]);
-        setSelectedTodoId('');
+        const isConfirm = confirm(
+            "Hey, are you absolutely positively sure about wiping out all those todos? No turning back once they're gone! 🌪️"
+        );
+
+        if (isConfirm) {
+            setTodos([]);
+            setSelectedTodoId('');
+        }
     }
 
     function clearCompleted() {
