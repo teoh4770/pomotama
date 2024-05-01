@@ -86,7 +86,7 @@ const useTimer = (): UseTimer => {
         const intervalId = workerTimer.setInterval(
             () => {
                 if (remainingTime <= 1) {
-                    // timesup play ding
+                    // play sounds when times up
                     playSound();
                     handleTimerEnd();
                     resetTimer();
@@ -131,12 +131,8 @@ const useTimer = (): UseTimer => {
                 (todoItem) => todoItem.id === selectedTodoId
             );
 
-            if (todo) {
-                if (timerMode === TimerModeEnum.POMODORO) {
-                    todoActions.incrementPomodoro(selectedTodoId);
-                }
-            } else {
-                throw new Error('Todo does not exist');
+            if (todo && timerMode === TimerModeEnum.POMODORO) {
+                todoActions.incrementPomodoro(selectedTodoId);
             }
         }
 
