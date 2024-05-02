@@ -6,3 +6,6 @@ export { Button };
 
 import { Tabs } from './Tabs';
 export { Tabs };
+
+import { Tooltip } from './Tooltip';
+export { Tooltip };
