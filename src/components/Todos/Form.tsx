@@ -2,7 +2,7 @@ import { FormEvent, useEffect, useRef } from 'react';
 
 import { Todo, TodoFormData } from '../../types';
 import { moveCursorToTheEnd } from '../../utils';
-import { NumberInput } from '../NumberInput';
+import { NumberInput } from './NumberInput';
 import { Button } from '../ui';
 
 interface FormProps {

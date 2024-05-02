@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { Button } from '../ui';
+import { Button } from '../../ui';
 
 interface NumberInputExtraProps {
     completedPomodoro?: number;
@@ -19,7 +19,8 @@ const NumberInput: React.FC<NumberInputProps> = ({
         defaultValue ? Number(defaultValue) : 1
     );
 
-    const spanText = `${completedPomodoro !== undefined ? 'Act / Est. Pomodoro' : 'Est. Pomodoro (round)'}`;
+    // span text (the text that I need to elaborate)
+    const spanText = `${completedPomodoro !== undefined ? 'Act / Est. Pomodoro' : 'Est. Pomodoro Round'}`;
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
         const value = +e.currentTarget.value;
@@ -44,6 +45,23 @@ const NumberInput: React.FC<NumberInputProps> = ({
         <div className={className} {...props}>
             <label>
                 <span className="label-text mb-1 inline-block">{spanText}</span>
+
+                <span className="">
+                    {/* container node + text node */}
+                    <span className="relative">
+                        <button type="button" className="info peer border">
+                            ℹ️
+                        </button>
+
+                        {/* tooltip container node + tooltip node (on text hover) */}
+                        {/* w-20 */}
+                        <span className="absolute left-1/2 top-0 flex -translate-x-1/2 -translate-y-full items-center rounded-xl bg-slate-900 text-white opacity-0 transition-opacity delay-100 peer-hover:opacity-100 peer-active:opacity-100">
+                            <span className="tooltip-content inline-block w-20 p-[2px] text-center text-[0.75rem]">
+                                Set Rounds
+                            </span>
+                        </span>
+                    </span>
+                </span>
 
                 <div className="flex items-center gap-1">
                     {completedPomodoro !== undefined ? (
