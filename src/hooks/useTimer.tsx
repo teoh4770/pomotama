@@ -3,6 +3,7 @@ import { useAtom, useAtomValue } from 'jotai';
 
 import {
     longBreakIntervalAtom,
+    themeSettingsAtom,
     timerModeAtom,
     timerSettingsAtom,
 } from '../lib';
@@ -54,7 +55,11 @@ const useTimer = (): UseTimer => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedTodoId]);
 
+    const themeSettings = useAtomValue(themeSettingsAtom);
+    const isDarkModeWhenRunning = themeSettings.darkModeWhenRunning;
+
     // derived variables
+    const isRunning = status === TimerStatusEnum.RUNNING;
     const initialTime = useMemo(() => {
         return minutesToSeconds(timerSettings[timerMode]);
     }, [timerSettings, timerMode]);
@@ -80,6 +85,17 @@ const useTimer = (): UseTimer => {
     useEffect(() => {
         updateLongBreakIntervalFromStorage(longBreakInterval);
     }, [longBreakInterval]);
+
+    // update dark mode
+    useEffect(() => {
+        const bodyClass = ['bg-black', 'delay-1000'];
+
+        if (isRunning && isDarkModeWhenRunning) {
+            document.body.classList.add(...bodyClass);
+        } else {
+            document.body.classList.remove(...bodyClass);
+        }
+    }, [isRunning, isDarkModeWhenRunning]);
 
     // update the timer based on status and remaining
     useEffect(() => {

@@ -1,5 +1,4 @@
 import { useAtomValue } from 'jotai';
-import { useEffect } from 'react';
 import { Setting, Summary, Timer, Todos } from './components';
 import { Button } from './components/ui';
 import { useTimer } from './hooks';
@@ -19,16 +18,6 @@ const App = () => {
     // if timer is running and isDarkModeWhenRunning setting is on, add hiddenClass
     const hiddenClass =
         isRunning && isDarkModeWhenRunning ? 'invisible delay-1000' : '';
-
-    useEffect(() => {
-        const bodyClass = ['bg-black', 'delay-1000'];
-
-        if (isRunning && isDarkModeWhenRunning) {
-            document.body.classList.add(...bodyClass);
-        } else {
-            document.body.classList.remove(...bodyClass);
-        }
-    }, [isRunning, isDarkModeWhenRunning]);
 
     return (
         <main className="[&>*]:px-3 sm:[&>*]:px-4">
