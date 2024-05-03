@@ -9,6 +9,11 @@ self.onmessage = (e: MessageEvent): void => {
     const command = data.command;
     const id = data.id;
 
+    if (data === 'heartbeat') {
+        // perform no-operation to keep the worker alive
+        console.log('keep the background worker running!');
+    }
+
     if (command === 'interval:start') {
         if (typeof data.interval === 'number') {
             const intervalId = +setInterval(() => {
