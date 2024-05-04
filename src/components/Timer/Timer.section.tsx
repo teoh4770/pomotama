@@ -76,6 +76,7 @@ const Timer = ({ timer }: TimerProps) => {
 
                 <TimerControls
                     status={timer.status}
+                    isTimerRunningInDarkMode={timer.isTimerRunningInDarkMode}
                     toggleTimer={timer.actions.toggleTimer}
                     resetTimer={timer.actions.resetTimer}
                 />

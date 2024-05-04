@@ -4,15 +4,23 @@ import { Button } from '../ui';
 
 interface ControlsProps {
     status: string;
+    isTimerRunningInDarkMode: boolean;
     toggleTimer: () => void;
     resetTimer: () => void;
 }
 
-const TimerControls = ({ status, toggleTimer }: ControlsProps) => {
+const TimerControls = ({
+    status,
+    isTimerRunningInDarkMode,
+    toggleTimer,
+}: ControlsProps) => {
     const timerIsRunning = status === 'running';
     const buttonText = timerIsRunning ? 'pause' : 'start';
+    const buttonTextColor = isTimerRunningInDarkMode
+        ? 'text-black'
+        : 'text-[var(--primary-color)]';
     const activeButtonClass = timerIsRunning
-        ? 'translate-y-0 text-black shadow-none transition-[color] delay-1000'
+        ? `translate-y-0 ${buttonTextColor} shadow-none transition-[color] delay-1000`
         : '';
 
     function playSound() {
