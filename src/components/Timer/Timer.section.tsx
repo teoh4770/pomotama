@@ -17,6 +17,7 @@ interface UseTimer {
     remainingTime: number;
     percentageToCompletion: number;
     timerMode: TimerModeEnum;
+    isTimerRunningInDarkMode: boolean;
     actions: TimerActions;
 }
 
@@ -66,6 +67,7 @@ const Timer = ({ timer }: TimerProps) => {
                         },
                     ]}
                     timerMode={timer.timerMode}
+                    isTimerRunningInDarkMode={timer.isTimerRunningInDarkMode}
                     tabListClassName="center | flex w-fit flex-row"
                     tabItemClassName="bg-transparent"
                 />

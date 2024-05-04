@@ -9,15 +9,11 @@ const App = () => {
     const timer = useTimer();
     const resetTimer = timer.actions.resetTimer;
 
-    // state
     const themeSettings = useAtomValue(themeSettingsAtom);
     const isDarkModeWhenRunning = themeSettings.darkModeWhenRunning;
-
     const isRunning = timer.status === 'running';
-
-    // if timer is running and isDarkModeWhenRunning setting is on, add hiddenClass
-    const hiddenClass =
-        isRunning && isDarkModeWhenRunning ? 'invisible delay-1000' : '';
+    const isTimerRunningInDarkMode = isDarkModeWhenRunning && isRunning;
+    const hiddenClass = isTimerRunningInDarkMode ? 'invisible delay-1000' : '';
 
     return (
         <main className="[&>*]:px-3 sm:[&>*]:px-4">
@@ -42,7 +38,7 @@ const App = () => {
                     </Button>
                     <Setting />
                 </header>
-                <Timer timer={timer} />
+                <Timer timer={{ ...timer, isTimerRunningInDarkMode }} />
                 <Todos timerCallback={resetTimer} />
                 <Summary
                     className={`mx-auto mt-6 max-w-[30rem] border-t-2 bg-white/10 px-3 py-5 text-white`}
