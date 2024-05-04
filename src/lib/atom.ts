@@ -35,6 +35,10 @@ const todosAtom = atom(JSON.parse(fetchUserTodosFromStorage() ?? '[]'));
 const finishedSessionsAtom = atom((get) => {
     const todos = get(todosAtom);
     const finishedSessions = todos.reduce((accumulator: number, todo: Todo) => {
+        if (todo.completed) {
+            return accumulator;
+        }
+
         return accumulator + todo.completedPomodoro;
     }, 0);
 
