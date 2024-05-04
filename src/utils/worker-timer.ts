@@ -46,7 +46,7 @@ const createWorkerTimer = (worker: Worker) => {
 
 const worker = new Worker();
 const workerTimer = createWorkerTimer(worker);
-const halfMinute = 30 * 1000;
+const halfMinute = 20 * 1000;
 
 // To avoid browser from halting the service worker when switching to another tab, sending a "heartbeat" command every 30 seconds will ensure the timer keeps running.
 setInterval(() => {
