@@ -82,6 +82,7 @@ const TodoForm = ({
                         intent="naked"
                         size="small"
                         type="button"
+                        className='uppercase tracking-wide'
                         aria-label="Delete button"
                         onClick={onDelete}
                     >
@@ -96,6 +97,7 @@ const TodoForm = ({
                         intent="naked"
                         size="small"
                         type="button"
+                        className='uppercase tracking-wide'
                         aria-label="Cancel button"
                         onClick={onCancel}
                     >
@@ -106,6 +108,7 @@ const TodoForm = ({
                         intent="confirm"
                         size="small"
                         type="submit"
+                        className='uppercase tracking-wide'
                         aria-label="Confirm button"
                     >
                         Save
