@@ -11,7 +11,6 @@ self.onmessage = (e: MessageEvent): void => {
 
     if (data === 'heartbeat') {
         // perform no-operation to keep the worker alive
-        console.log('keep the background worker running!');
     }
 
     if (command === 'interval:start') {
