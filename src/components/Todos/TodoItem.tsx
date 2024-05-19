@@ -66,8 +66,8 @@ const TodoItem = ({
 
     return (
         <Draggable key={todo.id} draggableId={todo.id.toString()} index={index}>
-            {(provided, snapshot) => (
-                <div
+            {(provided, _) => (
+                <li
                     ref={provided.innerRef}
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
@@ -132,7 +132,7 @@ const TodoItem = ({
                             </Button>
                         </div>
                     </div>
-                </div>
+                </li>
             )}
         </Draggable>
     );

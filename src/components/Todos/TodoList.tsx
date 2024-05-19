@@ -40,8 +40,8 @@ const TodoList = ({ todos, todoActions, timerCallback }: TodoListProps) => {
     return (
         <DragDropContext onDragEnd={onDragEnd}>
             <Droppable droppableId="droppable">
-                {(provided, snapshot) => (
-                    <div
+                {(provided, _) => (
+                    <ol
                         id="todo-list"
                         {...provided.droppableProps}
                         ref={provided.innerRef}
@@ -60,7 +60,7 @@ const TodoList = ({ todos, todoActions, timerCallback }: TodoListProps) => {
                             />
                         ))}
                         {provided.placeholder}
-                    </div>
+                    </ol>
                 )}
             </Droppable>
         </DragDropContext>
