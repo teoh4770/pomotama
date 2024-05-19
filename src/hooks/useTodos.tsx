@@ -1,8 +1,8 @@
-import { useEffect } from 'react';
 import { useAtom } from 'jotai';
+import { useEffect } from 'react';
 
 import { selectedTodoIdAtom, todosAtom } from '../lib';
-import { Todo, TodoFormData, TodoActions } from '../types';
+import { Todo, TodoActions, TodoFormData } from '../types';
 import {
     updateSelectedTodoIdFromStorage,
     updateUserTodosFromStorage,
@@ -127,6 +127,14 @@ const useTodos = (): UseTodos => {
         return todos.find((todo) => todo.id === id);
     }
 
+    function reorder(fromIndex: number, toIndex: number) {
+        const updatedTodos = [...todos];
+        const [removed] = updatedTodos.splice(fromIndex, 1);
+        updatedTodos.splice(toIndex, 0, removed);
+
+        setTodos(updatedTodos);
+    }
+
     const todoActions: TodoActions = {
         add,
         edit,
@@ -136,6 +144,7 @@ const useTodos = (): UseTodos => {
         clearCompleted,
         incrementPomodoro,
         find,
+        reorder,
     };
 
     return { todos, selectedTodoId, setSelectedTodoId, todoActions };
