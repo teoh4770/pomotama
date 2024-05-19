@@ -22,6 +22,8 @@ interface TodoActions {
     clearCompleted: () => void;
     incrementPomodoro: (id: string) => void;
     find: (id: string) => Todo | undefined;
+    reorder: (fromIndex: number, toIndex: number) => void;
 }
 
-export type { Todo, TodoFormData, TodoActions };
+export type { Todo, TodoActions, TodoFormData };
+
