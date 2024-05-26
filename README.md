@@ -33,9 +33,6 @@ Here's what Pomotama offers:
 > ℹ️ Tip:
 > The selected task will update its estimate pomodoro number once the pomodoro timer has finished!
 
-## 👩🏽‍🍳 The Process
-
-[In progress]
 
 ## 📚 What I Learned
 
