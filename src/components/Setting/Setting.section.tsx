@@ -5,73 +5,67 @@ import {
     timerSettingsAtom,
     themeSettingsAtom,
 } from '../../lib';
-
 import { TimerSettingInputs } from './TimerSettingInputs';
 import { ThemeSettingInputs } from './ThemeSettingInputs';
-
 import { Button } from '../ui';
 
-interface SettingFormTimerData {
+export interface SettingFormTimerData {
     pomodoroDuration: number;
     shortBreakDuration: number;
     longBreakDuration: number;
     longBreakInterval: number;
 }
 
-const Setting = () => {
-    const [timerSetting, setTimerSetting] = useAtom(timerSettingsAtom);
+const Setting: React.FC = () => {
+    // State management with Jotai
+    const [timerSettings, setTimerSetting] = useAtom(timerSettingsAtom);
     const [longBreakInterval, setLongBreakInterval] = useAtom(
         longBreakIntervalAtom
     );
-    const [themeSetting, setThemeSetting] = useAtom(themeSettingsAtom);
+    const [themeSettings, setThemeSetting] = useAtom(themeSettingsAtom);
 
-    const dialog = useRef<HTMLDialogElement | null>(null);
+    const dialogRef = useRef<HTMLDialogElement | null>(null);
 
-    function showModal() {
-        (dialog.current as HTMLDialogElement).showModal();
-    }
+    function handleSubmit(e: FormEvent<HTMLFormElement>) {
+        const formData = new FormData(e.currentTarget);
 
-    function hideModal() {
-        (dialog.current as HTMLDialogElement).close();
-    }
-
-    function handleSubmit(e: FormEvent) {
-        const $form = e.currentTarget as HTMLFormElement;
-        const formData = Object.fromEntries(new FormData($form));
-
-        const settingFormData: SettingFormTimerData = {
-            longBreakDuration: +formData.longBreakDuration,
-            pomodoroDuration: +formData.pomodoroDuration,
-            shortBreakDuration: +formData.shortBreakDuration,
-            longBreakInterval: +formData.longBreakInterval,
+        const formValues: SettingFormTimerData = {
+            longBreakDuration: parseFloat(
+                formData.get('longBreakDuration') as string
+            ),
+            pomodoroDuration: parseFloat(
+                formData.get('pomodoroDuration') as string
+            ),
+            shortBreakDuration: parseFloat(
+                formData.get('shortBreakDuration') as string
+            ),
+            longBreakInterval: parseInt(
+                formData.get('longBreakInterval') as string
+            ),
         };
 
-        const isWrongInputValue =
-            settingFormData.pomodoroDuration <= 0 ||
-            settingFormData.longBreakInterval <= 0;
-
-        if (isWrongInputValue) {
-            return;
+        // Validate inputs
+        if (Object.values(formValues).some((value) => value <= 0)) {
+            return; // Optionally show an error message
         }
 
         setTimerSetting({
-            pomodoroDuration: settingFormData.pomodoroDuration,
-            shortBreakDuration: settingFormData.shortBreakDuration,
-            longBreakDuration: settingFormData.longBreakDuration,
+            pomodoroDuration: formValues.pomodoroDuration,
+            shortBreakDuration: formValues.shortBreakDuration,
+            longBreakDuration: formValues.longBreakDuration,
         });
-        setLongBreakInterval(settingFormData.longBreakInterval);
+        setLongBreakInterval(formValues.longBreakInterval);
     }
 
     return (
         <>
             <Button
-                id="setting-button"
                 intent="secondary"
                 size="small"
                 type="button"
-                aria-label="setting button"
-                onClick={showModal}
-                className="visible flex items-center"
+                aria-label="Setting button"
+                onClick={() => dialogRef.current?.showModal()}
+                className="flex items-center visible"
             >
                 <svg
                     width="18"
@@ -92,7 +86,7 @@ const Setting = () => {
             </Button>
 
             {/* link about dialog html component: https://blog.webdevsimplified.com/2023-04/html-dialog/ */}
-            <dialog ref={dialog} className="dialog | box | visible">
+            <dialog ref={dialogRef} className="dialog | box | visible">
                 <form method="dialog" onSubmit={handleSubmit}>
                     <header className="dialog__header | box | flex items-center">
                         <h2 className="text-lg font-bold">Setting</h2>
@@ -102,40 +96,39 @@ const Setting = () => {
                             type="reset"
                             className="to-right hover:text-black/100"
                             aria-label="close button"
-                            onClick={hideModal}
+                            onClick={() => dialogRef.current?.close()}
                         >
                             Cancel/Close
                         </Button>
                     </header>
 
                     <div className="dialog__content | box">
-                        {/* besides the timer setting, other setting should be updated in real time, such as background color and sound (decorative) */}
+                        {/* Background color setting */}
+                        {/* Sound setting */}
                         <TimerSettingInputs
-                            timerSetting={{
-                                ...timerSetting,
+                            timerSettings={{
+                                ...timerSettings,
                                 longBreakInterval,
                             }}
                         />
 
-                        {/* Theme Settings: Where Color Themes, Hour Format, and Dark Mode would live */}
+                        {/* Theme Settings: Color Themes, Hour Format, and Dark Mode */}
                         <ThemeSettingInputs
-                            themeSetting={themeSetting}
+                            themeSettings={themeSettings}
                             setThemeSetting={setThemeSetting}
                         />
-
-                        {/* setting 3 */}
                     </div>
 
-                    <div className="dialog__footer | box | flex">
+                    <footer className="dialog__footer | box | flex justify-end">
                         <Button
                             intent="confirm"
                             size="medium"
                             type="submit"
-                            className="to-right min-w-20"
+                            className="min-w-20"
                         >
                             Ok
                         </Button>
-                    </div>
+                    </footer>
                 </form>
             </dialog>
         </>

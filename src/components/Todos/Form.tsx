@@ -13,7 +13,13 @@ interface FormProps {
     onDelete?: () => void;
 }
 
-const TodoForm = ({ mode, todo, onAddTodo, onClose, onDelete }: FormProps) => {
+const TodoForm: React.FC<FormProps> = ({
+    mode,
+    todo,
+    onAddTodo,
+    onClose,
+    onDelete,
+}) => {
     const titleInputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {

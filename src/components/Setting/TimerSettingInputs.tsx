@@ -1,85 +1,73 @@
 // Note: https://developer.mozilla.org/en-US/docs/Learn/Forms/Form_validation
-
-interface SettingFormTimerData {
-    pomodoroDuration: number;
-    shortBreakDuration: number;
-    longBreakDuration: number;
-    longBreakInterval: number;
-}
+import { SettingFormTimerData } from './Setting.section';
 
 interface TimerSettingProps {
-    timerSetting: SettingFormTimerData;
+    timerSettings: SettingFormTimerData;
 }
 
-const TimerSettingInputs = ({ timerSetting }: TimerSettingProps) => {
+const TimerSettingInputs: React.FC<TimerSettingProps> = ({ timerSettings }) => {
+    const renderInput = (
+        label: string,
+        name: string,
+        value: number,
+        min: number = 0,
+        max: number = 999
+    ) => (
+        <label className="timer-setting__item">
+            <div className="timer-setting__item-label">{label}</div>
+            <input
+                type="number"
+                className="timer-setting__item-input"
+                min={min}
+                max={max}
+                id={`${name}-input`}
+                name={name}
+                defaultValue={value}
+            />
+        </label>
+    );
+
     return (
         <div className="timer-setting">
             <h3 className="setting-title capita py-4 font-semibold text-gray-400">
                 ⌛ Timer
             </h3>
             <div className="stack">
+                {/* Consider form validation? */}
                 <div>
                     <h4 className="timer-setting__title font-bold">
                         Time (minutes)
                     </h4>
 
-                    <label className="timer-setting__item">
-                        <div className="timer-setting__item-label">
-                            Pomodoro
-                        </div>
-                        <input
-                            type="number"
-                            className="timer-setting__item-input"
-                            min={1}
-                            max={999}
-                            id="pomodoro-input"
-                            name="pomodoroDuration"
-                            defaultValue={timerSetting.pomodoroDuration}
-                        />
-                    </label>
-
-                    <label className="timer-setting__item">
-                        <div className="timer-setting__item-label">
-                            Short Break
-                        </div>
-                        <input
-                            type="number"
-                            className="timer-setting__item-input"
-                            min={0}
-                            max={999}
-                            id="short-break-input"
-                            name="shortBreakDuration"
-                            defaultValue={timerSetting.shortBreakDuration}
-                        />
-                    </label>
-
-                    <label className="timer-setting__item">
-                        <div className="timer-setting__item-label">
-                            Long Break
-                        </div>
-                        <input
-                            type="number"
-                            className="timer-setting__item-input"
-                            min={0}
-                            max={999}
-                            id="long-break-input"
-                            name="longBreakDuration"
-                            defaultValue={timerSetting.longBreakDuration}
-                        />
-                    </label>
+                    {renderInput(
+                        'Pomodoro',
+                        'pomodoroDuration',
+                        timerSettings.pomodoroDuration
+                    )}
+                    {renderInput(
+                        'Short Break',
+                        'shortBreakDuration',
+                        timerSettings.shortBreakDuration
+                    )}
+                    {renderInput(
+                        'Long Break',
+                        'longBreakDuration',
+                        timerSettings.longBreakDuration
+                    )}
                 </div>
+
                 <label className="timer-setting__item flex items-center justify-between">
                     <div className="timer-setting__item-label">
                         Long Break Interval
                     </div>
                     <input
                         type="number"
-                        className="timer-setting__item-input !w-fit"
+                        className="timer-setting__item-input !max-w-20"
                         min={1}
                         max={999}
                         id="long-break-interval"
                         name="longBreakInterval"
-                        defaultValue={timerSetting.longBreakInterval}
+                        defaultValue={timerSettings.longBreakInterval}
                     />
                 </label>
             </div>
