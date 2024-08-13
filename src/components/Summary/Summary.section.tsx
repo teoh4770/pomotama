@@ -14,38 +14,49 @@ type SummaryProps = {
 };
 
 const Summary: React.FC<SummaryProps> = ({ className }) => {
+    // Retrieve atom values
     const finishedSessions = useAtomValue(finishedSessionsAtom);
     const totalSessions = useAtomValue(getTotalSessionsAtom);
     const { hours, minutes } = useAtomValue(getUpdatedTimeAtom);
-    const todos: Todo[] = useAtomValue(todosAtom);
+    const todos = useAtomValue(todosAtom) as Todo[];
 
-    if (todos.length > 0) {
+    // Check for empty todos and provide a fallback UI
+    if (todos.length === 0) {
         return (
-            <section className={className}>
+            <section className={className} aria-label="Pomodoro summary">
                 <div className="flex flex-wrap items-center justify-center gap-4">
-                    <p>
-                        <span className="mr-1 text-white/70">Pomodoros:</span>
-
-                        <span className="text-2xl font-bold">
-                            {finishedSessions}
-                        </span>
-                        <span className="mx-[0.125rem] font-extralight">/</span>
-                        <span className="text-2xl font-bold">
-                            {totalSessions}
-                        </span>
-                    </p>
-                    <p>
-                        <span className="mr-1 text-white/70">Finish At:</span>
-                        <span className="text-2xl font-bold">
-                            <span>{formatTime(hours)}</span>
-                            <span>:</span>
-                            <span>{formatTime(minutes)}</span>
-                        </span>
+                    <p className="text-center text-sm">
+                        No todos available. Please add some tasks to track your
+                        progress.
                     </p>
                 </div>
             </section>
         );
     }
+
+    // Render the summary details
+    return (
+        <section className={className} aria-label="Pomodoro summary">
+            <div className="flex flex-wrap justify-center items-center gap-x-4 gap-y-2">
+                {/* Pomodoro infos */}
+                <p className="flex items-center">
+                    <span className="mr-1 text-white/70">Pomodoros:</span>
+                    <span className="text-2xl font-bold">
+                        {finishedSessions}
+                    </span>
+                    <span className="mx-1 font-extralight">/</span>
+                    <span className="text-2xl font-bold">{totalSessions}</span>
+                </p>
+                {/* Finish time info */}
+                <p className="flex items-center">
+                    <span className="mr-1 text-white/70">Finish At:</span>
+                    <span className="text-2xl font-bold">
+                        {formatTime(hours)}:{formatTime(minutes)}
+                    </span>
+                </p>
+            </div>
+        </section>
+    );
 };
 
 export { Summary };
