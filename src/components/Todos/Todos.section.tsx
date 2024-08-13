@@ -9,14 +9,12 @@ interface TodosProps {
     timerCallback: () => void;
 }
 
-const Todos = ({ timerCallback }: TodosProps) => {
-    const { todos, selectedTodoId, todoActions } = useTodos();
-    const [openAddTaskForm, setOpenAddTaskForm] = useState(false);
-    const [filterType, setFilterType] = useState<TodosFilterEnum>(
-        TodosFilterEnum.ALL
-    );
+const Todos: React.FC<TodosProps> = ({ timerCallback }) => {
+    const { todos, selectedTodo, todoActions } = useTodos();
 
-    const selectedTodo = todoActions.find(selectedTodoId);
+    const [isTodoFormVisible, setTodoFormVisible] = useState(false);
+    const [type, setType] = useState<TodosFilterEnum>(TodosFilterEnum.ALL);
+
     const filteredTodos = useMemo(() => {
         return {
             [TodosFilterEnum.ALL]: todos,
@@ -25,74 +23,65 @@ const Todos = ({ timerCallback }: TodosProps) => {
         };
     }, [todos]);
 
-    function showAddTaskForm() {
-        setOpenAddTaskForm(true);
-    }
-
-    function hideAddTaskForm() {
-        setOpenAddTaskForm(false);
-    }
+    const selectedTodoMessage = selectedTodo ? (
+        <p className="text-slate-300">
+            Currently focusing on:
+            <br />
+            <b className="text-lg text-white">{selectedTodo.title}</b>
+        </p>
+    ) : (
+        <p className="text-lg text-slate-300">
+            {todos.length > 0
+                ? "You didn't select any tasks 🥱"
+                : "You don't have any todos 🥱"}
+        </p>
+    );
 
     return (
-        <section id="tasks" className="tasks-section mx-auto max-w-[30rem]">
-            <div className="mt-4">
-                <div className="current-todo-message visible py-4 text-center">
-                    {selectedTodo ? (
-                        <>
-                            <p className="text-slate-300">
-                                Currently focusing on:
-                                <br />
-                                <b className="text-lg text-white">
-                                    {selectedTodo.title}
-                                </b>
-                            </p>
-                        </>
-                    ) : (
-                        <p className="text-lg text-slate-300">
-                            {todos.length > 0
-                                ? "You didn't select any tasks 🥱"
-                                : "You don't have any todos 🥱"}
-                        </p>
-                    )}
-                </div>
+        <section className="max-w-[30rem] mx-auto" aria-label="Todos section">
+            <div className="py-4 mt-4 text-center visible">
+                {selectedTodoMessage}
             </div>
 
-            {/* header of todo list */}
-            <header className="flex justify-between border-b-2 py-4">
+            <header className="flex justify-between py-4 border-b-2">
                 <h2 className="text-lg font-bold text-white">Tasks</h2>
             </header>
 
-            {/* action buttons for todo list */}
+            {/* Action buttons for todo list */}
             {todos.length > 0 && (
                 <TodoFilterActions
                     todos={todos}
                     todoActions={todoActions}
-                    setFilterType={setFilterType}
+                    setType={setType}
                 />
             )}
 
+            {/* Todo list */}
             <TodoList
-                todos={filteredTodos[filterType]}
+                todos={filteredTodos[type]}
                 todoActions={todoActions}
                 timerCallback={timerCallback}
             />
 
-            {/* Add task button */}
-            {openAddTaskForm ? (
+            {/* Todo form */}
+            {isTodoFormVisible && (
                 <TodoForm
                     mode="addTodo"
                     onSave={todoActions.add}
-                    onCancel={hideAddTaskForm}
-                    onClose={hideAddTaskForm}
+                    onCancel={() => setTodoFormVisible(false)}
+                    onClose={() => setTodoFormVisible(false)}
                 />
-            ) : (
+            )}
+
+            {/* Toggle button for todo form */}
+            {!isTodoFormVisible && (
                 <Button
                     intent="secondary"
                     size="medium"
                     type="button"
-                    className="w-full border-2 border-dashed bg-black/10 py-4 font-bold text-white/80 hover:text-white"
-                    aria-label="Add task button"
-                    onClick={showAddTaskForm}
+                    className="w-full py-4 bg-black/10 font-bold text-white/80 border-2 border-dashed hover:text-white"
+                    aria-label="Show todo form button"
+                    onClick={() => setTodoFormVisible(true)}
                 >
                     <span className="mx-auto">⭐ Add Task</span>
                 </Button>

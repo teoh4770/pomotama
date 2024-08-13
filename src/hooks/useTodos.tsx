@@ -10,6 +10,7 @@ import {
 
 interface UseTodos {
     todos: Todo[];
+    selectedTodo: Todo;
     selectedTodoId: string;
     setSelectedTodoId: (id: string) => void;
     todoActions: TodoActions;
@@ -18,6 +19,8 @@ interface UseTodos {
 const useTodos = (): UseTodos => {
     const [todos, setTodos] = useAtom<Todo[]>(todosAtom);
     const [selectedTodoId, setSelectedTodoId] = useAtom(selectedTodoIdAtom);
+
+    const selectedTodo = find(selectedTodoId) as Todo;
 
     useEffect(() => {
         updateUserTodosFromStorage(todos);
@@ -147,7 +150,13 @@ const useTodos = (): UseTodos => {
         reorder,
     };
 
-    return { todos, selectedTodoId, setSelectedTodoId, todoActions };
+    return {
+        todos,
+        selectedTodo,
+        selectedTodoId,
+        setSelectedTodoId,
+        todoActions,
+    };
 };
 
 export { useTodos };

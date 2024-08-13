@@ -3,7 +3,7 @@
 import { useState } from 'react';
 
 import { Draggable } from '@hello-pangea/dnd';
-import { Todo, TodoActions, TodoFormData } from '../../types';
+import { Todo, TodoActions } from '../../types';
 import { Button, Checkbox } from '../ui';
 import { TodoForm } from './Form';
 
@@ -11,60 +11,48 @@ interface TodoProps {
     todo: Todo;
     index: number;
     todoActions: TodoActions;
-    isTodoActive: boolean;
+    isActiveTodo: boolean;
     isTodoSelected: boolean;
     onShow: () => void;
     onSelect: () => void;
 }
 
-const TodoItem = ({
+// ? onShow, onSelect, isTodoEditorVisible are weird
+// but i like the conditional rendering logic
+const TodoItem: React.FC<TodoProps> = ({
     todo,
     index,
-    todoActions,
-    isTodoActive,
+    todoActions: { edit, remove, toggleState },
+    isActiveTodo,
     isTodoSelected,
     onShow,
     onSelect,
-}: TodoProps) => {
-    const [isEditingTodo, setIsEditingTodo] = useState(false);
+}) => {
+    const [isTodoEditorVisible, setTodoEditorVisible] = useState(false);
 
-    function openTodoEditor() {
+    function handleEditClick(e: React.MouseEvent) {
+        e.stopPropagation();
+
+        setTodoEditorVisible(true);
         onShow();
-        setIsEditingTodo(true);
     }
 
-    function closeTodoEditor() {
-        setIsEditingTodo(false);
-    }
+    const renderTodoForm = () => (
+        <li>
+            <TodoForm
+                mode="editTodo"
+                todo={todo}
+                onSave={(todoFormData) => {
+                    edit(todo.id, todoFormData);
+                    setTodoEditorVisible(false);
+                }}
+                onDelete={() => remove(todo.id)}
+                onCancel={() => setTodoEditorVisible(false)}
+            />
+        </li>
+    );
 
-    function saveTodo(todoFormData: TodoFormData) {
-        todoActions.edit(todo.id, todoFormData);
-        closeTodoEditor();
-    }
-
-    function deleteTodo() {
-        todoActions.remove(todo.id);
-    }
-
-    function toggleTodo() {
-        todoActions.toggleState(todo.id);
-    }
-
-    if (isEditingTodo && isTodoActive) {
-        return (
-            <li>
-                <TodoForm
-                    mode="editTodo"
-                    todo={todo}
-                    onSave={saveTodo}
-                    onDelete={deleteTodo}
-                    onCancel={closeTodoEditor}
-                />
-            </li>
-        );
-    }
-
-    return (
+    const renderTodoItem = () => (
         <Draggable key={todo.id} draggableId={todo.id.toString()} index={index}>
             {(provided, _) => (
                 <li
@@ -73,14 +61,14 @@ const TodoItem = ({
                     {...provided.dragHandleProps}
                 >
                     <div
-                        title="Click to focus on this task"
-                        tabIndex={0}
                         role="button"
                         id={todo.id}
-                        className={`todo ${isTodoSelected && 'focus'} flex w-full cursor-pointer items-center rounded-lg bg-white px-5 py-4`}
+                        className={`todo ${isTodoSelected ? 'focus' : ''} | flex items-center w-full bg-white px-5 py-4 cursor-pointer rounded-lg`}
                         onClick={onSelect}
+                        title="Click to focus on this task"
+                        tabIndex={0} // Make it focusable
                     >
-                        <div className="todo__input mr-auto flex">
+                        <div className="flex mr-auto">
                             <span className="form-control">
                                 <Checkbox
                                     type="checkbox"
@@ -88,7 +76,7 @@ const TodoItem = ({
                                     id={todo.id}
                                     className="peer"
                                     checked={todo.completed}
-                                    onChange={toggleTodo}
+                                    onChange={() => toggleState(todo.id)}
                                     onClick={(e) => e.stopPropagation()}
                                 />
                                 <label
@@ -101,8 +89,8 @@ const TodoItem = ({
                         </div>
 
                         <div className="flex items-center gap-4">
-                            <div className="todo-pomodoro-amount grid text-sm">
-                                <span className="amount -translate-x-[1px] text-right">
+                            <div className="grid text-sm">
+                                <span className="text-right -translate-x-[1px]">
                                     <span className="completed-pomodoro-amount text-lg font-bold">
                                         {todo.completedPomodoro}
                                     </span>
@@ -111,7 +99,7 @@ const TodoItem = ({
                                         {todo.targetPomodoro}
                                     </span>
                                 </span>
-                                <span className="">
+                                <span>
                                     round{todo.targetPomodoro > 1 && 's'}
                                 </span>
                             </div>
@@ -120,13 +108,10 @@ const TodoItem = ({
                                 intent="secondary"
                                 size="small"
                                 type="button"
-                                className="border border-slate-300 !text-black/60 hover:bg-black/10"
+                                className="!text-black/60 hover:bg-black/10 border border-slate-300"
                                 title="Click to edit this task"
-                                aria-label="Edit button"
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    openTodoEditor();
-                                }}
+                                aria-label="Edit todo button"
+                                onClick={handleEditClick}
                             >
                                 Edit
                             </Button>
@@ -136,6 +121,10 @@ const TodoItem = ({
             )}
         </Draggable>
     );
+
+    return isActiveTodo && isTodoEditorVisible
+        ? renderTodoForm()
+        : renderTodoItem();
 };
 
 export { TodoItem };

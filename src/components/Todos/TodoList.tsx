@@ -53,7 +53,7 @@ const TodoList = ({ todos, todoActions, timerCallback }: TodoListProps) => {
                                 todo={todo}
                                 index={index}
                                 todoActions={todoActions}
-                                isTodoActive={activeTodoId === todo.id}
+                                isActiveTodo={activeTodoId === todo.id}
                                 onShow={() => setActiveTodoId(todo.id)}
                                 isTodoSelected={selectedTodoId === todo.id}
                                 onSelect={() => selectTodo(todo.id)}
