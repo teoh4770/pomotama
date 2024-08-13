@@ -13,8 +13,8 @@ const Checkbox: React.FC<CheckboxProps> = ({ className, ...props }) => {
         <input
             onKeyUp={handleKeyUp}
             className={className}
-            {...props}
             type="checkbox"
+            {...props}
         />
     );
 };

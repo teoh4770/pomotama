@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 import { Button } from '.';
 
-interface TabItemProps {
+interface Tab {
     label: string;
     name: string;
     value: string | number;
@@ -11,7 +11,7 @@ interface TabItemProps {
 }
 
 interface TabsProps {
-    tabs: TabItemProps[];
+    tabs: Tab[];
     defaultValue?: string;
     tabListClassName?: string;
     tabItemClassName?: string;
