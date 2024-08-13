@@ -3,12 +3,12 @@
  */
 import {
     getTimes,
-    formattedTimes,
+    formatTime,
     minutesToSeconds,
     clipTime,
     updatedTime,
 } from './time';
-export { getTimes, formattedTimes, minutesToSeconds, clipTime, updatedTime };
+export { getTimes, formatTime, minutesToSeconds, clipTime, updatedTime };
 
 /**
  * localStorage.ts

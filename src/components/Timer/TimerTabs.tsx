@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { TimerModeEnum } from '../../types';
 import { Tabs } from '../ui';
 
-interface TimerTabItemProps {
+interface TimerTab {
     label: string;
     name: string;
     value: number;
@@ -12,9 +12,9 @@ interface TimerTabItemProps {
 }
 
 interface TimerTabsProps {
-    items: TimerTabItemProps[];
+    tabs: TimerTab[];
     timerMode: TimerModeEnum;
-    isTimerRunningInDarkMode?: boolean;
+    isTimerRunningInDarkMode: boolean;
     tabListClassName?: string;
     tabItemClassName?: string;
 }
@@ -34,43 +34,44 @@ const ACTIVE_TABS = {
     },
 };
 
+const setPrimaryColor = (activeTab: TimerModeEnum) => {
+    const root = document.documentElement;
+    root.style.setProperty('--primary-color', ACTIVE_TABS[activeTab].color);
+};
+
+const changeIcon = (
+    activeTab: TimerModeEnum,
+    isTimerRunningInDarkMode: boolean
+) => {
+    const link = document.querySelector(
+        "link[rel~='icon']"
+    ) as HTMLAnchorElement | null;
+
+    if (!link) {
+        throw new Error('The icon is not found!');
+    }
+
+    link.href = isTimerRunningInDarkMode
+        ? '/favicon-dark.svg'
+        : ACTIVE_TABS[activeTab].icon;
+};
+
 const TimerTabs: React.FC<TimerTabsProps> = ({
-    items,
+    tabs,
     timerMode,
-    isTimerRunningInDarkMode,
-    tabListClassName,
-    tabItemClassName,
+    isTimerRunningInDarkMode = false,
+    tabListClassName = '',
+    tabItemClassName = '',
 }) => {
     useEffect(() => {
         setPrimaryColor(timerMode);
-        changeIcon(timerMode);
-
-        function setPrimaryColor(activeTab: TimerModeEnum) {
-            const root = document.documentElement;
-            root.style.setProperty(
-                '--primary-color',
-                ACTIVE_TABS[activeTab].color
-            );
-        }
-
-        function changeIcon(activeTab: TimerModeEnum) {
-            const link = document.querySelector(
-                "link[rel~='icon']"
-            ) as HTMLAnchorElement;
-
-            if (link) {
-                link.href = isTimerRunningInDarkMode
-                    ? '/favicon-dark.svg'
-                    : ACTIVE_TABS[activeTab].icon;
-            }
-        }
+        changeIcon(timerMode, isTimerRunningInDarkMode);
     }, [timerMode, isTimerRunningInDarkMode]);
 
     return (
-        // why key?: resetting the tabs state when timerMode changes
         <Tabs
-            key={timerMode}
-            items={items}
+            key={timerMode} // Ensures that the tab component resets its state when the timerMode changes
+            tabs={tabs}
             defaultValue={timerMode}
             tabListClassName={tabListClassName}
             tabItemClassName={tabItemClassName}

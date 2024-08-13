@@ -4,55 +4,49 @@ import { timerSettingsAtom } from '../../lib/atom';
 import { Time, Indicator, TimerControls } from '.';
 import { TimerTabs } from './TimerTabs';
 
-import { TimerModeEnum, TimerStatusEnum } from '../../types';
-
-interface TimerActions {
-    toggleTimer: () => void;
-    resetTimer: () => void;
-    changeTimerMode: (mode: TimerModeEnum) => void;
-}
-
-interface UseTimer {
-    status: TimerStatusEnum;
-    remainingTime: number;
-    percentageToCompletion: number;
-    timerMode: TimerModeEnum;
-    isTimerRunningInDarkMode: boolean;
-    actions: TimerActions;
-}
+import { TimerModeEnum } from '../../types';
+import { UseTimer } from '../../hooks/useTimer';
 
 interface TimerProps {
     timer: UseTimer;
+    isDarkMode: boolean;
 }
 
-const Timer = ({ timer }: TimerProps) => {
+const Timer: React.FC<TimerProps> = ({
+    timer: {
+        remainingTime,
+        status,
+        timerMode,
+        percentageToCompletion,
+        actions,
+    },
+    isDarkMode,
+}) => {
     const timerSettings = useAtomValue(timerSettingsAtom);
 
     return (
-        <section id="timer-section" className="timer-section">
-            <Indicator
-                className="mx-auto mb-8 h-[0.125rem] w-full max-w-2xl bg-black/10"
-                percentage={timer.percentageToCompletion}
-            />
+        <section aria-label="Timer section">
+            <Indicator percentage={percentageToCompletion} />
 
-            <article className="timer mx-auto max-w-[30rem] space-y-6 rounded-lg bg-white/10 px-4 py-6 text-center text-white sm:space-y-8 sm:py-8">
+            <article
+                className="space-y-6 max-w-[30rem] px-4 py-6 mx-auto bg-white/10 text-center text-white rounded-lg sm:space-y-8 sm:py-8"
+                aria-label="Timer"
+            >
                 <TimerTabs
-                    items={[
+                    tabs={[
                         {
                             name: TimerModeEnum.POMODORO,
                             label: 'Pomodoro',
                             value: timerSettings.pomodoroDuration,
                             handleClick: () =>
-                                timer.actions.changeTimerMode(
-                                    TimerModeEnum.POMODORO
-                                ),
+                                actions.changeTimerMode(TimerModeEnum.POMODORO),
                         },
                         {
                             name: TimerModeEnum.SHORT_BREAK,
                             label: 'Short Break',
                             value: timerSettings.shortBreakDuration,
                             handleClick: () =>
-                                timer.actions.changeTimerMode(
+                                actions.changeTimerMode(
                                     TimerModeEnum.SHORT_BREAK
                                 ),
                         },
@@ -61,24 +55,24 @@ const Timer = ({ timer }: TimerProps) => {
                             label: 'Long Break',
                             value: timerSettings.longBreakDuration,
                             handleClick: () =>
-                                timer.actions.changeTimerMode(
+                                actions.changeTimerMode(
                                     TimerModeEnum.LONG_BREAK
                                 ),
                         },
                     ]}
-                    timerMode={timer.timerMode}
-                    isTimerRunningInDarkMode={timer.isTimerRunningInDarkMode}
+                    timerMode={timerMode}
+                    isTimerRunningInDarkMode={isDarkMode}
                     tabListClassName="center | flex w-fit flex-row"
                     tabItemClassName="bg-transparent"
                 />
 
-                <Time remainingTime={timer.remainingTime} />
+                <Time remainingTime={remainingTime} />
 
                 <TimerControls
-                    status={timer.status}
-                    isTimerRunningInDarkMode={timer.isTimerRunningInDarkMode}
-                    toggleTimer={timer.actions.toggleTimer}
-                    resetTimer={timer.actions.resetTimer}
+                    status={status}
+                    isDarkMode={isDarkMode}
+                    toggleTimer={actions.toggleTimer}
+                    resetTimer={actions.resetTimer}
                 />
             </article>
         </section>

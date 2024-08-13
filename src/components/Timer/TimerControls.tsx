@@ -1,35 +1,38 @@
 import selectSound from '../../assets/select.mp3';
+import { TimerStatusEnum } from '../../types';
 
 import { Button } from '../ui';
 
 interface ControlsProps {
-    status: string;
-    isTimerRunningInDarkMode: boolean;
+    status: TimerStatusEnum;
+    isDarkMode: boolean;
     toggleTimer: () => void;
     resetTimer: () => void;
 }
 
-const TimerControls = ({
+function playSelectSound() {
+    new Audio(selectSound).play();
+}
+
+const TimerControls: React.FC<ControlsProps> = ({
     status,
-    isTimerRunningInDarkMode,
+    isDarkMode,
     toggleTimer,
-}: ControlsProps) => {
-    const timerIsRunning = status === 'running';
-    const buttonText = timerIsRunning ? 'pause' : 'start';
-    const buttonTextColor = isTimerRunningInDarkMode
+}) => {
+    const isTimerRunning = status === TimerStatusEnum.RUNNING;
+
+    const buttonTextColor = isDarkMode
         ? 'text-black'
         : 'text-[var(--primary-color)]';
-    const activeButtonClass = timerIsRunning
-        ? `translate-y-0 ${buttonTextColor} shadow-none transition-[color] delay-1000`
+    const activeButtonClass = isTimerRunning
+        ? `${buttonTextColor} translate-y-0 shadow-none transition-colors delay-1000`
         : '';
 
-    function playSound() {
-        const click = new Audio(selectSound);
-        click.play();
-    }
-
     return (
-        <div className="visible flex justify-center">
+        <div
+            className="flex justify-center visible"
+            aria-label="Timer controls"
+        >
             <Button
                 intent="primary"
                 size="large"
@@ -37,15 +40,11 @@ const TimerControls = ({
                 className={activeButtonClass}
                 onClick={() => {
                     toggleTimer();
-                    playSound();
+                    playSelectSound();
                 }}
             >
-                {buttonText}
+                {isTimerRunning ? 'Pause' : 'Start'}
             </Button>
-            {/* temporarily remove the  */}
-            {/* <button className="button !bg-black" onClick={resetTimer}>
-                Reset
-            </button> */}
         </div>
     );
 };

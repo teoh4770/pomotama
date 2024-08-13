@@ -9,7 +9,7 @@ import {
 } from '../lib';
 import ringSound from '../assets/ring.mp3';
 import {
-    formattedTimes,
+    formatTime,
     getTimes,
     minutesToSeconds,
     updateLongBreakIntervalFromStorage,
@@ -25,7 +25,7 @@ interface TimerActions {
     changeTimerMode: (mode: TimerModeEnum) => void;
 }
 
-interface UseTimer {
+export interface UseTimer {
     status: TimerStatusEnum;
     remainingTime: number;
     percentageToCompletion: number;
@@ -69,7 +69,7 @@ const useTimer = (): UseTimer => {
 
     // Time variables
     const { minutes, seconds } = getTimes(remainingTime);
-    const timeString = `${formattedTimes(minutes)}:${formattedTimes(seconds)}`;
+    const timeString = `${formatTime(minutes)}:${formatTime(seconds)}`;
 
     // update the document title
     useEffect(() => {

@@ -12,7 +12,7 @@ const getTimes = (timeInSeconds: number) => {
     return { minutes, seconds };
 };
 
-const formattedTimes = (time: number) => {
+const formatTime = (time: number) => {
     if (time < 0) throw new Error('Input cannot be a negative number');
 
     return time >= 10 ? String(time) : '0' + time;
@@ -42,4 +42,4 @@ const updatedTime = (time: Time, additionalMinutes: number): Time => {
     return { hours, minutes };
 };
 
-export { getTimes, formattedTimes, minutesToSeconds, clipTime, updatedTime };
+export { getTimes, formatTime, minutesToSeconds, clipTime, updatedTime };

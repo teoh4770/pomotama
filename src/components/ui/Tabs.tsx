@@ -11,24 +11,24 @@ interface TabItemProps {
 }
 
 interface TabsProps {
-    items: TabItemProps[];
+    tabs: TabItemProps[];
     defaultValue?: string;
     tabListClassName?: string;
     tabItemClassName?: string;
 }
 
 const Tabs: React.FC<TabsProps> = ({
-    items,
+    tabs,
     defaultValue,
     tabListClassName,
     tabItemClassName,
 }) => {
-    const [activeTab, setActiveTab] = useState(defaultValue ?? items[0].name);
+    const [activeTab, setActiveTab] = useState(defaultValue ?? tabs[0].name);
 
     return (
         <div className="tabs">
             <div className={`tabs-list ${tabListClassName}`}>
-                {items.map(({ name, label, ariaLabel, value, handleClick }) => (
+                {tabs.map(({ name, label, ariaLabel, value, handleClick }) => (
                     <Button
                         key={name}
                         intent="secondary"

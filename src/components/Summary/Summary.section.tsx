@@ -7,7 +7,7 @@ import {
     todosAtom,
 } from '../../lib';
 import { Todo } from '../../types';
-import { formattedTimes } from '../../utils';
+import { formatTime } from '../../utils';
 
 type SummaryProps = {
     className?: string;
@@ -37,9 +37,9 @@ const Summary: React.FC<SummaryProps> = ({ className }) => {
                     <p>
                         <span className="mr-1 text-white/70">Finish At:</span>
                         <span className="text-2xl font-bold">
-                            <span>{formattedTimes(hours)}</span>
+                            <span>{formatTime(hours)}</span>
                             <span>:</span>
-                            <span>{formattedTimes(minutes)}</span>
+                            <span>{formatTime(minutes)}</span>
                         </span>
                     </p>
                 </div>
