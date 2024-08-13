@@ -1,70 +1,64 @@
 import { FormEvent, useEffect, useRef } from 'react';
 
-import { Todo, TodoFormData } from '../../types';
+import { Todo, TodoFormData, TodoFormMode } from '../../types';
 import { moveCursorToTheEnd } from '../../utils';
 import { NumberInput } from './NumberInput';
 import { Button } from '../ui';
 
 interface FormProps {
-    mode: 'addTodo' | 'editTodo';
+    mode: TodoFormMode;
     todo?: Todo;
-    onSave: (formData: TodoFormData) => void;
-    onCancel: () => void;
+    onAddTodo: (formData: TodoFormData) => void;
+    onClose: () => void;
     onDelete?: () => void;
-    onClose?: () => void;
 }
 
-const TodoForm = ({
-    mode,
-    todo,
-    onSave,
-    onCancel,
-    onDelete,
-    onClose,
-}: FormProps) => {
-    const titleInput = useRef<HTMLInputElement>(null);
+const TodoForm = ({ mode, todo, onAddTodo, onClose, onDelete }: FormProps) => {
+    const titleInputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
-        const input = titleInput.current as HTMLInputElement;
+        const input = titleInputRef.current;
 
-        input.focus();
-        moveCursorToTheEnd(input);
+        if (input) {
+            input.focus();
+            moveCursorToTheEnd(input);
+        }
     }, []);
 
     function handleSubmit(e: FormEvent) {
         e.preventDefault();
 
         const $form = e.currentTarget as HTMLFormElement;
-        const formData = Object.fromEntries(new FormData($form));
+        const formData = new FormData($form);
 
         const todoFormData: TodoFormData = {
-            title: formData.title as string,
-            targetPomodoro: +formData.targetPomodoro as number,
+            title: formData.get('title') as string,
+            targetPomodoro: parseInt(formData.get('targetPomodoro') as string),
         };
-        onSave(todoFormData);
+
+        onAddTodo(todoFormData);
 
         $form.reset();
-
-        onClose?.();
+        onClose();
     }
 
     return (
         <form
             onSubmit={handleSubmit}
             id="task-adder"
-            className="task-adder grid overflow-hidden rounded-lg bg-white !font-bold text-slate-700"
+            className="grid bg-white !font-bold text-slate-700 overflow-hidden rounded-lg"
         >
-            <div className="form-inputs grid gap-4 px-5 py-7">
+            <div className="grid gap-4 px-5 py-7" aria-label="Todo form inputs">
                 <label>
                     <span className="sr-only">New Todo</span>
                     <input
-                        ref={titleInput}
+                        ref={titleInputRef}
                         type="text"
                         name="title"
                         className="w-full bg-transparent text-xl placeholder:italic"
-                        required
                         defaultValue={todo?.title ?? ''}
                         placeholder="What are you working on?"
+                        required
                     />
                 </label>
 
@@ -76,30 +70,31 @@ const TodoForm = ({
                 />
             </div>
 
-            <div className="todo-actions flex justify-between bg-slate-300 px-5 py-3">
-                {mode === 'editTodo' ? (
+            <div
+                className="flex px-5 py-3 bg-slate-300"
+                aria-label="Todo form action buttons"
+            >
+                {mode === 'editTodo' && (
                     <Button
                         intent="naked"
                         size="small"
                         type="button"
-                        className='uppercase tracking-wide'
+                        className="uppercase tracking-wide"
                         aria-label="Delete button"
                         onClick={onDelete}
                     >
                         Delete
                     </Button>
-                ) : (
-                    <div></div>
                 )}
 
-                <div className="flex">
+                <div className="flex ml-auto">
                     <Button
                         intent="naked"
                         size="small"
                         type="button"
-                        className='uppercase tracking-wide'
+                        className="uppercase tracking-wide"
                         aria-label="Cancel button"
-                        onClick={onCancel}
+                        onClick={onClose}
                     >
                         Cancel
                     </Button>
@@ -108,7 +103,7 @@ const TodoForm = ({
                         intent="confirm"
                         size="small"
                         type="submit"
-                        className='uppercase tracking-wide'
+                        className="uppercase tracking-wide"
                         aria-label="Confirm button"
                     >
                         Save

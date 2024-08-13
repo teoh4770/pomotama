@@ -15,4 +15,9 @@ enum TodosFilterEnum {
     COMPLETED = 'completed',
 }
 
-export { TimerStatusEnum, TimerModeEnum, TodosFilterEnum };
+enum TodoFormMode {
+    ADD_TODO = 'addTodo',
+    EDIT_TODO = 'editTodo',
+}
+
+export { TimerStatusEnum, TimerModeEnum, TodosFilterEnum, TodoFormMode };

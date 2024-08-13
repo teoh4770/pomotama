@@ -1,5 +1,7 @@
-const moveCursorToTheEnd = (input: HTMLInputElement) => {
-    input.setSelectionRange(input.value.length, input.value.length);
+const moveCursorToTheEnd = (input: HTMLInputElement | null) => {
+    if (input) {
+        input.setSelectionRange(input.value.length, input.value.length);
+    }
 };
 
 export { moveCursorToTheEnd };

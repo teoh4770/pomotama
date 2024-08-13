@@ -3,7 +3,7 @@ import { useTodos } from '../../hooks';
 
 import { TodoForm, TodoList, TodoFilterActions } from '.';
 import { Button } from '../ui';
-import { TodosFilterEnum } from '../../types';
+import { TodoFormMode, TodosFilterEnum } from '../../types';
 
 interface TodosProps {
     timerCallback: () => void;
@@ -66,9 +66,8 @@ const Todos: React.FC<TodosProps> = ({ timerCallback }) => {
             {/* Todo form */}
             {isTodoFormVisible && (
                 <TodoForm
-                    mode="addTodo"
-                    onSave={todoActions.add}
-                    onCancel={() => setTodoFormVisible(false)}
+                    mode={TodoFormMode.ADD_TODO}
+                    onAddTodo={todoActions.add}
                     onClose={() => setTodoFormVisible(false)}
                 />
             )}

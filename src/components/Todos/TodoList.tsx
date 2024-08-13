@@ -14,49 +14,53 @@ interface TodoListProps {
     timerCallback: () => void;
 }
 
-const TodoList = ({ todos, todoActions, timerCallback }: TodoListProps) => {
+const TodoList: React.FC<TodoListProps> = ({
+    todos,
+    todoActions,
+    timerCallback,
+}) => {
     const timerMode = useAtomValue(timerModeAtom);
 
-    const [activeTodoId, setActiveTodoId] = useState('');
     const { selectedTodoId, setSelectedTodoId } = useTodos();
+    const [editingTodoId, setEditingTodoId] = useState('');
 
-    function selectTodo(todoId: string) {
-        if (todoId === selectedTodoId) {
-            return;
+    // ? quite coupled
+    function handleTodoClick(id: string) {
+        if (id !== selectedTodoId) {
+            if (timerMode === TimerModeEnum.POMODORO) {
+                timerCallback();
+            }
+            setSelectedTodoId(id);
         }
-
-        if (timerMode === TimerModeEnum.POMODORO) {
-            timerCallback();
-        }
-
-        setSelectedTodoId(todoId);
     }
 
-    function onDragEnd(result: any) {
-        if (!result.destination) return;
-        todoActions.reorder(result.source.index, result.destination.index);
+    // ? refactor
+    function handleDragEnd(result: any) {
+        if (result.destination) {
+            todoActions.reorder(result.source.index, result.destination.index);
+        }
     }
 
     return (
-        <DragDropContext onDragEnd={onDragEnd}>
+        <DragDropContext onDragEnd={handleDragEnd}>
             <Droppable droppableId="droppable">
                 {(provided, _) => (
                     <ol
-                        id="todo-list"
                         {...provided.droppableProps}
                         ref={provided.innerRef}
-                        className="todo-list mb-3 mt-5 grid gap-2"
+                        className="grid gap-2 mb-3 mt-5"
+                        aria-label="Todo list"
                     >
                         {todos.map((todo, index) => (
                             <TodoItem
                                 key={todo.id}
                                 todo={todo}
                                 index={index}
-                                todoActions={todoActions}
-                                isActiveTodo={activeTodoId === todo.id}
-                                onShow={() => setActiveTodoId(todo.id)}
-                                isTodoSelected={selectedTodoId === todo.id}
-                                onSelect={() => selectTodo(todo.id)}
+                                actions={todoActions}
+                                isEditing={editingTodoId === todo.id}
+                                isSelected={selectedTodoId === todo.id}
+                                onEditTodo={() => setEditingTodoId(todo.id)}
+                                onClickTodo={() => handleTodoClick(todo.id)}
                             />
                         ))}
                         {provided.placeholder}

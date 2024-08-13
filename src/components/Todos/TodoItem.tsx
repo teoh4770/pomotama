@@ -1,53 +1,52 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 // reference: https://react.dev/learn/sharing-state-between-components
 
 import { useState } from 'react';
 
 import { Draggable } from '@hello-pangea/dnd';
-import { Todo, TodoActions } from '../../types';
+import { Todo, TodoActions, TodoFormMode } from '../../types';
 import { Button, Checkbox } from '../ui';
 import { TodoForm } from './Form';
 
 interface TodoProps {
     todo: Todo;
     index: number;
-    todoActions: TodoActions;
-    isActiveTodo: boolean;
-    isTodoSelected: boolean;
-    onShow: () => void;
-    onSelect: () => void;
+    actions: TodoActions;
+    isEditing: boolean;
+    isSelected: boolean;
+    onEditTodo: () => void;
+    onClickTodo: () => void;
 }
 
-// ? onShow, onSelect, isTodoEditorVisible are weird
-// but i like the conditional rendering logic
 const TodoItem: React.FC<TodoProps> = ({
     todo,
     index,
-    todoActions: { edit, remove, toggleState },
-    isActiveTodo,
-    isTodoSelected,
-    onShow,
-    onSelect,
+    actions: { edit, remove, toggleState },
+    isEditing,
+    isSelected,
+    onEditTodo,
+    onClickTodo,
 }) => {
-    const [isTodoEditorVisible, setTodoEditorVisible] = useState(false);
+    const [isEditorVisible, setEditorVisible] = useState(false);
 
     function handleEditClick(e: React.MouseEvent) {
         e.stopPropagation();
 
-        setTodoEditorVisible(true);
-        onShow();
+        setEditorVisible(true);
+        onEditTodo();
     }
 
     const renderTodoForm = () => (
         <li>
             <TodoForm
-                mode="editTodo"
+                mode={TodoFormMode.EDIT_TODO}
                 todo={todo}
-                onSave={(todoFormData) => {
+                onAddTodo={(todoFormData) => {
                     edit(todo.id, todoFormData);
-                    setTodoEditorVisible(false);
+                    setEditorVisible(false);
                 }}
                 onDelete={() => remove(todo.id)}
-                onCancel={() => setTodoEditorVisible(false)}
+                onClose={() => setEditorVisible(false)}
             />
         </li>
     );
@@ -63,8 +62,8 @@ const TodoItem: React.FC<TodoProps> = ({
                     <div
                         role="button"
                         id={todo.id}
-                        className={`todo ${isTodoSelected ? 'focus' : ''} | flex items-center w-full bg-white px-5 py-4 cursor-pointer rounded-lg`}
-                        onClick={onSelect}
+                        className={`todo ${isSelected ? 'focus' : ''} | flex items-center w-full bg-white px-5 py-4 cursor-pointer rounded-lg`}
+                        onClick={onClickTodo}
                         title="Click to focus on this task"
                         tabIndex={0} // Make it focusable
                     >
@@ -122,9 +121,7 @@ const TodoItem: React.FC<TodoProps> = ({
         </Draggable>
     );
 
-    return isActiveTodo && isTodoEditorVisible
-        ? renderTodoForm()
-        : renderTodoItem();
+    return isEditing && isEditorVisible ? renderTodoForm() : renderTodoItem();
 };
 
 export { TodoItem };
