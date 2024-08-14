@@ -45,3 +45,11 @@ export { moveCursorToTheEnd };
  */
 import { workerTimer } from './worker-timer';
 export { workerTimer };
+
+export function playSound(src: string) {
+    try {
+        new Audio(src).play();
+    } catch (error) {
+        console.error('Failed to play sound: ', error);
+    }
+}

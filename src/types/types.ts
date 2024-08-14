@@ -1,5 +1,3 @@
-// put the shared interface here
-
 interface Todo {
     title: string;
     completed: boolean;

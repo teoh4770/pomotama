@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useAtom, useAtomValue } from 'jotai';
-
 import {
     longBreakIntervalAtom,
     themeSettingsAtom,
@@ -12,12 +11,14 @@ import {
     formatTime,
     getTimes,
     minutesToSeconds,
+    playSound,
     updateLongBreakIntervalFromStorage,
     updateTimerSettingsFromStorage,
     workerTimer,
 } from '../utils';
 import { useTodos } from './useTodos';
 import { TimerModeEnum, TimerStatusEnum } from '../types';
+import { useThemeMode } from './useThemeMode';
 
 interface TimerActions {
     toggleTimer: () => void;
@@ -29,177 +30,164 @@ export interface UseTimer {
     status: TimerStatusEnum;
     remainingTime: number;
     percentageToCompletion: number;
-    timerMode: TimerModeEnum;
+    currentTimerMode: TimerModeEnum;
     actions: TimerActions;
 }
 
-const LONG_BREAK_INTERVAL_START_INDEX = 0;
+// constant...
+const NEXT_TIMER_MODE = {
+    [TimerModeEnum.POMODORO]: TimerModeEnum.SHORT_BREAK,
+    [TimerModeEnum.SHORT_BREAK]: TimerModeEnum.POMODORO,
+    [TimerModeEnum.LONG_BREAK]: TimerModeEnum.POMODORO,
+};
+
+// Encapsulates logic for managing long break interval count
+const useLongBreakIntervalCount = (initialValue: number = 0) => {
+    const [value, setValue] = useState(initialValue);
+
+    return {
+        value,
+        increment: () => setValue((prev) => prev + 1),
+        reset: () => setValue(initialValue),
+    };
+};
 
 const useTimer = (): UseTimer => {
-    // global
+    // Jotai states
+    const isDarkMode = useAtomValue(themeSettingsAtom).darkModeWhenRunning;
+
     const timerSettings = useAtomValue(timerSettingsAtom);
+    const [currentTimerMode, setTimerMode] =
+        useAtom<TimerModeEnum>(timerModeAtom);
+
+    // useLongBreakIntervalCount states
     const longBreakInterval = useAtomValue(longBreakIntervalAtom);
+    const longBreakIntervalCount = useLongBreakIntervalCount();
 
     // useTimer states
     const [timeElapsed, setTimeElapsed] = useState(0);
-    const [status, setStatus] = useState(TimerStatusEnum.IDLE);
-    const [timerMode, setTimerMode] = useAtom(timerModeAtom);
-    const [longBreakIntervalCount, setLongBreakIntervalCount] = useState(
-        LONG_BREAK_INTERVAL_START_INDEX
+    const [status, setStatus] = useState<TimerStatusEnum>(TimerStatusEnum.IDLE);
+
+    // useTodos state
+    const { selectedTodoId, actions: todoActions } = useTodos();
+    const currentTodo = todoActions.find(selectedTodoId);
+
+    // Derived variables
+    const isRunning = status === TimerStatusEnum.RUNNING;
+
+    const initialTime = useMemo(() => {
+        const timeInMinutes = timerSettings[currentTimerMode];
+        return minutesToSeconds(timeInMinutes);
+    }, [timerSettings, currentTimerMode]);
+
+    const remainingTime = useMemo(
+        () => initialTime - timeElapsed,
+        [initialTime, timeElapsed]
     );
 
-    // Todo variables
-    const { todos, selectedTodoId, todoActions } = useTodos();
-    const currentTodo = useMemo(() => {
-        return todoActions.find(selectedTodoId);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [selectedTodoId]);
+    const percentageToCompletion = useMemo(
+        () => Math.max(0, Math.min(1, timeElapsed / initialTime)), // [0,1]: inclusively between 0 and 1
+        [timeElapsed, initialTime]
+    );
 
-    const themeSettings = useAtomValue(themeSettingsAtom);
-    const isDarkModeWhenRunning = themeSettings.darkModeWhenRunning;
-
-    // derived variables
-    const isRunning = status === TimerStatusEnum.RUNNING;
-    const initialTime = useMemo(() => {
-        return minutesToSeconds(timerSettings[timerMode]);
-    }, [timerSettings, timerMode]);
-    const remainingTime = initialTime - timeElapsed;
-    const percentageToCompletion = timeElapsed / initialTime;
-    const targetInterval = longBreakInterval - 1;
-
-    // Time variables
-    const { minutes, seconds } = getTimes(remainingTime);
-    const timeString = `${formatTime(minutes)}:${formatTime(seconds)}`;
-
-    // update the document title
-    useEffect(() => {
-        const todoTitle = currentTodo ? currentTodo.title : 'Time to focus!';
-        document.title = `${timeString} - ${todoTitle}`;
-    }, [timeString, currentTodo]);
-
-    // update local storage
+    // Update Local Storage
+    // Timer settings
     useEffect(() => {
         updateTimerSettingsFromStorage(timerSettings);
     }, [timerSettings]);
 
+    // Long Break interval
     useEffect(() => {
         updateLongBreakIntervalFromStorage(longBreakInterval);
     }, [longBreakInterval]);
 
-    // update dark mode
+    // Update the timer if the status is running and remaining time changes
     useEffect(() => {
-        const bodyClass = ['bg-black', 'delay-1000'];
+        if (status !== TimerStatusEnum.RUNNING) return;
 
-        if (isRunning && isDarkModeWhenRunning) {
-            document.body.classList.add(...bodyClass);
-        } else {
-            document.body.classList.remove(...bodyClass);
-        }
-    }, [isRunning, isDarkModeWhenRunning]);
-
-    // update the timer based on status and remaining
-    useEffect(() => {
-        const intervalId = workerTimer.setInterval(
-            () => {
-                if (remainingTime <= 1) {
-                    // play sounds when times up
-                    playSound();
-                    handleTimerEnd();
-                    resetTimer();
-                    return;
-                }
-
+        // !update worker timer
+        const intervalId = workerTimer.setInterval(() => {
+            if (remainingTime <= 1) {
+                playSound(ringSound);
+                handleTimerCompletion();
+                resetTimer();
+            } else {
                 setTimeElapsed((timeElapsed) => timeElapsed + 1);
-            },
-            status === TimerStatusEnum.RUNNING ? 1000 : null
-        );
+            }
+        }, 1000);
 
         return () => workerTimer.clearInterval(intervalId);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [status, remainingTime]);
 
+    // Update the document title
+    useEffect(() => {
+        const time = getTimes(remainingTime);
+        const timeString = `${formatTime(time.minutes)}:${formatTime(time.seconds)}`;
+
+        document.title = `${timeString} - ${currentTodo?.title ?? 'Time to focus!'}`;
+    }, [currentTodo, remainingTime]);
+
+    // Update theme mode
+    useThemeMode(isRunning, isDarkMode);
+
+    // Helper functions
+    // handle timer when complete
+    function handleTimerCompletion() {
+        if (currentTimerMode === TimerModeEnum.POMODORO) {
+            todoActions.incrementPomodoro(selectedTodoId);
+            longBreakIntervalCount.increment();
+        }
+
+        toggleTimerMode();
+    }
+
+    // toggle timer mode
+    function toggleTimerMode() {
+        if (
+            currentTimerMode === TimerModeEnum.POMODORO &&
+            longBreakIntervalCount.value >= longBreakInterval - 1 // targetInterval
+        ) {
+            setTimerMode(TimerModeEnum.LONG_BREAK);
+            longBreakIntervalCount.reset();
+        } else {
+            setTimerMode(NEXT_TIMER_MODE[currentTimerMode]);
+        }
+    }
+
+    // Timer actions
+    // Toggle
     function toggleTimer() {
         setStatus((status) => {
-            if (status === TimerStatusEnum.RUNNING) {
-                return TimerStatusEnum.IDLE;
-            }
-            return TimerStatusEnum.RUNNING;
+            return status === TimerStatusEnum.RUNNING
+                ? TimerStatusEnum.IDLE
+                : TimerStatusEnum.RUNNING;
         });
     }
 
-    function resetTimer() {
-        setStatus(TimerStatusEnum.IDLE);
-        setTimeElapsed(0);
-    }
-
+    // Change timer mode
     function changeTimerMode(mode: TimerModeEnum) {
         setTimerMode(mode);
         resetTimer();
     }
 
-    function handleTimerEnd() {
-        incrementTodoPomodoro();
-        updateLongBreakIntervalCount();
-        toggleTimerMode();
-
-        function incrementTodoPomodoro() {
-            const todo = todos.find(
-                (todoItem) => todoItem.id === selectedTodoId
-            );
-
-            if (todo && timerMode === TimerModeEnum.POMODORO) {
-                todoActions.incrementPomodoro(selectedTodoId);
-            }
-        }
-
-        function updateLongBreakIntervalCount() {
-            if (timerMode === TimerModeEnum.POMODORO) {
-                setLongBreakIntervalCount((prev) => prev + 1);
-                return;
-            }
-        }
-
-        function toggleTimerMode() {
-            if (
-                timerMode === TimerModeEnum.POMODORO &&
-                longBreakIntervalCount >= targetInterval
-            ) {
-                setTimerMode(TimerModeEnum.LONG_BREAK);
-                resetLongBreakIntervalCount();
-                return;
-            }
-
-            if (
-                timerMode === TimerModeEnum.SHORT_BREAK ||
-                timerMode === TimerModeEnum.LONG_BREAK
-            ) {
-                setTimerMode(TimerModeEnum.POMODORO);
-            } else {
-                setTimerMode(TimerModeEnum.SHORT_BREAK);
-            }
-
-            function resetLongBreakIntervalCount() {
-                setLongBreakIntervalCount(LONG_BREAK_INTERVAL_START_INDEX);
-            }
-        }
-    }
-
-    function playSound() {
-        const ding = new Audio(ringSound);
-        ding.play();
+    // Reset
+    function resetTimer() {
+        setStatus(TimerStatusEnum.IDLE);
+        setTimeElapsed(0);
     }
 
     const actions: TimerActions = {
         toggleTimer,
-        resetTimer,
         changeTimerMode,
+        resetTimer,
     };
 
     return {
         remainingTime,
         percentageToCompletion,
         status,
-        timerMode,
+        currentTimerMode,
         actions,
     };
 };

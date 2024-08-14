@@ -36,7 +36,7 @@ const ACTIVE_TABS = {
 
 const setPrimaryColor = (activeTab: TimerModeEnum) => {
     const root = document.documentElement;
-    root.style.setProperty('--primary-color', ACTIVE_TABS[activeTab].color);
+    // root.style.setProperty('--primary-color', ACTIVE_TABS[activeTab].color);
 };
 
 const changeIcon = (
@@ -51,9 +51,9 @@ const changeIcon = (
         throw new Error('The icon is not found!');
     }
 
-    link.href = isTimerRunningInDarkMode
-        ? '/favicon-dark.svg'
-        : ACTIVE_TABS[activeTab].icon;
+    // link.href = isTimerRunningInDarkMode
+    //     ? '/favicon-dark.svg'
+    //     : ACTIVE_TABS[activeTab].icon;
 };
 
 const TimerTabs: React.FC<TimerTabsProps> = ({
