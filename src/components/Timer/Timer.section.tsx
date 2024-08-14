@@ -16,7 +16,7 @@ const Timer: React.FC<TimerProps> = ({
     timer: {
         remainingTime,
         status,
-        timerMode,
+        currentTimerMode,
         percentageToCompletion,
         actions,
     },
@@ -60,7 +60,7 @@ const Timer: React.FC<TimerProps> = ({
                                 ),
                         },
                     ]}
-                    timerMode={timerMode}
+                    timerMode={currentTimerMode}
                     isTimerRunningInDarkMode={isDarkMode}
                     tabListClassName="center | flex w-fit flex-row"
                     tabItemClassName="bg-transparent"

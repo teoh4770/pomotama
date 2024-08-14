@@ -1,4 +1,4 @@
-import { getTimes, formattedTimes, clipTime, updatedTime } from '../time';
+import { getTimes, formatTime, clipTime, updatedTime } from '../time';
 
 describe('getTimes', () => {
     it('should return minutes and seconds for a given time in seconds', () => {
@@ -25,7 +25,7 @@ describe('formattedTimes', () => {
         const time = 11;
         const expectedTime = '11';
 
-        const formattedTime = formattedTimes(time);
+        const formattedTime = formatTime(time);
 
         expect(formattedTime).toBe(expectedTime);
     });
@@ -34,7 +34,7 @@ describe('formattedTimes', () => {
         const time = 0;
         const expectedTime = '00';
 
-        const formattedTime = formattedTimes(time);
+        const formattedTime = formatTime(time);
 
         expect(formattedTime).toBe(expectedTime);
     });
@@ -42,7 +42,7 @@ describe('formattedTimes', () => {
     it('should throw an error if input is negative', () => {
         const time = -1;
 
-        expect(() => formattedTimes(time)).toThrow();
+        expect(() => formatTime(time)).toThrow();
     });
 });
 
