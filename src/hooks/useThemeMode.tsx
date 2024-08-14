@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 
+// Main hook for handling dark theme mode
 const useThemeMode = (isRunning: boolean, isDarkMode: boolean) => {
     useEffect(() => {
         if (isRunning && isDarkMode) {
