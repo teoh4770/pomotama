@@ -10,13 +10,13 @@ import { TodoItem } from './TodoItem';
 
 interface TodoListProps {
     todos: Todo[];
-    todoActions: TodoActions;
+    actions: TodoActions;
     timerCallback: () => void;
 }
 
 const TodoList: React.FC<TodoListProps> = ({
     todos,
-    todoActions,
+    actions,
     timerCallback,
 }) => {
     const timerMode = useAtomValue(timerModeAtom);
@@ -37,7 +37,7 @@ const TodoList: React.FC<TodoListProps> = ({
     // ? refactor
     function handleDragEnd(result: any) {
         if (result.destination) {
-            todoActions.reorder(result.source.index, result.destination.index);
+            actions.reorder(result.source.index, result.destination.index);
         }
     }
 
@@ -56,7 +56,7 @@ const TodoList: React.FC<TodoListProps> = ({
                                 key={todo.id}
                                 todo={todo}
                                 index={index}
-                                actions={todoActions}
+                                actions={actions}
                                 isEditing={editingTodoId === todo.id}
                                 isSelected={selectedTodoId === todo.id}
                                 onEditTodo={() => setEditingTodoId(todo.id)}

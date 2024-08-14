@@ -10,7 +10,7 @@ interface TodosProps {
 }
 
 const Todos: React.FC<TodosProps> = ({ timerCallback }) => {
-    const { todos, selectedTodo, todoActions } = useTodos();
+    const { todos, selectedTodo, actions } = useTodos();
 
     const [isTodoFormVisible, setTodoFormVisible] = useState(false);
     const [type, setType] = useState<TodosFilterEnum>(TodosFilterEnum.ALL);
@@ -51,7 +51,7 @@ const Todos: React.FC<TodosProps> = ({ timerCallback }) => {
             {todos.length > 0 && (
                 <TodoFilterActions
                     todos={todos}
-                    todoActions={todoActions}
+                    actions={actions}
                     setType={setType}
                 />
             )}
@@ -59,7 +59,7 @@ const Todos: React.FC<TodosProps> = ({ timerCallback }) => {
             {/* Todo list */}
             <TodoList
                 todos={filteredTodos[type]}
-                todoActions={todoActions}
+                actions={actions}
                 timerCallback={timerCallback}
             />
 
@@ -67,7 +67,7 @@ const Todos: React.FC<TodosProps> = ({ timerCallback }) => {
             {isTodoFormVisible && (
                 <TodoForm
                     mode={TodoFormMode.ADD_TODO}
-                    onAddTodo={todoActions.add}
+                    onAddTodo={actions.add}
                     onClose={() => setTodoFormVisible(false)}
                 />
             )}

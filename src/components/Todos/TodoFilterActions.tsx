@@ -3,13 +3,13 @@ import { Todo, TodoActions, TodosFilterEnum } from '../../types';
 
 interface TodoFilterActionsProps {
     todos: Todo[];
-    todoActions: TodoActions;
+    actions: TodoActions;
     setType: (filter: TodosFilterEnum) => void;
 }
 
 const TodoFilterActions: React.FC<TodoFilterActionsProps> = ({
     todos,
-    todoActions: { clearAll, clearCompleted },
+    actions: { clearAll, clearCompleted },
     setType,
 }) => {
     const hasCompletedTodos = todos.some((todo) => todo.completed);

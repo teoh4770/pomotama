@@ -1,6 +1,5 @@
 import { useAtom } from 'jotai';
 import { useEffect } from 'react';
-
 import { selectedTodoIdAtom, todosAtom } from '../lib';
 import { Todo, TodoActions, TodoFormData } from '../types';
 import {
@@ -13,29 +12,26 @@ interface UseTodos {
     selectedTodo: Todo;
     selectedTodoId: string;
     setSelectedTodoId: (id: string) => void;
-    todoActions: TodoActions;
+    actions: TodoActions;
 }
 
 const useTodos = (): UseTodos => {
     const [todos, setTodos] = useAtom<Todo[]>(todosAtom);
     const [selectedTodoId, setSelectedTodoId] = useAtom(selectedTodoIdAtom);
 
-    const selectedTodo = find(selectedTodoId) as Todo;
+    const selectedTodo = find(selectedTodoId) || todos[0] || null;
 
+    // Update todos in localstorage
     useEffect(() => {
         updateUserTodosFromStorage(todos);
     }, [todos]);
 
+    // Update selectedTodoId in localstorage
     useEffect(() => {
         updateSelectedTodoIdFromStorage(selectedTodoId);
     }, [selectedTodoId]);
 
-    function selectFirstTodoIfOnlyOneExists(todos: Todo[]) {
-        if (todos.length === 1) {
-            setSelectedTodoId(todos[0].id);
-        }
-    }
-
+    // Add
     function add(formData: TodoFormData) {
         const updatedTodos = [
             ...todos,
@@ -47,17 +43,16 @@ const useTodos = (): UseTodos => {
                 completedPomodoro: 0,
             },
         ];
-
-        selectFirstTodoIfOnlyOneExists(updatedTodos);
         setTodos(updatedTodos);
+
+        handleSingleTodoSelection(updatedTodos);
     }
 
+    // Edit
     function edit(id: string, formData: TodoFormData) {
-        const todo = todos.find((todo) => todo.id === id) as Todo;
-        const updatedTodo = { ...todo, ...formData };
         const updatedTodos = todos.map((todo) => {
             if (todo.id === id) {
-                return updatedTodo;
+                return { ...todo, ...formData };
             }
             return todo;
         });
@@ -65,13 +60,13 @@ const useTodos = (): UseTodos => {
         setTodos(updatedTodos);
     }
 
+    // Remove
     function remove(id: string) {
         const updatedTodos = todos.filter((todo) => todo.id !== id);
-
-        selectFirstTodoIfOnlyOneExists(updatedTodos);
         setTodos(updatedTodos);
     }
 
+    // Toggle
     function toggleState(id: string) {
         const updatedTodos = todos.map((todo) => {
             if (todo.id === id) {
@@ -82,54 +77,50 @@ const useTodos = (): UseTodos => {
             }
             return todo;
         });
-
         setTodos(updatedTodos);
     }
 
+    // Clear
     function clearAll() {
         const isConfirm = confirm(
             "Hey, are you absolutely positively sure about wiping out all those todos? No turning back once they're gone! 🌪️"
         );
 
         if (isConfirm) {
-            setTodos([]);
-            setSelectedTodoId('');
+            reset();
         }
     }
 
+    // Clear completed
     function clearCompleted() {
         const updatedTodos = todos.filter((todo) => !todo.completed);
         setTodos(updatedTodos);
 
-        if (updatedTodos.length > 0) {
-            setSelectedTodoId(updatedTodos[0].id);
-        } else {
-            setSelectedTodoId('');
-        }
+        handleSingleTodoSelection(updatedTodos);
     }
 
+    // increment pomodoro
     function incrementPomodoro(id: string) {
-        const key = 'completedPomodoro';
+        const KEY = 'completedPomodoro';
 
-        const todo = todos.find((todo) => todo.id === id) as Todo;
-        const updatedTodo = {
-            ...todo,
-            [key]: todo[key] + 1,
-        };
         const updatedTodos = todos.map((todo) => {
             if (todo.id === id) {
-                return updatedTodo;
+                return {
+                    ...todo,
+                    [KEY]: todo[KEY] + 1,
+                };
             }
             return todo;
         });
-
         setTodos(updatedTodos);
     }
 
+    // Find
     function find(id: string): Todo | undefined {
         return todos.find((todo) => todo.id === id);
     }
 
+    // ?reorder
     function reorder(fromIndex: number, toIndex: number) {
         const updatedTodos = [...todos];
         const [removed] = updatedTodos.splice(fromIndex, 1);
@@ -138,7 +129,20 @@ const useTodos = (): UseTodos => {
         setTodos(updatedTodos);
     }
 
-    const todoActions: TodoActions = {
+    // Utils
+    function handleSingleTodoSelection(todos: Todo[]) {
+        if (todos.length === 1) {
+            setSelectedTodoId(todos[0].id);
+        }
+    }
+
+    function reset() {
+        setTodos([]);
+        setSelectedTodoId('');
+    }
+
+    // actions
+    const actions: TodoActions = {
         add,
         edit,
         remove,
@@ -155,7 +159,7 @@ const useTodos = (): UseTodos => {
         selectedTodo,
         selectedTodoId,
         setSelectedTodoId,
-        todoActions,
+        actions,
     };
 };
 
