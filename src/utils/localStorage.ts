@@ -17,7 +17,7 @@ const DEFAULT_TIMER_SETTINGS = {
     [TimerModeEnum.LONG_BREAK]: 20,
 };
 
-const LONG_BREAK_INTERVAL = 'longBreakInterval';
+const LONG_BREAK_INTERVAL_KEY = 'longBreakInterval';
 const DEFAULT_LONG_BREAK_INTERVAL = 2;
 
 const storage = {
@@ -49,7 +49,7 @@ const storage = {
             const timerSettings = localStorage.getItem(TIMER_SETTINGS_KEY);
 
             return timerSettings
-                ? JSON.parse(timerSettings)
+                ? (JSON.parse(timerSettings) as TimerSettings)
                 : DEFAULT_TIMER_SETTINGS;
         },
         // update settings
@@ -60,7 +60,7 @@ const storage = {
     longBreakInterval: {
         // get long break interval
         get(): number {
-            const longBreakInterval = localStorage.getItem(LONG_BREAK_INTERVAL);
+            const longBreakInterval = localStorage.getItem(LONG_BREAK_INTERVAL_KEY);
 
             return longBreakInterval
                 ? Number.parseInt(longBreakInterval)
@@ -68,7 +68,7 @@ const storage = {
         },
         // set long break interval
         set(value: number) {
-            localStorage.setItem(TIMER_SETTINGS_KEY, JSON.stringify(value));
+            localStorage.setItem(LONG_BREAK_INTERVAL_KEY, JSON.stringify(value));
         },
     },
 };

@@ -8,8 +8,8 @@ const { todos, selectedTodoId, timerSettings, longBreakInterval } = storage;
 const todosAtom = atom(todos.all());
 const selectedTodoIdAtom = atom(selectedTodoId.get());
 const timerSettingsAtom = atom(timerSettings.all());
-const longBreakIntervalAtom = atom(longBreakInterval.get());
 const timerModeAtom = atom(TimerModeEnum.POMODORO);
+const longBreakIntervalAtom = atom(longBreakInterval.get());
 const themeSettingsAtom = atom({
     darkModeWhenRunning: true,
 });
