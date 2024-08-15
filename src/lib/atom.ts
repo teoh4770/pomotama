@@ -93,7 +93,7 @@ const finishTimeAtom = atom((get) => {
         (totalTime, key) => {
             const mode = key as TimerModeEnum;
             return (
-                totalTime + timerSettings[key] * incompleteSessionsDetail[mode]
+                totalTime + timerSettings[mode] * incompleteSessionsDetail[mode]
             );
         },
         0
