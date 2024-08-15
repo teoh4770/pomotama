@@ -26,20 +26,24 @@ const clipTime = (time: number) => {
     return Math.min(Math.max(0, time), 999);
 };
 
-const updatedTime = (time: Time, additionalMinutes: number): Time => {
-    if (additionalMinutes < 0) {
+const addMinutesToTime = (currentTime: Time, minutesToAdd: number): Time => {
+    if (minutesToAdd < 0) {
         throw new Error('additionalMinutes cannot accept negative values...');
     }
 
-    const timeInMinutes = time.hours * 60 + time.minutes + additionalMinutes;
-    const minutes = timeInMinutes % 60;
-    let hours = Math.floor(timeInMinutes / 60);
+    const totalMinutes =
+        currentTime.hours * 60 + currentTime.minutes + minutesToAdd;
 
-    if (hours >= 24) {
-        hours %= 24;
-    }
-
-    return { hours, minutes };
+    return {
+        hours: Math.floor(totalMinutes / 60) % 24,
+        minutes: totalMinutes % 60,
+    };
 };
 
-export { getTimes, formatTime, minutesToSeconds, clipTime, updatedTime };
+export {
+    getTimes,
+    formatTime,
+    minutesToSeconds,
+    clipTime,
+    addMinutesToTime,
+};

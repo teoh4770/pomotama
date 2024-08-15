@@ -2,10 +2,7 @@ import { useAtom } from 'jotai';
 import { useEffect } from 'react';
 import { selectedTodoIdAtom, todosAtom } from '../lib';
 import { Todo, TodoActions, TodoFormData } from '../types';
-import {
-    updateSelectedTodoIdFromStorage,
-    updateUserTodosFromStorage,
-} from '../utils';
+import { storage } from '../utils';
 
 interface UseTodos {
     todos: Todo[];
@@ -23,7 +20,6 @@ const useTodos = (): UseTodos => {
     const [todos, setTodos] = useAtom<Todo[]>(todosAtom);
     const [selectedTodoId, setSelectedTodoId] = useAtom(selectedTodoIdAtom);
 
-
     // =========================
     // === Derived Variables ===
     // =========================
@@ -31,21 +27,19 @@ const useTodos = (): UseTodos => {
     // Derived variable: Find the selected todo based on the ID or fallback to the first todo
     const selectedTodo = find(selectedTodoId) || todos[0] || null;
 
-    
     // =========================
     // ===    Side Effect    ===
     // =========================
 
     // Side effect: Update todos in local storage whenever the todos array changes
     useEffect(() => {
-        updateUserTodosFromStorage(todos);
+        storage.todos.populate(todos);
     }, [todos]);
 
     // Side effect: Update selectedTodoId in local storage whenever it changes
     useEffect(() => {
-        updateSelectedTodoIdFromStorage(selectedTodoId);
+        storage.selectedTodoId.set(selectedTodoId);
     }, [selectedTodoId]);
-
 
     // =========================
     // ===  Todo Actions   ===

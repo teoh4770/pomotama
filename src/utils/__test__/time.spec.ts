@@ -1,4 +1,4 @@
-import { getTimes, formatTime, clipTime, updatedTime } from '../time';
+import { getTimes, formatTime, clipTime, addMinutesToTime } from '../time';
 
 describe('getTimes', () => {
     it('should return minutes and seconds for a given time in seconds', () => {
@@ -76,12 +76,12 @@ describe('clipTime', () => {
     });
 });
 
-describe('updatedTime', () => {
+describe('addMinutesToTime', () => {
     it('should add additional minutes to the given time', () => {
         const baseTime = { hours: 21, minutes: 30 };
         const additionalMinutes = 30;
 
-        const result = updatedTime(baseTime, additionalMinutes);
+        const result = addMinutesToTime(baseTime, additionalMinutes);
         expect(result).toStrictEqual({ hours: 22, minutes: 0 });
     });
 
@@ -89,7 +89,7 @@ describe('updatedTime', () => {
         const baseTime = { hours: 23, minutes: 30 };
         const additionalMinutes = 60;
 
-        const result = updatedTime(baseTime, additionalMinutes);
+        const result = addMinutesToTime(baseTime, additionalMinutes);
         expect(result).toStrictEqual({ hours: 0, minutes: 30 });
     });
 
@@ -97,7 +97,7 @@ describe('updatedTime', () => {
         const baseTime = { hours: 23, minutes: 30 };
         const additionalMinutes = 1500; // 25 hours (1500 minutes)
 
-        const result = updatedTime(baseTime, additionalMinutes);
+        const result = addMinutesToTime(baseTime, additionalMinutes);
         expect(result).toEqual({ hours: 0, minutes: 30 });
     });
 
@@ -105,7 +105,7 @@ describe('updatedTime', () => {
         const baseTime = { hours: 21, minutes: 30 };
         const additionalMinutes = 0;
 
-        const result = updatedTime(baseTime, additionalMinutes);
+        const result = addMinutesToTime(baseTime, additionalMinutes);
         expect(result).toStrictEqual(baseTime);
     });
 
@@ -113,7 +113,7 @@ describe('updatedTime', () => {
         const baseTime = { hours: 23, minutes: 30 };
         const additionalMinutes = -60;
 
-        expect(() => updatedTime(baseTime, additionalMinutes)).toThrow(
+        expect(() => addMinutesToTime(baseTime, additionalMinutes)).toThrow(
             'additionalMinutes cannot accept negative values...'
         );
     });

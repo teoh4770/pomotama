@@ -6,33 +6,15 @@ import {
     formatTime,
     minutesToSeconds,
     clipTime,
-    updatedTime,
+    addMinutesToTime,
 } from './time';
-export { getTimes, formatTime, minutesToSeconds, clipTime, updatedTime };
+export { getTimes, formatTime, minutesToSeconds, clipTime, addMinutesToTime };
 
 /**
  * localStorage.ts
  */
-import {
-    fetchUserTodosFromStorage,
-    updateUserTodosFromStorage,
-    fetchSelectedTodoIdFromStorage,
-    updateSelectedTodoIdFromStorage,
-    fetchTimerSettingsFromStorage,
-    updateTimerSettingsFromStorage,
-    fetchLongBreakIntervalFromStorage,
-    updateLongBreakIntervalFromStorage,
-} from './localStorage';
-export {
-    fetchUserTodosFromStorage,
-    updateUserTodosFromStorage,
-    fetchSelectedTodoIdFromStorage,
-    updateSelectedTodoIdFromStorage,
-    fetchTimerSettingsFromStorage,
-    updateTimerSettingsFromStorage,
-    fetchLongBreakIntervalFromStorage,
-    updateLongBreakIntervalFromStorage,
-};
+import { storage } from './localStorage';
+export { storage };
 
 /**
  * dom.ts

@@ -1,10 +1,10 @@
 import { useAtomValue } from 'jotai';
 
 import {
-    getUpdatedTimeAtom,
-    getTotalSessionsAtom,
-    finishedSessionsAtom,
     todosAtom,
+    totalSessionsAtom,
+    completedSessionsAtom,
+    finishTimeAtom,
 } from '../../lib';
 import { Todo } from '../../types';
 import { formatTime } from '../../utils';
@@ -15,10 +15,10 @@ type SummaryProps = {
 
 const Summary: React.FC<SummaryProps> = ({ className }) => {
     // Retrieve atom values
-    const finishedSessions = useAtomValue(finishedSessionsAtom);
-    const totalSessions = useAtomValue(getTotalSessionsAtom);
-    const { hours, minutes } = useAtomValue(getUpdatedTimeAtom);
     const todos = useAtomValue(todosAtom) as Todo[];
+    const completedSessions = useAtomValue(completedSessionsAtom);
+    const totalSessions = useAtomValue(totalSessionsAtom);
+    const { hours, minutes } = useAtomValue(finishTimeAtom);
 
     // Check for empty todos and provide a fallback UI
     if (todos.length === 0) {
@@ -42,7 +42,7 @@ const Summary: React.FC<SummaryProps> = ({ className }) => {
                 <p className="flex items-center">
                     <span className="mr-1 text-white/70">Pomodoros:</span>
                     <span className="text-2xl font-bold">
-                        {finishedSessions}
+                        {completedSessions}
                     </span>
                     <span className="mx-1 font-extralight">/</span>
                     <span className="text-2xl font-bold">{totalSessions}</span>

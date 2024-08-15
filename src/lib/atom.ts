@@ -1,129 +1,105 @@
 import { atom } from 'jotai';
-import {
-    fetchLongBreakIntervalFromStorage,
-    fetchSelectedTodoIdFromStorage,
-    fetchTimerSettingsFromStorage,
-    fetchUserTodosFromStorage,
-    updatedTime,
-} from '../utils';
+import { storage, addMinutesToTime } from '../utils';
 import { TimerModeEnum, Todo } from '../types';
 
-// Timer global variables
-const defaultTimerSettings = {
-    [TimerModeEnum.POMODORO]: 25,
-    [TimerModeEnum.SHORT_BREAK]: 5,
-    [TimerModeEnum.LONG_BREAK]: 20,
-};
-const timerSettingsAtom = atom(
-    JSON.parse(
-        fetchTimerSettingsFromStorage() ?? JSON.stringify(defaultTimerSettings)
-    )
-);
+const { todos, selectedTodoId, timerSettings, longBreakInterval } = storage;
 
-const defaultLongBreakInterval = '2';
-const longBreakIntervalAtom = atom(
-    Number.parseInt(
-        fetchLongBreakIntervalFromStorage() ?? defaultLongBreakInterval
-    )
-);
-
+// Atoms
+const todosAtom = atom(todos.all());
+const selectedTodoIdAtom = atom(selectedTodoId.get());
+const timerSettingsAtom = atom(timerSettings.all());
+const longBreakIntervalAtom = atom(longBreakInterval.get());
 const timerModeAtom = atom(TimerModeEnum.POMODORO);
-
-// Todo global variables
-const todosAtom = atom(JSON.parse(fetchUserTodosFromStorage() ?? '[]'));
-
-const finishedSessionsAtom = atom((get) => {
-    const todos = get(todosAtom);
-    const finishedSessions = todos.reduce((accumulator: number, todo: Todo) => {
-        if (todo.completed) {
-            return accumulator;
-        }
-
-        return accumulator + todo.completedPomodoro;
-    }, 0);
-
-    return finishedSessions;
+const themeSettingsAtom = atom({
+    darkModeWhenRunning: true,
 });
 
-const getTotalSessionsAtom = atom((get) => {
+// Derived Atoms
+
+// Total number of target pomodoros for incomplete todos
+const totalSessionsAtom = atom((get) => {
     const todos = get(todosAtom);
     const totalSessions = todos.reduce((accumulator: number, todo: Todo) => {
-        if (todo.completed) {
-            return accumulator;
-        }
-
-        return accumulator + todo.targetPomodoro;
+        return todo.completed ? accumulator : accumulator + todo.targetPomodoro;
     }, 0);
 
     return totalSessions;
 });
 
-const unfininishedTodoSessionsAmountAtom = atom((get) => {
+// Total number of completed pomodoros
+const completedSessionsAtom = atom((get) => {
     const todos = get(todosAtom);
-    const unfinishedTodoSessionsTotal = todos.reduce(
+    const completedSessions = todos.reduce(
         (accumulator: number, todo: Todo) => {
-            if (todo.completed) {
-                return accumulator;
-            }
-
-            const unfinishedTodoSessions = Math.max(
-                todo.targetPomodoro - todo.completedPomodoro,
-                0
-            );
-            return accumulator + unfinishedTodoSessions;
+            return todo.completed
+                ? accumulator
+                : accumulator + todo.completedPomodoro;
         },
         0
     );
 
-    return unfinishedTodoSessionsTotal;
+    return completedSessions;
 });
 
-const getUnfinishedSessionsForEachTimerModeAtom = atom((get) => {
-    const unfinishedTodoTotal = get(unfininishedTodoSessionsAmountAtom);
+// Total number of incomplete pomodoros
+const incompleteSessionsAtom = atom((get) => {
+    const todos = get(todosAtom);
+    const incompleteSessionsTotal = todos.reduce(
+        (accumulator: number, todo: Todo) => {
+            const incompleteSessions = Math.max(
+                todo.targetPomodoro - todo.completedPomodoro,
+                0
+            );
+
+            return todo.completed
+                ? accumulator
+                : accumulator + incompleteSessions;
+        },
+        0
+    );
+
+    return incompleteSessionsTotal;
+});
+
+// Incomplete sessions for different timer modes
+const incompleteSessionsDetailAtom = atom((get) => {
     const longbreakInterval = get(longBreakIntervalAtom);
 
-    const pomodoroSessions = unfinishedTodoTotal;
+    const incompleteSessions = get(incompleteSessionsAtom);
     const longBreakSessions = Math.floor(
-        unfinishedTodoTotal / longbreakInterval
+        incompleteSessions / longbreakInterval
     );
-    const shortBreakSessions = pomodoroSessions - longBreakSessions;
+    const shortBreakSessions = incompleteSessions - longBreakSessions;
 
     return {
-        [TimerModeEnum.POMODORO]: pomodoroSessions,
+        [TimerModeEnum.POMODORO]: incompleteSessions,
         [TimerModeEnum.SHORT_BREAK]: shortBreakSessions,
         [TimerModeEnum.LONG_BREAK]: longBreakSessions,
     };
 });
 
-const getTotalTimeInMinutesAtom = atom((get) => {
-    const timerSettings = get(timerSettingsAtom);
-    const unfinishedSessions = get(getUnfinishedSessionsForEachTimerModeAtom);
-    const timerModeKeys = Object.keys(timerSettings) as TimerModeEnum[];
-    let totalTime = 0;
-
-    timerModeKeys.forEach((timerMode) => {
-        totalTime += timerSettings[timerMode] * unfinishedSessions[timerMode];
-    });
-
-    return totalTime;
-});
-
-const getUpdatedTimeAtom = atom((get) => {
-    const totalTimeInMinutes = get(getTotalTimeInMinutesAtom);
+// Calculate finish time based on current time and total remaining minutes
+const finishTimeAtom = atom((get) => {
     const date = new Date();
-    const time = {
+    const currentTime = {
         hours: date.getHours(),
         minutes: date.getMinutes(),
     };
 
-    return updatedTime(time, totalTimeInMinutes);
-});
+    const timerSettings = get(timerSettingsAtom);
+    const incompleteSessionsDetail = get(incompleteSessionsDetailAtom);
 
-const selectedTodoIdAtom = atom(fetchSelectedTodoIdFromStorage() ?? '');
+    const totalTimeInMinutes = Object.keys(timerSettings).reduce(
+        (totalTime, key) => {
+            const mode = key as TimerModeEnum;
+            return (
+                totalTime + timerSettings[key] * incompleteSessionsDetail[mode]
+            );
+        },
+        0
+    );
 
-// Theme settings
-const themeSettingsAtom = atom({
-    darkModeWhenRunning: true,
+    return addMinutesToTime(currentTime, totalTimeInMinutes);
 });
 
 export {
@@ -131,12 +107,11 @@ export {
     longBreakIntervalAtom,
     timerModeAtom,
     todosAtom,
-    unfininishedTodoSessionsAmountAtom,
-    finishedSessionsAtom,
-    getTotalSessionsAtom,
-    getUnfinishedSessionsForEachTimerModeAtom,
-    getTotalTimeInMinutesAtom,
-    getUpdatedTimeAtom,
+    incompleteSessionsAtom,
+    completedSessionsAtom,
+    totalSessionsAtom,
+    incompleteSessionsDetailAtom,
+    finishTimeAtom,
     selectedTodoIdAtom,
     themeSettingsAtom,
 };

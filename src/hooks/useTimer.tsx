@@ -12,8 +12,7 @@ import {
     getTimes,
     minutesToSeconds,
     playSound,
-    updateLongBreakIntervalFromStorage,
-    updateTimerSettingsFromStorage,
+    storage,
     workerTimer,
 } from '../utils';
 import { useTodos } from './useTodos';
@@ -63,20 +62,17 @@ const useTimer = (): UseTimer => {
     const [currentTimerMode, setTimerMode] =
         useAtom<TimerModeEnum>(timerModeAtom);
 
-
     // =========================
     // ===  States variable  ===
     // =========================
     const [timeElapsed, setTimeElapsed] = useState(0);
     const [status, setStatus] = useState<TimerStatusEnum>(TimerStatusEnum.IDLE);
 
-
     // =========================
     // ===   Custom Hooks    ===
     // =========================
     const longBreakIntervalCount = useLongBreakIntervalCount(0);
     const { selectedTodoId, actions: todoActions } = useTodos();
-
 
     // =========================
     // === Derived Variables ===
@@ -103,20 +99,18 @@ const useTimer = (): UseTimer => {
         [timeElapsed, initialTime]
     );
 
- 
-    
     // =========================
     // ===    Side Effect    ===
     // =========================
 
     // Side effect: Update the timer settings in local storage whenever they change
     useEffect(() => {
-        updateTimerSettingsFromStorage(timerSettings);
+        storage.timerSettings.populate(timerSettings);
     }, [timerSettings]);
 
     // Side effect: Update the long break interval in local storage whenever it changes
     useEffect(() => {
-        updateLongBreakIntervalFromStorage(longBreakInterval);
+        storage.longBreakInterval.set(longBreakInterval);
     }, [longBreakInterval]);
 
     // Side effect: Run the timer if it's in a running state and update the remaining time every second
@@ -148,7 +142,6 @@ const useTimer = (): UseTimer => {
     // Side effect: Update the theme mode based on whether the timer is running and the dark mode setting
     useThemeMode(status === TimerStatusEnum.RUNNING, isDarkMode);
 
-    
     // =========================
     // ===   Timer actions   ===
     // =========================
