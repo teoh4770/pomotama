@@ -12,10 +12,8 @@ const TodoFilterActions: React.FC<TodoFilterActionsProps> = ({
     actions,
     setType,
 }) => {
-    const hasCompletedTodos = Array.from(todos).some((todo) => todo.completed);
-    const hasPomodoroCount = Array.from(todos).some(
-        (todo) => todo.completedPomodoro > 0
-    );
+    const hasCompletedTodos = todos.some((todo) => todo.completed);
+    const hasPomodoroCount = todos.some((todo) => todo.completedPomodoro > 0);
 
     return (
         <section className="grid gap-2 mt-4" aria-label="Todos filter controls">

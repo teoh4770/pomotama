@@ -53,7 +53,11 @@ const Todos: React.FC<TodosProps> = ({ timerCallback }) => {
 
             {/* Action buttons for todo list */}
             {todos.length > 0 && (
-                <TodoFilterActions todos actions={actions} setType={setType} />
+                <TodoFilterActions
+                    todos={todos}
+                    actions={actions}
+                    setType={setType}
+                />
             )}
 
             {/* Todo list */}
