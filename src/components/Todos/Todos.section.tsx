@@ -33,7 +33,7 @@ const Todos: React.FC<TodosProps> = ({ timerCallback }) => {
         <p className="text-lg text-slate-300">
             {todos.length > 0
                 ? "You didn't select any tasks 🥱"
-                : "You don't have any todos 🥱"}
+                : "You don't have any tasks 😭"}
         </p>
     );
 
@@ -75,6 +75,7 @@ const Todos: React.FC<TodosProps> = ({ timerCallback }) => {
             {/* Toggle button for todo form */}
             {!isTodoFormVisible && (
                 <Button
+                    id="driver-1"
                     intent="secondary"
                     size="medium"
                     type="button"

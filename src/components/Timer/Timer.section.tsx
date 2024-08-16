@@ -25,7 +25,7 @@ const Timer: React.FC<TimerProps> = ({
     const timerSettings = useAtomValue(timerSettingsAtom);
 
     return (
-        <section aria-label="Timer section">
+        <section id="driver-2" aria-label="Timer section">
             <Indicator percentage={percentageToCompletion} />
 
             <article

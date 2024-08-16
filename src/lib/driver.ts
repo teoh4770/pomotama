@@ -26,7 +26,7 @@ const driverObj = driver({
             },
         },
         {
-            element: '#tasks',
+            element: '#driver-1',
             popover: {
                 title: 'Todo List',
                 description:
@@ -34,7 +34,7 @@ const driverObj = driver({
             },
         },
         {
-            element: '#timer-section',
+            element: '#driver-2',
             popover: {
                 title: 'Timer',
                 description:
@@ -43,7 +43,7 @@ const driverObj = driver({
         },
 
         {
-            element: '#setting-button',
+            element: '#driver-3',
             popover: {
                 title: 'Setting Button',
                 description:

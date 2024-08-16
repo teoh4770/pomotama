@@ -60,6 +60,7 @@ const Setting: React.FC = () => {
     return (
         <>
             <Button
+                id="driver-3"
                 intent="secondary"
                 size="small"
                 type="button"

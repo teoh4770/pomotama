@@ -26,8 +26,7 @@ const Summary: React.FC<SummaryProps> = ({ className }) => {
             <section className={className} aria-label="Pomodoro summary">
                 <div className="flex flex-wrap items-center justify-center gap-4">
                     <p className="text-center text-sm">
-                        No todos available. Please add some tasks to track your
-                        progress.
+                        Please add some tasks to track your progress.
                     </p>
                 </div>
             </section>
