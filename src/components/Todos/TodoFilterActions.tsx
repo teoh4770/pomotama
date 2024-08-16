@@ -9,10 +9,13 @@ interface TodoFilterActionsProps {
 
 const TodoFilterActions: React.FC<TodoFilterActionsProps> = ({
     todos,
-    actions: { clearAll, clearCompleted },
+    actions,
     setType,
 }) => {
-    const hasCompletedTodos = todos.some((todo) => todo.completed);
+    const hasCompletedTodos = Array.from(todos).some((todo) => todo.completed);
+    const hasPomodoroCount = Array.from(todos).some(
+        (todo) => todo.completedPomodoro > 0
+    );
 
     return (
         <section className="grid gap-2 mt-4" aria-label="Todos filter controls">
@@ -52,7 +55,7 @@ const TodoFilterActions: React.FC<TodoFilterActionsProps> = ({
                 />
             </div>
 
-            {/* Helpful actions */}
+            {/* Actions */}
             <div className="flex">
                 <span className="mr-2 max-w-[3.125rem] translate-y-[3.5px] text-sm text-white">
                     Actions:
@@ -64,10 +67,22 @@ const TodoFilterActions: React.FC<TodoFilterActionsProps> = ({
                         size="small"
                         type="button"
                         aria-label="Clear all tasks button"
-                        onClick={clearAll}
+                        onClick={actions.clearAll}
                     >
                         Clear All
                     </Button>
+
+                    {hasPomodoroCount && hasCompletedTodos && (
+                        <Button
+                            intent="secondary"
+                            size="small"
+                            type="button"
+                            aria-label="Reset all tasks button"
+                            onClick={actions.restart}
+                        >
+                            Reset All
+                        </Button>
+                    )}
 
                     {hasCompletedTodos && (
                         <Button
@@ -75,7 +90,7 @@ const TodoFilterActions: React.FC<TodoFilterActionsProps> = ({
                             size="small"
                             type="button"
                             aria-label="Clear completed tasks button"
-                            onClick={clearCompleted}
+                            onClick={actions.clearCompleted}
                         >
                             Clear Completed
                         </Button>

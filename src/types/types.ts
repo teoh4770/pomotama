@@ -18,10 +18,10 @@ interface TodoActions {
     toggleState: (id: string) => void;
     clearAll: () => void;
     clearCompleted: () => void;
+    restart: () => void;
     incrementPomodoro: (id: string) => void;
     find: (id: string) => Todo | undefined;
     reorder: (fromIndex: number, toIndex: number) => void;
 }
 
 export type { Todo, TodoActions, TodoFormData };
-

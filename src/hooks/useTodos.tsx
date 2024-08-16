@@ -113,6 +113,25 @@ const useTodos = (): UseTodos => {
         handleSingleTodoSelection(updatedTodos);
     }
 
+    // Todo action: Reset all todo items
+    function restart() {
+        const isConfirm = confirm(
+            'Hey, do you wanna reset all pomodoro count and unchecked the tasks! 🌪️'
+        );
+
+        const updatedTodos = todos.map((todo) => {
+            return {
+                ...todo,
+                completed: false,
+                completedPomodoro: 0,
+            };
+        });
+
+        if (isConfirm) {
+            setTodos(updatedTodos);
+        }
+    }
+
     // Todo action: Increment the pomodoro count for a specific todo item based on its ID
     function incrementPomodoro(id: string) {
         const KEY = 'completedPomodoro';
@@ -168,6 +187,7 @@ const useTodos = (): UseTodos => {
             toggleState,
             clearAll,
             clearCompleted,
+            restart,
             incrementPomodoro,
             find,
             reorder,
