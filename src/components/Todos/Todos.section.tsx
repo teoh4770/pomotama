@@ -38,7 +38,11 @@ const Todos: React.FC<TodosProps> = ({ timerCallback }) => {
     );
 
     return (
-        <section className="max-w-[30rem] mx-auto" aria-label="Todos section">
+        <section
+            id="driver-1"
+            className="max-w-[30rem] mx-auto"
+            aria-label="Todos section"
+        >
             <div className="py-4 mt-4 text-center visible">
                 {selectedTodoMessage}
             </div>
@@ -75,7 +79,6 @@ const Todos: React.FC<TodosProps> = ({ timerCallback }) => {
             {/* Toggle button for todo form */}
             {!isTodoFormVisible && (
                 <Button
-                    id="driver-1"
                     intent="secondary"
                     size="medium"
                     type="button"
