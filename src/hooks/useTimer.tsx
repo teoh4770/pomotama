@@ -117,15 +117,20 @@ const useTimer = (): UseTimer => {
     useEffect(() => {
         if (status !== TimerStatusEnum.RUNNING) return;
 
-        // !update worker timer
+        let lastTime = new Date();
+        let count = 0;
+
         const intervalId = workerTimer.setInterval(() => {
+            count += Date.now() - lastTime.getTime();
+            lastTime = new Date();
+
             if (remainingTime <= 1) {
                 playSound(ringSound);
                 handleTimerCompletion();
             } else {
-                setTimeElapsed((timeElapsed) => timeElapsed + 1);
+                setTimeElapsed((timeElapsed) => timeElapsed + Math.floor(count / 1000));
             }
-        }, 1000);
+        }, 250);
 
         return () => workerTimer.clearInterval(intervalId);
         // eslint-disable-next-line react-hooks/exhaustive-deps
