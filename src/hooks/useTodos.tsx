@@ -57,6 +57,7 @@ const useTodos = (): UseTodos => {
                 completedPomodoro: 0,
             },
         ];
+
         setTodos(updatedTodos);
 
         handleSingleTodoSelection(updatedTodos);
@@ -77,20 +78,39 @@ const useTodos = (): UseTodos => {
     // Todo action: Remove a todo item from the list based on its ID
     function remove(id: string) {
         const updatedTodos = todos.filter((todo) => todo.id !== id);
+
         setTodos(updatedTodos);
     }
 
     // Todo action: Toggle the completed state of a todo item based on its ID
     function toggleState(id: string) {
+        let updatedTodo: Todo | undefined;
+
         const updatedTodos = todos.map((todo) => {
-            if (todo.id === id) {
-                return {
-                    ...todo,
-                    completed: !todo.completed,
-                };
-            }
-            return todo;
+            if (todo.id !== id) return todo;
+
+            updatedTodo = {
+                ...todo,
+                completed: !todo.completed,
+            };
+
+            return updatedTodo;
         });
+
+        // Extra todo list effect if state is toggled...
+        // Find the todo and check if it is completed
+        // const updatedTodo = updatedTodos.find((todo) => todo.id === id) as Todo;
+
+        if (updatedTodo?.completed) {
+            const nextTodoId = chooseNextTodo(updatedTodos, updatedTodo.id);
+
+            setTodos(moveTodoToBack(updatedTodos, id));
+            setSelectedTodoId(nextTodoId);
+
+            return;
+        }
+
+        // If not completed, simply update the todos
         setTodos(updatedTodos);
     }
 
@@ -108,6 +128,7 @@ const useTodos = (): UseTodos => {
     // Todo action: Clear only the completed todo items
     function clearCompleted() {
         const updatedTodos = todos.filter((todo) => !todo.completed);
+
         setTodos(updatedTodos);
 
         handleSingleTodoSelection(updatedTodos);
@@ -145,6 +166,7 @@ const useTodos = (): UseTodos => {
             }
             return todo;
         });
+
         setTodos(updatedTodos);
     }
 
@@ -167,6 +189,21 @@ const useTodos = (): UseTodos => {
         if (todos.length === 1) {
             setSelectedTodoId(todos[0].id);
         }
+    }
+
+    // Helper function: Select the next todo, which is the first incomplete one.
+    function chooseNextTodo(todos: Todo[], currentTodoId: string) {
+        const nextTodoId = todos.find((todo) => !todo.completed)?.id;
+
+        return nextTodoId || currentTodoId;
+    }
+
+    // Helper function: Put the todo at the back of the todo list
+    function moveTodoToBack(todos: Todo[], id: string) {
+        const todo = todos.find((todo) => todo.id === id) as Todo;
+        const filteredTodos = todos.filter((todo) => todo.id !== id);
+
+        return [...filteredTodos, todo];
     }
 
     // Helper function: Reset the todos list and selectedTodoId to their initial state

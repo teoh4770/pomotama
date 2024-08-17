@@ -70,7 +70,7 @@ const TodoFilterActions: React.FC<TodoFilterActionsProps> = ({
                         Clear All
                     </Button>
 
-                    {hasPomodoroCount && hasCompletedTodos && (
+                    {(hasPomodoroCount || hasCompletedTodos) && (
                         <Button
                             intent="secondary"
                             size="small"
