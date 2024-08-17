@@ -5,6 +5,7 @@ import {
     totalSessionsAtom,
     completedSessionsAtom,
     finishTimeAtom,
+    totalTimeRemainingAtom,
 } from '../../lib';
 import { Todo } from '../../types';
 import { formatTime } from '../../utils';
@@ -19,6 +20,11 @@ const Summary: React.FC<SummaryProps> = ({ className }) => {
     const completedSessions = useAtomValue(completedSessionsAtom);
     const totalSessions = useAtomValue(totalSessionsAtom);
     const { hours, minutes } = useAtomValue(finishTimeAtom);
+    const { hours: totalTimeRemainingInHour } = useAtomValue(
+        totalTimeRemainingAtom
+    );
+    
+    const formattedTotalTimeRemaining = `${totalTimeRemainingInHour.toFixed(1)}h`;
 
     // Check for empty todos and provide a fallback UI
     if (todos.length === 0) {
@@ -47,10 +53,14 @@ const Summary: React.FC<SummaryProps> = ({ className }) => {
                     <span className="text-2xl font-bold">{totalSessions}</span>
                 </p>
                 {/* Finish time info */}
-                <p className="flex items-center">
-                    <span className="mr-1 text-white/70">Finish At:</span>
+                <p className="flex items-center space-x-1">
+                    <span className="text-white/70">Finish At:</span>
                     <span className="text-2xl font-bold">
                         {formatTime(hours)}:{formatTime(minutes)}
+                    </span>
+                    {/* we wanna add an extra information here */}
+                    <span className="text-sm text-white/70">
+                        ({formattedTotalTimeRemaining})
                     </span>
                 </p>
             </div>

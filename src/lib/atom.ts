@@ -78,6 +78,23 @@ const incompleteSessionsDetailAtom = atom((get) => {
     };
 });
 
+// Calculate the total time (in minute and hour) based on incomplete sessions detail
+const totalTimeRemainingAtom = atom((get) => {
+    const timerSettings = get(timerSettingsAtom);
+    const incompleteSessionsDetail = get(incompleteSessionsDetailAtom);
+
+    // Calculate total time in minutes
+    const totalMinutes = Object.keys(timerSettings).reduce((totalTime, key) => {
+        const mode = key as TimerModeEnum;
+        return totalTime + timerSettings[mode] * incompleteSessionsDetail[mode];
+    }, 0);
+
+    return {
+        minutes: totalMinutes,
+        hours: totalMinutes / 60,
+    };
+});
+
 // Calculate finish time based on current time and total remaining minutes
 const finishTimeAtom = atom((get) => {
     const date = new Date();
@@ -86,18 +103,7 @@ const finishTimeAtom = atom((get) => {
         minutes: date.getMinutes(),
     };
 
-    const timerSettings = get(timerSettingsAtom);
-    const incompleteSessionsDetail = get(incompleteSessionsDetailAtom);
-
-    const totalTimeInMinutes = Object.keys(timerSettings).reduce(
-        (totalTime, key) => {
-            const mode = key as TimerModeEnum;
-            return (
-                totalTime + timerSettings[mode] * incompleteSessionsDetail[mode]
-            );
-        },
-        0
-    );
+    const totalTimeInMinutes = get(totalTimeRemainingAtom).minutes;
 
     return addMinutesToTime(currentTime, totalTimeInMinutes);
 });
@@ -111,6 +117,7 @@ export {
     completedSessionsAtom,
     totalSessionsAtom,
     incompleteSessionsDetailAtom,
+    totalTimeRemainingAtom,
     finishTimeAtom,
     selectedTodoIdAtom,
     themeSettingsAtom,
