@@ -17,7 +17,7 @@ import {
 } from '../utils';
 import { useTodos } from './useTodos';
 import { TimerModeEnum, TimerStatusEnum } from '../types';
-import { useThemeMode } from './useThemeMode';
+import { useDarkMode } from './useDarkMode';
 
 interface TimerActions {
     toggleTimer: () => void;
@@ -56,7 +56,6 @@ const useTimer = (): UseTimer => {
     // =========================
     // ===    Atom values    ===
     // =========================
-    const isDarkMode = useAtomValue(themeSettingsAtom).darkModeWhenRunning;
     const timerSettings = useAtomValue(timerSettingsAtom);
     const longBreakInterval = useAtomValue(longBreakIntervalAtom);
     const [currentTimerMode, setTimerMode] =
@@ -128,7 +127,9 @@ const useTimer = (): UseTimer => {
                 playSound(ringSound);
                 handleTimerCompletion();
             } else {
-                setTimeElapsed((timeElapsed) => timeElapsed + Math.floor(count / 1000));
+                setTimeElapsed(
+                    (timeElapsed) => timeElapsed + Math.floor(count / 1000)
+                );
             }
         }, 250);
 
@@ -145,7 +146,11 @@ const useTimer = (): UseTimer => {
     }, [currentTodo, remainingTime]);
 
     // Side effect: Update the theme mode based on whether the timer is running and the dark mode setting
-    useThemeMode(status === TimerStatusEnum.RUNNING, isDarkMode);
+    const isDarkMode =
+        useAtomValue(themeSettingsAtom).darkMode &&
+        status === TimerStatusEnum.RUNNING;
+
+    useDarkMode(isDarkMode);
 
     // =========================
     // ===   Timer actions   ===

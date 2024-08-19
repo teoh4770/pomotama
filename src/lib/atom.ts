@@ -11,7 +11,7 @@ const timerSettingsAtom = atom(timerSettings.all());
 const timerModeAtom = atom(TimerModeEnum.POMODORO);
 const longBreakIntervalAtom = atom(longBreakInterval.get());
 const themeSettingsAtom = atom({
-    darkModeWhenRunning: true,
+    darkMode: true,
 });
 
 // Derived Atoms

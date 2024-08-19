@@ -10,10 +10,9 @@ const App = () => {
     const timer = useTimer();
     const themeSettings = useAtomValue(themeSettingsAtom);
 
-    const isTimerRunningInDarkMode =
-        themeSettings.darkModeWhenRunning &&
-        timer.status === TimerStatusEnum.RUNNING;
-    const hiddenClass = isTimerRunningInDarkMode ? 'invisible delay-1000' : '';
+    const isDarkMode =
+        themeSettings.darkMode && timer.status === TimerStatusEnum.RUNNING;
+    const hiddenClass = isDarkMode ? 'invisible delay-1000' : '';
 
     return (
         <main className="[&>*]:px-3 sm:[&>*]:px-4">
@@ -23,7 +22,7 @@ const App = () => {
                 aria-label="App section"
             >
                 <Header hiddenClass={hiddenClass} />
-                <Timer timer={timer} isDarkMode={isTimerRunningInDarkMode} />
+                <Timer timer={timer} isDarkMode={isDarkMode} />
                 <Todos timerCallback={timer.actions.resetTimer} />
                 <Summary
                     className={`max-w-[30rem] px-3 py-5 mx-auto my-6 bg-white/10 text-white border-t-2`}

@@ -1,5 +1,5 @@
 interface ThemeSettingData {
-    darkModeWhenRunning: boolean;
+    darkMode: boolean;
 }
 
 interface ThemeSettingInputsProps {
@@ -14,7 +14,7 @@ const ThemeSettingInputs: React.FC<ThemeSettingInputsProps> = ({
     const handleChange = () => {
         setThemeSetting({
             ...themeSettings,
-            darkModeWhenRunning: !themeSettings.darkModeWhenRunning,
+            darkMode: !themeSettings.darkMode,
         });
     };
 
@@ -29,7 +29,7 @@ const ThemeSettingInputs: React.FC<ThemeSettingInputsProps> = ({
                 </span>
                 <input
                     type="checkbox"
-                    checked={themeSettings.darkModeWhenRunning}
+                    checked={themeSettings.darkMode}
                     onChange={handleChange}
                     className="sr-only peer"
                     id="dark-mode-input"
