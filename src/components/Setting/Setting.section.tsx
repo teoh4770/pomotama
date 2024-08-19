@@ -8,11 +8,12 @@ import {
 import { TimerSettingInputs } from './TimerSettingInputs';
 import { ThemeSettingInputs } from './ThemeSettingInputs';
 import { Button } from '../ui';
+import { TimerModeEnum } from '../../types';
 
-export interface SettingFormTimerData {
-    pomodoroDuration: number;
-    shortBreakDuration: number;
-    longBreakDuration: number;
+interface SettingFormTimerData {
+    [TimerModeEnum.POMODORO]: number;
+    [TimerModeEnum.SHORT_BREAK]: number;
+    [TimerModeEnum.LONG_BREAK]: number;
     longBreakInterval: number;
 }
 
@@ -30,13 +31,13 @@ const Setting: React.FC = () => {
         const formData = new FormData(e.currentTarget);
 
         const formValues: SettingFormTimerData = {
-            longBreakDuration: parseFloat(
+            [TimerModeEnum.LONG_BREAK]: parseFloat(
                 formData.get('longBreakDuration') as string
             ),
-            pomodoroDuration: parseFloat(
+            [TimerModeEnum.POMODORO]: parseFloat(
                 formData.get('pomodoroDuration') as string
             ),
-            shortBreakDuration: parseFloat(
+            [TimerModeEnum.SHORT_BREAK]: parseFloat(
                 formData.get('shortBreakDuration') as string
             ),
             longBreakInterval: parseInt(
@@ -50,9 +51,9 @@ const Setting: React.FC = () => {
         }
 
         setTimerSetting({
-            pomodoroDuration: formValues.pomodoroDuration,
-            shortBreakDuration: formValues.shortBreakDuration,
-            longBreakDuration: formValues.longBreakDuration,
+            [TimerModeEnum.POMODORO]: formValues[TimerModeEnum.POMODORO],
+            [TimerModeEnum.SHORT_BREAK]: formValues[TimerModeEnum.SHORT_BREAK],
+            [TimerModeEnum.LONG_BREAK]: formValues[TimerModeEnum.LONG_BREAK],
         });
         setLongBreakInterval(formValues.longBreakInterval);
     }

@@ -37,14 +37,14 @@ const Timer: React.FC<TimerProps> = ({
                         {
                             name: TimerModeEnum.POMODORO,
                             label: 'Pomodoro',
-                            value: timerSettings.pomodoroDuration,
+                            value: timerSettings[TimerModeEnum.POMODORO],
                             handleClick: () =>
                                 actions.changeTimerMode(TimerModeEnum.POMODORO),
                         },
                         {
                             name: TimerModeEnum.SHORT_BREAK,
                             label: 'Short Break',
-                            value: timerSettings.shortBreakDuration,
+                            value: timerSettings[TimerModeEnum.SHORT_BREAK],
                             handleClick: () =>
                                 actions.changeTimerMode(
                                     TimerModeEnum.SHORT_BREAK
@@ -53,7 +53,7 @@ const Timer: React.FC<TimerProps> = ({
                         {
                             name: TimerModeEnum.LONG_BREAK,
                             label: 'Long Break',
-                            value: timerSettings.longBreakDuration,
+                            value: timerSettings[TimerModeEnum.LONG_BREAK],
                             handleClick: () =>
                                 actions.changeTimerMode(
                                     TimerModeEnum.LONG_BREAK

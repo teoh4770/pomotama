@@ -1,5 +1,5 @@
-import { Todo, TodoFormData, TodoActions } from './types';
-export type { Todo, TodoFormData, TodoActions };
+import { Todo, TodoFormData, TodoActions, TimerSettings } from './types';
+export type { Todo, TodoFormData, TodoActions, TimerSettings };
 
 import {
     TimerModeEnum,

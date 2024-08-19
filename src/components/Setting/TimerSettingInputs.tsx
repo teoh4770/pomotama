@@ -1,8 +1,13 @@
 // Note: https://developer.mozilla.org/en-US/docs/Learn/Forms/Form_validation
-import { SettingFormTimerData } from './Setting.section';
+import { TimerModeEnum } from '../../types';
 
 interface TimerSettingProps {
-    timerSettings: SettingFormTimerData;
+    timerSettings: {
+        [TimerModeEnum.POMODORO]: number;
+        [TimerModeEnum.SHORT_BREAK]: number;
+        [TimerModeEnum.LONG_BREAK]: number;
+        longBreakInterval: number;
+    };
 }
 
 const TimerSettingInputs: React.FC<TimerSettingProps> = ({ timerSettings }) => {
@@ -42,17 +47,17 @@ const TimerSettingInputs: React.FC<TimerSettingProps> = ({ timerSettings }) => {
                     {renderInput(
                         'Pomodoro',
                         'pomodoroDuration',
-                        timerSettings.pomodoroDuration
+                        timerSettings[TimerModeEnum.POMODORO]
                     )}
                     {renderInput(
                         'Short Break',
                         'shortBreakDuration',
-                        timerSettings.shortBreakDuration
+                        timerSettings[TimerModeEnum.SHORT_BREAK]
                     )}
                     {renderInput(
                         'Long Break',
                         'longBreakDuration',
-                        timerSettings.longBreakDuration
+                        timerSettings[TimerModeEnum.LONG_BREAK]
                     )}
                 </div>
 

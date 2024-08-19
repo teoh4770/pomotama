@@ -4,7 +4,7 @@ import { Tabs } from '../ui';
 
 interface TimerTab {
     label: string;
-    name: string;
+    name: string | number;
     value: number;
     ariaLabel?: string;
     handleClick: () => void;

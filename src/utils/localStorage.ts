@@ -1,11 +1,5 @@
-import { Todo } from '../types';
+import { TimerSettings, Todo } from '../types';
 import { TimerModeEnum } from '../types';
-
-interface TimerSettings {
-    [TimerModeEnum.POMODORO]: number;
-    [TimerModeEnum.SHORT_BREAK]: number;
-    [TimerModeEnum.LONG_BREAK]: number;
-}
 
 const TODOS_KEY = 'todos';
 const SELECTED_TODO_ID_KEY = 'selectedTodoId';
