@@ -4,7 +4,7 @@ import { Button } from '.';
 
 interface Tab {
     label: string;
-    name: string;
+    name: string | number;
     value: string | number;
     ariaLabel?: string;
     handleClick: () => void;
@@ -12,7 +12,7 @@ interface Tab {
 
 interface TabsProps {
     tabs: Tab[];
-    defaultValue?: string;
+    defaultValue?: string | number;
     tabListClassName?: string;
     tabItemClassName?: string;
 }

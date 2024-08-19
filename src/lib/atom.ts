@@ -85,7 +85,7 @@ const totalTimeRemainingAtom = atom((get) => {
 
     // Calculate total time in minutes
     const totalMinutes = Object.keys(timerSettings).reduce((totalTime, key) => {
-        const mode = key as TimerModeEnum;
+        const mode = key as unknown as TimerModeEnum;
         return totalTime + timerSettings[mode] * incompleteSessionsDetail[mode];
     }, 0);
 

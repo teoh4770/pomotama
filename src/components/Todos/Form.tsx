@@ -80,7 +80,7 @@ const TodoForm: React.FC<FormProps> = ({
                 className="flex px-5 py-3 bg-slate-300"
                 aria-label="Todo form action buttons"
             >
-                {mode === 'editTodo' && (
+                {mode === TodoFormMode.EDIT_TODO && (
                     <Button
                         intent="naked"
                         size="small"

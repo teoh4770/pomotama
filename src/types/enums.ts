@@ -1,23 +1,23 @@
 enum TimerStatusEnum {
-    IDLE = 'idle',
-    RUNNING = 'running',
+    IDLE,
+    RUNNING,
 }
 
 enum TimerModeEnum {
-    POMODORO = 'pomodoroDuration',
-    SHORT_BREAK = 'shortBreakDuration',
-    LONG_BREAK = 'longBreakDuration',
+    POMODORO,
+    SHORT_BREAK,
+    LONG_BREAK,
 }
 
 enum TodosFilterEnum {
-    ALL = 'all',
-    ACTIVE = 'active',
-    COMPLETED = 'completed',
+    ALL,
+    ACTIVE,
+    COMPLETED,
 }
 
 enum TodoFormMode {
-    ADD_TODO = 'addTodo',
-    EDIT_TODO = 'editTodo',
+    ADD_TODO,
+    EDIT_TODO,
 }
 
 export { TimerStatusEnum, TimerModeEnum, TodosFilterEnum, TodoFormMode };
