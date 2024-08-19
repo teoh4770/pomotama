@@ -15,11 +15,12 @@
 ## ✨ Features
 
 Here's what Pomotama offers:
-- **Start Pomodoro Session**: Just hit start, and you're off!
-- **Timer Indicators**: Keep an eye on your time with handy indicators.
-- **Customise Settings**: Tailor your focus and break times to your liking.
-- **Track Daily Tasks**: Manage your to-dos effortlessly - add, remove, edit, and toggle tasks as needed.
-- **Estimate Finish Time**: Get an estimate of the time required to complete your daily tasks.
+
+-   **Start Pomodoro Session**: Just hit start, and you're off!
+-   **Timer Indicators**: Keep an eye on your time with handy indicators.
+-   **Customise Settings**: Tailor your focus and break times to your liking.
+-   **Track Daily Tasks**: Manage your to-dos effortlessly - add, remove, edit, and toggle tasks as needed.
+-   **Estimate Finish Time**: Get an estimate of the time required to complete your daily tasks.
 
 ## 🤔 How to use a Pomodoro timer?
 
@@ -33,27 +34,27 @@ Here's what Pomotama offers:
 > ℹ️ Tip:
 > The selected task will update its estimate pomodoro number once the pomodoro timer has finished!
 
-
 ## 📚 What I Learned
 
-- Wireframing the app
-- Structuring React projects
-- Create custom hooks
-- Exploring Jotai, global state management
-- Discovering Driver.js
-- Utilising Web Worker
-- Implementing unit tests and component tests
+-   Wireframing the app
+-   Structuring React projects
+-   Create custom hooks
+-   Exploring Jotai, global state management
+-   Discovering Driver.js
+-   Utilising Web Worker
+-   Implementing unit tests and component tests
 
 ## 💭 How can it be improved?
 
-- Enable customisation of background color for different timer mode
-- Enable customisation of sound
-- Implement user authentication for access across devices
-- Introduce a reward or punishment system to incentivize focus and facilitate mindfulness
+-   Enable customisation of background color for different timer mode
+-   Enable customisation of sound
+-   Implement user authentication for access across devices
+-   Introduce a reward or punishment system to incentivize focus and facilitate mindfulness
 
 ## 🚦 Running the Project
 
 To run the project in your local environment, follow these steps:
+
 1. Clone the repository to your local machine.
 2. Run npm install or pnpm install or yarn in the project directory to install the required dependencies.
 3. Run npm run start or pnpm run start or yarn start to get the project started.
@@ -62,5 +63,3 @@ To run the project in your local environment, follow these steps:
 ## 🍿 Video
 
 https://github.com/teoh4770/Pomotama/assets/98545971/5a662891-d78b-418b-83fb-d1fe68f5ef4a
-
-

@@ -1,4 +1,4 @@
-import { TimerModeEnum } from "./enums";
+import { TimerModeEnum } from './enums';
 
 // Todos
 
@@ -30,13 +30,12 @@ interface TodoActions {
 
 export type { Todo, TodoActions, TodoFormData };
 
-
 // Timer
 
 interface TimerSettings {
-  [TimerModeEnum.POMODORO]: number;
-  [TimerModeEnum.SHORT_BREAK]: number;
-  [TimerModeEnum.LONG_BREAK]: number;
+    [TimerModeEnum.POMODORO]: number;
+    [TimerModeEnum.SHORT_BREAK]: number;
+    [TimerModeEnum.LONG_BREAK]: number;
 }
 
-export type { TimerSettings }
+export type { TimerSettings };

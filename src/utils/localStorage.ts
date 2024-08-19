@@ -54,7 +54,9 @@ const storage = {
     longBreakInterval: {
         // get long break interval
         get(): number {
-            const longBreakInterval = localStorage.getItem(LONG_BREAK_INTERVAL_KEY);
+            const longBreakInterval = localStorage.getItem(
+                LONG_BREAK_INTERVAL_KEY
+            );
 
             return longBreakInterval
                 ? Number.parseInt(longBreakInterval)
@@ -62,7 +64,10 @@ const storage = {
         },
         // set long break interval
         set(value: number) {
-            localStorage.setItem(LONG_BREAK_INTERVAL_KEY, JSON.stringify(value));
+            localStorage.setItem(
+                LONG_BREAK_INTERVAL_KEY,
+                JSON.stringify(value)
+            );
         },
     },
 };

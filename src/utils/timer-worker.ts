@@ -51,7 +51,7 @@ function clearExistingInterval(id: number) {
         clearInterval(intervalId);
         delete intervalIds[id];
 
-        notifyIntervalCleared(id)
+        notifyIntervalCleared(id);
     } else {
         sendError('Interval ID not found');
     }

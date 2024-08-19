@@ -23,7 +23,7 @@ const Summary: React.FC<SummaryProps> = ({ className }) => {
     const { hours: totalTimeRemainingInHour } = useAtomValue(
         totalTimeRemainingAtom
     );
-    
+
     const formattedTotalTimeRemaining = `${totalTimeRemainingInHour.toFixed(1)}h`;
 
     // Check for empty todos and provide a fallback UI

@@ -40,10 +40,4 @@ const addMinutesToTime = (currentTime: Time, minutesToAdd: number): Time => {
     };
 };
 
-export {
-    getTimes,
-    formatTime,
-    minutesToSeconds,
-    clipTime,
-    addMinutesToTime,
-};
+export { getTimes, formatTime, minutesToSeconds, clipTime, addMinutesToTime };
