@@ -32,15 +32,16 @@ const useTodos = (): UseTodos => {
     // =========================
 
     // Side effect: Update todos in local storage whenever the todos array changes
+    // ! need to fix, this render 3 times (might due to timer)
     useEffect(() => {
         storage.todos.populate(todos);
+        console.log(todos);
     }, [todos]);
 
     // Side effect: Update selectedTodoId in local storage whenever it changes
     useEffect(() => {
         storage.selectedTodoId.set(selectedTodoId);
     }, [selectedTodoId]);
-
     // =========================
     // ===  Todo Actions   ===
     // =========================
@@ -51,6 +52,7 @@ const useTodos = (): UseTodos => {
             ...todos,
             {
                 title: formData.title,
+                description: formData.description,
                 completed: false,
                 id: self.crypto.randomUUID(),
                 targetPomodoro: formData.targetPomodoro,

@@ -62,59 +62,84 @@ const TodoItem: React.FC<TodoProps> = ({
                     <div
                         role="button"
                         id={todo.id}
-                        className={`todo ${isSelected ? 'focus' : ''} | flex items-center w-full bg-white px-5 py-4 cursor-pointer rounded-lg`}
+                        className={`todo ${isSelected ? 'focus' : ''} | space-y-2 bg-white px-5 py-4 cursor-pointer rounded-lg`}
                         onClick={onClickTodo}
                         title="Click to focus on this task"
                         tabIndex={0} // Make it focusable
                     >
-                        <div className="flex mr-auto">
-                            <span className="form-control">
-                                <Checkbox
-                                    type="checkbox"
-                                    name={'todo-' + todo.id}
-                                    id={todo.id}
-                                    className="peer"
-                                    checked={todo.completed}
-                                    onChange={() => toggleState(todo.id)}
-                                    onClick={(e) => e.stopPropagation()}
-                                />
-                                <label
-                                    className="peer-checked:line-through"
-                                    htmlFor={todo.id}
-                                >
-                                    {todo.title}
-                                </label>
-                            </span>
-                        </div>
+                        {/* upper section */}
+                        <div className="flex items-center w-full">
+                            {/* contain checkbox and title */}
+                            <div className="flex mr-auto">
+                                <span className="form-control">
+                                    <Checkbox
+                                        type="checkbox"
+                                        name={'todo-' + todo.id}
+                                        id={todo.id}
+                                        className="peer"
+                                        checked={todo.completed}
+                                        onChange={() => toggleState(todo.id)}
+                                        onClick={(e) => e.stopPropagation()}
+                                    />
 
-                        <div className="flex items-center gap-4">
-                            <div className="grid text-sm">
-                                <span className="text-right -translate-x-[1px]">
-                                    <span className="completed-pomodoro-amount text-lg font-bold">
-                                        {todo.completedPomodoro}
-                                    </span>
-                                    /
-                                    <span className="expected-pomodoro-amount">
-                                        {todo.targetPomodoro}
-                                    </span>
-                                </span>
-                                <span>
-                                    round{todo.targetPomodoro > 1 && 's'}
+                                    <label
+                                        className="peer-checked:line-through"
+                                        htmlFor={todo.id}
+                                    >
+                                        {todo.title}
+                                    </label>
                                 </span>
                             </div>
 
-                            <Button
-                                intent="secondary"
-                                size="small"
-                                type="button"
-                                className="!text-black/60 hover:bg-black/10 border border-slate-300"
-                                title="Click to edit this task"
-                                aria-label="Edit todo button"
-                                onClick={handleEditClick}
-                            >
-                                Edit
-                            </Button>
+                            {/* contain pomodoro rounds and button */}
+                            <div className="flex items-center gap-4">
+                                <div className="grid text-sm">
+                                    <span className="text-right -translate-x-[1px]">
+                                        <span className="completed-pomodoro-amount text-lg font-bold">
+                                            {todo.completedPomodoro}
+                                        </span>
+                                        /
+                                        <span className="expected-pomodoro-amount">
+                                            {todo.targetPomodoro}
+                                        </span>
+                                    </span>
+                                    <span>
+                                        round{todo.targetPomodoro > 1 && 's'}
+                                    </span>
+                                </div>
+
+                                <Button
+                                    intent="secondary"
+                                    size="small"
+                                    type="button"
+                                    className="!text-black/60 hover:bg-black/10 border border-slate-300"
+                                    title="Click to edit this task"
+                                    aria-label="Edit todo button"
+                                    onClick={handleEditClick}
+                                >
+                                    Edit
+                                </Button>
+                            </div>
                         </div>
+
+                        {/* if todo description is not empty  */}
+                        {todo.description && (
+                            <div className='px-4'>
+                                <label
+                                    className="hidden"
+                                    htmlFor={'description-' + todo.id}
+                                >
+                                    description
+                                </label>
+                                <textarea
+                                    name="description"
+                                    id={'description-' + todo.id}
+                                    className="w-full p-3 text-sm bg-[#feff9c]/80 rounded-lg pointer-events-none resize-none cursor-none shadow-md"
+                                    value={todo.description}
+                                    readOnly
+                                ></textarea>
+                            </div>
+                        )}
                     </div>
                 </li>
             )}

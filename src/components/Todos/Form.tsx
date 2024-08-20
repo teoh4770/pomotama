@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useRef } from 'react';
+import { FormEvent, useEffect, useRef, useState } from 'react';
 
 import { Todo, TodoFormData, TodoFormMode } from '../../types';
 import { moveCursorToTheEnd } from '../../utils';
@@ -20,16 +20,33 @@ const TodoForm: React.FC<FormProps> = ({
     onClose,
     onDelete,
 }) => {
+    const [textAreaVisible, setTextAreaVisible] = useState(
+        todo != null && todo.description != null && todo.description.length > 0
+    );
+
     const titleInputRef = useRef<HTMLInputElement>(null);
+    const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
     useEffect(() => {
-        const input = titleInputRef.current;
+        const $input = titleInputRef.current;
 
-        if (input) {
-            input.focus();
-            moveCursorToTheEnd(input);
+        if ($input) {
+            $input.focus();
+            moveCursorToTheEnd($input);
         }
     }, []);
+
+    function showTextArea() {
+        setTextAreaVisible(true);
+    }
+
+    function clearTextArea() {
+        const $input = textAreaRef.current;
+
+        if ($input) {
+            $input.value = '';
+        }
+    }
 
     function handleSubmit(e: FormEvent) {
         e.preventDefault();
@@ -39,6 +56,7 @@ const TodoForm: React.FC<FormProps> = ({
 
         const todoFormData: TodoFormData = {
             title: formData.get('title') as string,
+            description: formData.get('description') as string,
             targetPomodoro: parseInt(formData.get('targetPomodoro') as string),
         };
 
@@ -70,12 +88,48 @@ const TodoForm: React.FC<FormProps> = ({
 
                 <NumberInput
                     name="targetPomodoro"
-                    className=""
                     defaultValue={todo?.targetPomodoro}
                     completedPomodoro={todo?.completedPomodoro}
                 />
+
+                <div>
+                    {textAreaVisible && (
+                        <textarea
+                            ref={textAreaRef}
+                            name="description"
+                            className="w-full p-3 bg-[#efefef] text-sm font-light rounded-lg resize-none"
+                            defaultValue={todo?.description ?? ''}
+                            placeholder="Some notes..."
+                            onFocus={(e) => moveCursorToTheEnd(e.currentTarget)}
+                            autoFocus
+                        ></textarea>
+                    )}
+
+                    <div>
+                        {!textAreaVisible && (
+                            <button
+                                type="button"
+                                className="text-sm font-light underline tracking-wider text-slate-400 hover:text-slate-500"
+                                onClick={showTextArea}
+                            >
+                                + Add Note
+                            </button>
+                        )}
+
+                        {textAreaVisible && (
+                            <button
+                                type="button"
+                                className="text-sm font-light underline tracking-wider text-slate-400 hover:text-slate-500"
+                                onClick={clearTextArea}
+                            >
+                                Clear Note
+                            </button>
+                        )}
+                    </div>
+                </div>
             </div>
 
+            {/* footer section */}
             <div
                 className="flex px-5 py-3 bg-slate-300"
                 aria-label="Todo form action buttons"

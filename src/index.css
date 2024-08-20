@@ -46,17 +46,57 @@ mark {
     padding: 0.25rem;
 }
 
+textarea {
+  field-sizing: content;
+  min-height: 4rem;
+}
+
 /* Composition */
 /* Stack */
 .stack {
     /* ↓ The grid context */
     display: grid;
     row-gap: var(--gap, 1.5rem);
+
+    & > * {
+        /* ↓ Any extant vertical margins are removed */
+        margin-block: 0;
+    }
 }
 
-.stack > * {
-    /* ↓ Any extant vertical margins are removed */
-    margin-block: 0;
+.grow-wrap {
+    /* ↓  easy way to plop the elements on top of each other and have them both sized based on the tallest one's height */
+    display: grid;
+
+    &::after {
+        /* Note the weird space! Needed to prevent jump behavior */
+        content: attr(data-replicated-value) ' ';
+
+        /* This is how textarea text behaves */
+        white-space: pre-wrap;
+
+        /* Hidden from view, clicks and screen readers */
+        visibility: hidden;
+    }
+
+    & > textarea {
+        /* You could leave this, but after a user resizes, then it ruins the auto sizing */
+        resize: none;
+
+        /* Firefox shows scrollbar on growth, you can hide like this. */
+        overflow: hidden;
+    }
+
+    & > textarea,
+    &::after {
+        /* Identical styling required!! */
+        border: 1px solid black;
+        padding: 0.5rem;
+        font: inherit;
+
+        /* Place on top of each other */
+        grid-area: 1 / 1 / 2 / 2;
+    }
 }
 
 /* Box */
@@ -74,7 +114,6 @@ mark {
     background-color: var(--bg-color, transparent);
 }
 
-/* Center */
 .center {
     /* ↓ Remove padding from the width calculation */
     box-sizing: content-box;
@@ -107,16 +146,7 @@ mark {
 
 /* Block */
 
-/* Input
-normal input
-
-checkbox
-input[data-type="checkbox"]
-input[data-type="toggle-btn"]
-
-select
-
-input exception */
+/* Input */
 
 .form-control {
     --form-control-color: rgb(30 30 30);
@@ -173,7 +203,7 @@ input[type='number'] {
     width: 100%;
     padding: 0.625rem;
     /* Colors */
-    background-color: rgb(203 213 225);
+    background-color: rgb(239, 239, 239);
     /* Others */
     border-radius: 0.5rem;
 }
@@ -181,7 +211,6 @@ input[type='number'] {
 input[type='number']:read-only {
     cursor: not-allowed;
     pointer-events: none;
-    background-color: rgb(239, 239, 239);
     color: rgb(187, 187, 187);
 }
 

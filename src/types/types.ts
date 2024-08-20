@@ -4,6 +4,7 @@ import { TimerModeEnum } from './enums';
 
 interface Todo {
     title: string;
+    description: string;
     completed: boolean;
     id: string;
     targetPomodoro: number;
@@ -12,6 +13,7 @@ interface Todo {
 
 interface TodoFormData {
     title: string;
+    description: string;
     targetPomodoro: number;
 }
 
