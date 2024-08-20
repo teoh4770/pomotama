@@ -1,6 +1,6 @@
 # 🍅 Pomotama
 
-> A web-based Pomodoro Timer designed to boost your productivity.
+> Remade of Pomofocus.io, a web-based Pomodoro Timer I love to boost your productivity
 
 [Pomotama](https://pomotama.netlify.app/) is a Pomodoro timer app inspired by [Pomofocus.io](https://pomofocus.io/), built with React and TypeScript. I love Pomofocus.io so much that I'm basically using it every day while doing tasks. While it's being really helpful to my productivity flow, I feel like I can improve the app to suit my need more. Therefore, I built this side project for both learning purposes and personal usage.
 
