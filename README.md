@@ -22,18 +22,6 @@ Here's what Pomotama offers:
 -   **Track Daily Tasks**: Manage your to-dos effortlessly - add, remove, edit, and toggle tasks as needed.
 -   **Estimate Finish Time**: Get an estimate of the time required to complete your daily tasks.
 
-## 🤔 How to use a Pomodoro timer?
-
-1. **Add tasks** to work on today
-2. **Set estimate pomodoros** (1 = 25min of work) for each task
-3. **Select a task** to work on
-4. **Start timer** and focus on the task for 25 minutes
-5. **Take a break** for 5 minutes when the alarm rings
-6. **Iterate** 3-5 until you finish the tasks
-
-> ℹ️ Tip:
-> The selected task will update its estimate pomodoro number once the pomodoro timer has finished!
-
 ## 📚 What I Learned
 
 -   Wireframing the app
