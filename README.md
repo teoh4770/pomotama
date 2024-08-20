@@ -51,15 +51,16 @@ Here's what Pomotama offers:
 -   Implement user authentication for access across devices
 -   Introduce a reward or punishment system to incentivize focus and facilitate mindfulness
 
-## 🚦 Running the Project
+## 🚦 Quick Start
 
-To run the project in your local environment, follow these steps:
+1. Clone the Repository: git clone https://github.com/teoh4770/Pomotama.git
+2. Navigate to Directory: cd path/to/your/clone
+3. Install Dependencies: pnpm i
+4. Start the App: pnpm run dev
 
-1. Clone the repository to your local machine.
-2. Run npm install or pnpm install or yarn in the project directory to install the required dependencies.
-3. Run npm run start or pnpm run start or yarn start to get the project started.
-4. Open http://localhost:5173 (or the address shown in your console) in your web browser to view the app.
+## 💁 Contributions
+Contributions are welcome! If you'd like to contribute, please check out the [Contributing Guide](https://github.com/teoh4770/Pomotama/blob/main/CONTRIBUTING.md), and feel free to open an issue or a pull request.
 
-## 🍿 Video
+## 🍿 Demo Video
 
 https://github.com/teoh4770/Pomotama/assets/98545971/5a662891-d78b-418b-83fb-d1fe68f5ef4a
