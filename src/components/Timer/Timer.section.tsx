@@ -15,9 +15,9 @@ interface TimerProps {
 const Timer: React.FC<TimerProps> = ({
     timer: {
         remainingTime,
+        percentageToCompletion,
         status,
         currentTimerMode,
-        percentageToCompletion,
         actions,
     },
     isDarkMode,
@@ -26,7 +26,7 @@ const Timer: React.FC<TimerProps> = ({
 
     return (
         <section id="driver-2" aria-label="Timer section">
-            <Indicator percentage={percentageToCompletion} />
+            <Indicator percentageToCompletion={percentageToCompletion} />
 
             <article
                 className="space-y-6 max-w-[30rem] px-4 py-6 mx-auto bg-white/10 text-center text-white rounded-lg sm:space-y-8 sm:py-8"

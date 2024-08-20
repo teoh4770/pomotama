@@ -1,20 +1,18 @@
 interface IndicatorProps {
-    percentage: number;
+    percentageToCompletion: number;
 }
 
-const Indicator = ({ percentage }: IndicatorProps) => {
-    const validatedPercentage = Math.max(0, Math.min(percentage, 1));
-
+const Indicator = ({ percentageToCompletion }: IndicatorProps) => {
     return (
         <div
-            className="max-w-2xl w-full h-[0.125rem] mx-auto mb-8 bg-black/10"
+            className="max-w-2xl w-full h-[0.125rem] mx-auto mb-8 bg-black/10 visible"
             aria-label="Time indicator"
         >
             <div
                 className="h-full bg-white"
                 style={{
                     transformOrigin: 'left',
-                    transform: `scaleX(${validatedPercentage})`,
+                    transform: `scaleX(${percentageToCompletion})`,
                 }}
             ></div>
         </div>

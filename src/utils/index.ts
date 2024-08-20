@@ -35,3 +35,7 @@ export function playSound(src: string) {
         console.error('Failed to play sound: ', error);
     }
 }
+
+export function clamp(percentage: number, min = 0, max = 1) {
+    return Math.max(min, Math.min(percentage, max));
+}

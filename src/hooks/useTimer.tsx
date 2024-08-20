@@ -8,6 +8,7 @@ import {
 } from '../lib';
 import ringSound from '../assets/ring.mp3';
 import {
+    clamp,
     formatTime,
     getTimes,
     minutesToSeconds,
@@ -94,7 +95,7 @@ const useTimer = (): UseTimer => {
 
     // Derived variable: Calculate the percentage of time elapsed for the progress bar
     const percentageToCompletion = useMemo(
-        () => Math.max(0, Math.min(1, timeElapsed / initialTime)), // [0,1]: inclusively between 0 and 1
+        () => clamp(timeElapsed / initialTime), // [0,1]: inclusively between 0 and 1
         [timeElapsed, initialTime]
     );
 
