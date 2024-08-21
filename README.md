@@ -4,15 +4,17 @@
 
 [Pomotama](https://pomotama.netlify.app/) is a Pomodoro timer app inspired by [Pomofocus.io](https://pomofocus.io/), built with React and TypeScript. I love Pomofocus.io so much that I'm basically using it every day while doing tasks. While it's being really helpful to my productivity flow, I feel like I can improve the app to suit my need more. Therefore, I built this side project for both learning purposes and personal usage.
 
-## 📦 Technologies
+## ❓ What is Pomodoro Technique
 
--   <code>Vite</code>
--   <code>React.js</code>
--   <code>TypeScript</code>
--   <code>Tailwind CSS</code>
--   <code>Testing Library</code>
--   <code>Jotai</code>
--   <code>Driver.js</code>
+<section>
+  <p>The Pomodoro Technique is a structured method that divides work into 25-minute focused sessions followed by 5-minute breaks. After completing four sessions, you take a longer break of 15-30 minutes.</p>
+  
+  <img width="1000" alt="pomodoro" src="https://github.com/user-attachments/assets/3bfa56ac-e464-4710-8447-44a7f4151ab0">
+  
+  <p>The Pomodoro Technique is known for its simplicity. It helps you break down tasks into manageable intervals and avoid burnout by incorporating regular breaks.</p>
+
+  <cite>Image and text credit to <a href="https://flowmodor.com/blog/pomodoro-vs-flowtime">flowmodor.com</a></cite>
+</section>
 
 ## ✨ Features
 
@@ -24,6 +26,16 @@ Here's what Pomotama offers:
 -   **Track Daily Tasks**: Manage your to-dos effortlessly - add, remove, edit, and toggle tasks as needed.
 -   **Estimate Finish Time**: Get an estimate of the time required to complete your daily tasks.
 
+## 📦 Technologies
+
+-   <code>Vite</code>
+-   <code>React.js</code>
+-   <code>TypeScript</code>
+-   <code>Tailwind CSS</code>
+-   <code>Testing Library</code>
+-   <code>Jotai</code>
+-   <code>Driver.js</code>
+
 ## 📚 What I Learned
 
 -   Wireframing the app
@@ -34,13 +46,6 @@ Here's what Pomotama offers:
 -   Utilising Web Worker
 -   Implementing unit tests and component tests
 
-## 💭 How can it be improved?
-
--   Enable customisation of background color for different timer mode
--   Enable customisation of sound
--   Implement user authentication for access across devices
--   Introduce a reward or punishment system to incentivize focus and facilitate mindfulness
-
 ## 🚦 Quick Start
 
 1. Clone the Repository: git clone https://github.com/teoh4770/Pomotama.git
@@ -48,7 +53,7 @@ Here's what Pomotama offers:
 3. Install Dependencies: pnpm i
 4. Start the App: pnpm run dev
 
-## 💁 Contributions
+## 📚 Contributions
 Contributions are welcome! If you'd like to contribute, please check out the [Contributing Guide](https://github.com/teoh4770/Pomotama/blob/main/CONTRIBUTING.md), and feel free to open an issue or a pull request.
 
 ## 🍿 Demo Video
