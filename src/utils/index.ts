@@ -1,14 +1,8 @@
 /**
  * time.ts
  */
-import {
-    getTimes,
-    formatTime,
-    minutesToSeconds,
-    clipTime,
-    addMinutesToTime,
-} from './time';
-export { getTimes, formatTime, minutesToSeconds, clipTime, addMinutesToTime };
+import { getTimes, formatTime, addMinutesToTime } from './time';
+export { getTimes, formatTime, addMinutesToTime };
 
 /**
  * localStorage.ts

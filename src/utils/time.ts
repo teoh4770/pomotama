@@ -4,7 +4,9 @@ interface Time {
 }
 
 const getTimes = (timeInSeconds: number) => {
-    if (timeInSeconds < 0) return { minutes: 0, seconds: 0 };
+    if (timeInSeconds <= 0) {
+        return { minutes: 0, seconds: 0 };
+    }
 
     const minutes = Math.floor(timeInSeconds / 60);
     const seconds = timeInSeconds % 60;
@@ -18,17 +20,13 @@ const formatTime = (time: number) => {
     return time >= 10 ? String(time) : '0' + time;
 };
 
-const minutesToSeconds = (minutes: number) => {
-    return minutes * 60;
-};
-
-const clipTime = (time: number) => {
-    return Math.min(Math.max(0, time), 999);
-};
-
 const addMinutesToTime = (currentTime: Time, minutesToAdd: number): Time => {
     if (minutesToAdd < 0) {
         throw new Error('additionalMinutes cannot accept negative values...');
+    }
+
+    if (currentTime.hours < 0 || currentTime.minutes < 0) {
+        throw new Error('time object cannot be negative...');
     }
 
     const totalMinutes =
@@ -40,4 +38,4 @@ const addMinutesToTime = (currentTime: Time, minutesToAdd: number): Time => {
     };
 };
 
-export { getTimes, formatTime, minutesToSeconds, clipTime, addMinutesToTime };
+export { getTimes, formatTime, addMinutesToTime };

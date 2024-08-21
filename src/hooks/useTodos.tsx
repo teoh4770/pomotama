@@ -35,7 +35,6 @@ const useTodos = (): UseTodos => {
     // ! need to fix, this render 3 times (might due to timer)
     useEffect(() => {
         storage.todos.populate(todos);
-        console.log(todos);
     }, [todos]);
 
     // Side effect: Update selectedTodoId in local storage whenever it changes

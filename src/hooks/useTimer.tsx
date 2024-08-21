@@ -11,7 +11,6 @@ import {
     clamp,
     formatTime,
     getTimes,
-    minutesToSeconds,
     playSound,
     storage,
     workerTimer,
@@ -72,19 +71,12 @@ const useTimer = (): UseTimer => {
     // ===   Custom Hooks    ===
     // =========================
     const longBreakIntervalCount = useLongBreakIntervalCount(0);
-    const { selectedTodoId, actions: todoActions } = useTodos();
-
-    // =========================
-    // === Derived Variables ===
-    // =========================
-
-    // Derive variable: Get the target todo based on the given id
-    const currentTodo = todoActions.find(selectedTodoId);
+    const { selectedTodoId, selectedTodo, actions: todoActions } = useTodos();
 
     // Derived variable: Calculate the initial time in seconds based on the current timer mode
     const initialTime = useMemo(() => {
-        const timeInMinutes = timerSettings[currentTimerMode];
-        return minutesToSeconds(timeInMinutes);
+        const timeInSeconds = timerSettings[currentTimerMode] * 60;
+        return timeInSeconds;
     }, [timerSettings, currentTimerMode]);
 
     // Derived variable: Calculate the remaining time by subtracting the elapsed time from the initial time
@@ -143,8 +135,8 @@ const useTimer = (): UseTimer => {
         const time = getTimes(remainingTime);
         const timeString = `${formatTime(time.minutes)}:${formatTime(time.seconds)}`;
 
-        document.title = `${timeString} - ${currentTodo?.title ?? 'Time to focus!'}`;
-    }, [currentTodo, remainingTime]);
+        document.title = `${timeString} - ${selectedTodo?.title ?? 'Time to focus!'}`;
+    }, [selectedTodo, remainingTime]);
 
     // Side effect: Update the theme mode based on whether the timer is running and the dark mode setting
     const isDarkMode =
@@ -181,7 +173,7 @@ const useTimer = (): UseTimer => {
     // Helper function: Handle actions when the timer completes (e.g., increment pomodoro count, switch mode, reset timer)
     function handleTimerCompletion() {
         if (currentTimerMode === TimerModeEnum.POMODORO) {
-            todoActions.incrementPomodoro(selectedTodoId);
+            todoActions.incrementPomodoro(selectedTodoId); // render
             longBreakIntervalCount.increment();
         }
 
