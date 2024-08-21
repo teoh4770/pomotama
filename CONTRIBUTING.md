@@ -32,7 +32,7 @@ pnpm run dev
 
 ## How to Contribute 
 
-### TL:DR
+### <ins>TL:DR</ins>
 
 1. **Fork the Repository**: Click the "Fork" button in the upper right corner of the repository's page on GitHub.
 
@@ -77,7 +77,7 @@ pnpm run dev
 
 7. **Create Pull Request**: Go to [Pomotama](https://github.com/teoh4770/Pomotama/pulls?q=sort:updated-desc+is:pr+is:open) on GitHub, and click the "New Pull Request" button. Fill out the necessary information and submit your pull request.
 
-### Issues
+### <ins>Issues</ins>
 
 #### Create a new issue
 
@@ -95,7 +95,7 @@ create one using the [issue form](https://github.com/teoh4770/Pomotama/issues/ne
 
 For this project, in general, we don't assign issues to anyone. If you find an issue that you can work on, you can assign yourself to the issue. Make sure to link your development branch to the issue.
 
-### Branching
+### <ins>Branching</ins>
 
 As a general rule, always branch off from `main`. If you need a specific feature that is being worked on, you can branch off from that but make sure to note down which one has to be merged first in the PR.
 
@@ -111,7 +111,7 @@ Here is the convention we have for branch names:
 
 A very simple example: `feature/1/register-form`
 
-### Pull Requests
+### <ins>Pull Requests</ins>
 
 Pull request checklist:
 
