@@ -9,8 +9,8 @@
 <section>
   <p>The Pomodoro Technique is a structured method that divides work into 25-minute focused sessions followed by 5-minute breaks. After completing four sessions, you take a longer break of 15-30 minutes.</p>
   
-  <img width="1000" alt="pomodoro" src="https://github.com/user-attachments/assets/3bfa56ac-e464-4710-8447-44a7f4151ab0">
-  
+  <img width="1000" alt="pomodoro technique illustration" src="https://github.com/user-attachments/assets/8a4d23f3-7b12-4b3e-a874-8b9edbef3dc1">
+
   <p>The Pomodoro Technique is known for its simplicity. It helps you break down tasks into manageable intervals and avoid burnout by incorporating regular breaks.</p>
 
   <cite>Image and text credit to <a href="https://flowmodor.com/blog/pomodoro-vs-flowtime">flowmodor.com</a></cite>
