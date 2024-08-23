@@ -20,7 +20,7 @@
         "noUnusedParameters": true,
         "noFallthroughCasesInSwitch": true,
         "forceConsistentCasingInFileNames": true,
-        "types": ["@testing-library/jest-dom", "vitest/globals"]
+        "types": ["@testing-library/jest-dom", "vitest/globals", "vitest/jsdom"]
     },
     "include": ["src", "src/utils/timer-worker.ts"],
     "references": [{ "path": "./tsconfig.node.json" }]

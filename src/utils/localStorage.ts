@@ -41,7 +41,7 @@ const storage = {
         // fetch settings
         all() {
             const timerSettings = localStorage.getItem(TIMER_SETTINGS_KEY);
-
+  
             return timerSettings
                 ? (JSON.parse(timerSettings) as TimerSettings)
                 : DEFAULT_TIMER_SETTINGS;
