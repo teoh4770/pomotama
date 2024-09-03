@@ -116,7 +116,7 @@ const useTimer = (): UseTimer => {
             count += Date.now() - lastTime.getTime();
             lastTime = new Date();
 
-            if (remainingTime <= 1) {
+            if (remainingTime <= 0) {
                 playSound(ringSound);
                 handleTimerCompletion();
             } else {
