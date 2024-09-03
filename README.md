@@ -38,13 +38,13 @@ Here's what Pomotama offers:
 
 ## 📚 What I Learned
 
--   Wireframing the app
--   Structuring React projects
+-   Wireframe the app
+-   Structure React projects
 -   Create custom hooks
--   Exploring Jotai, global state management
--   Discovering Driver.js
--   Utilising Web Worker
--   Implementing unit tests and component tests
+-   Explore Jotai, global state management
+-   Discover Driver.js
+-   Utilise Web Worker
+-   Implement unit tests and component tests
 
 ## 🚦 Quick Start
 
