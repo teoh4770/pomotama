@@ -95,15 +95,11 @@ const useTimer = (): UseTimer => {
     // ===    Side Effect    ===
     // =========================
 
-    // Side effect: Update the timer settings in local storage whenever they change
+    // Side effect: Update the settings in local storage whenever they change
     useEffect(() => {
         storage.timerSettings.populate(timerSettings);
-    }, [timerSettings]);
-
-    // Side effect: Update the long break interval in local storage whenever it changes
-    useEffect(() => {
         storage.longBreakInterval.set(longBreakInterval);
-    }, [longBreakInterval]);
+    }, [timerSettings, longBreakInterval]);
 
     // Side effect: Run the timer if it's in a running state and update the remaining time every second
     useEffect(() => {
@@ -123,6 +119,8 @@ const useTimer = (): UseTimer => {
                 setTimeElapsed(
                     (timeElapsed) => timeElapsed + Math.floor(count / 1000)
                 );
+
+                updateTitle();
             }
         }, 200);
 
@@ -131,12 +129,7 @@ const useTimer = (): UseTimer => {
     }, [status, remainingTime]);
 
     // Side effect: Update the document title with the remaining time and current todo title
-    useEffect(() => {
-        const time = getTimes(remainingTime);
-        const timeString = `${formatTime(time.minutes)}:${formatTime(time.seconds)}`;
-
-        document.title = `${timeString} - ${selectedTodo?.title ?? 'Time to focus!'}`;
-    }, [selectedTodo, remainingTime]);
+    useEffect(updateTitle, [remainingTime, selectedTodo]);
 
     // Side effect: Update the theme mode based on whether the timer is running and the dark mode setting
     const isDarkMode =
@@ -192,6 +185,14 @@ const useTimer = (): UseTimer => {
         } else {
             setTimerMode(NEXT_TIMER_MODE[currentTimerMode]);
         }
+    }
+
+    // Helper function: Update title
+    function updateTitle() {
+        const time = getTimes(remainingTime);
+        const timeString = `${formatTime(time.minutes)}:${formatTime(time.seconds)}`;
+
+        document.title = `${timeString} - ${selectedTodo?.title ?? 'Time to focus!'}`;
     }
 
     return {

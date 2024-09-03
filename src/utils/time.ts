@@ -17,7 +17,7 @@ const getTimes = (timeInSeconds: number) => {
 const formatTime = (time: number) => {
     if (time < 0) throw new Error('Input cannot be a negative number');
 
-    return time >= 10 ? String(time) : '0' + time;
+    return time >= 10 ? time.toFixed(0) : '0' + time;
 };
 
 const addMinutesToTime = (currentTime: Time, minutesToAdd: number): Time => {
