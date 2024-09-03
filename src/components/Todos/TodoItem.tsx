@@ -124,7 +124,7 @@ const TodoItem: React.FC<TodoProps> = ({
 
                         {/* if todo description is not empty  */}
                         {todo.description && (
-                            <div className='px-4'>
+                            <div className="px-4">
                                 <label
                                     className="hidden"
                                     htmlFor={'description-' + todo.id}

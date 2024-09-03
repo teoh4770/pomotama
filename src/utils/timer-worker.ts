@@ -8,7 +8,7 @@ self.onmessage = (e: MessageEvent): void => {
     switch (command) {
         // Handle 'heartbeat' to keep the worker alive
         case 'heartbeat':
-            console.log('Heartbeat keeps the worker alive!')
+            console.log('Heartbeat keeps the worker alive!');
             break;
 
         // Handle 'interval:start' command to initiate a new interval

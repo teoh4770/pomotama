@@ -47,8 +47,8 @@ mark {
 }
 
 textarea {
-  field-sizing: content;
-  min-height: 4rem;
+    field-sizing: content;
+    min-height: 4rem;
 }
 
 /* Composition */

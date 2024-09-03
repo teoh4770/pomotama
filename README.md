@@ -13,7 +13,8 @@
 
   <p>The Pomodoro Technique is known for its simplicity. It helps you break down tasks into manageable intervals and avoid burnout by incorporating regular breaks.</p>
 
-  <cite>Image and text credit to <a href="https://flowmodor.com/blog/pomodoro-vs-flowtime">flowmodor.com</a></cite>
+<cite>Image and text credit to <a href="https://flowmodor.com/blog/pomodoro-vs-flowtime">flowmodor.com</a></cite>
+
 </section>
 
 ## ✨ Features
@@ -54,6 +55,7 @@ Here's what Pomotama offers:
 4. Start the App: pnpm run dev
 
 ## 📚 Contributions
+
 Contributions are welcome! If you'd like to contribute, please check out the [Contributing Guide](https://github.com/teoh4770/Pomotama/blob/main/CONTRIBUTING.md), and feel free to open an issue or a pull request.
 
 ## 🍿 Demo Video
