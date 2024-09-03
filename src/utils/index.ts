@@ -19,8 +19,8 @@ export { moveCursorToTheEnd };
 /**
  * worker-timer.js
  */
-import { workerTimer } from './worker-timer';
-export { workerTimer };
+import { timerWorker } from './worker-timer';
+export { timerWorker as timer };
 
 export function playSound(src: string) {
     try {

@@ -13,7 +13,7 @@ import {
     getTimes,
     playSound,
     storage,
-    workerTimer,
+    timer,
 } from '../utils';
 import { useTodos } from './useTodos';
 import { TimerModeEnum, TimerStatusEnum } from '../types';
@@ -112,7 +112,7 @@ const useTimer = (): UseTimer => {
         let lastTime = new Date();
         let count = 0;
 
-        const intervalId = workerTimer.setInterval(() => {
+        const intervalId = timer.setInterval(() => {
             count += Date.now() - lastTime.getTime();
             lastTime = new Date();
 
@@ -124,9 +124,9 @@ const useTimer = (): UseTimer => {
                     (timeElapsed) => timeElapsed + Math.floor(count / 1000)
                 );
             }
-        }, 250);
+        }, 200);
 
-        return () => workerTimer.clearInterval(intervalId);
+        return () => timer.clearInterval(intervalId);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [status, remainingTime]);
 

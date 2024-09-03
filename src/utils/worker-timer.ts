@@ -1,11 +1,12 @@
+// We can import a worker in vite like this
 import Worker from './timer-worker.ts?worker';
 
 // interact with timer-worker.ts
 
-// postMessage => a message is sent to worker to tell worker do something
+// postMessage => a message is sent to worker on main thread to tell worker in another thread do something
 // onMessage => handle the communication between worker and the main thread
 
-const createWorkerTimer = (worker: Worker) => {
+const createTimerWorker = (worker: Worker) => {
     // id: A counter used to assign unique IDs to each interval.
     // callbacks: An object that stores the callback functions associated with each interval ID.
     let id = 0;
@@ -66,14 +67,11 @@ const createWorkerTimer = (worker: Worker) => {
     };
 };
 
-/**
- * why here?
- */
 const worker = new Worker();
-const workerTimer = createWorkerTimer(worker);
+const timerWorker = createTimerWorker(worker);
 
-setInterval(() => {
+window.setInterval(() => {
     worker.postMessage('heartbeat');
-}, 250);
+}, 200);
 
-export { workerTimer };
+export { timerWorker };
