@@ -26,7 +26,7 @@ const useInterval = (callback: () => void, delay: number | null) => {
         if (typeof delay === 'number') {
             intervalRef.current = setInterval(tick, delay);
 
-            return () => clearInterval(String(intervalRef.current));
+            return () => clearInterval(intervalRef.current as NodeJS.Timeout);
         }
     }, [delay]);
 
