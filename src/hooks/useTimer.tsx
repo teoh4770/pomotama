@@ -7,17 +7,11 @@ import {
     timerSettingsAtom,
 } from '../lib';
 import ringSound from '../assets/ring.mp3';
-import {
-    clamp,
-    formatTime,
-    getTimes,
-    playSound,
-    storage,
-    timer,
-} from '../utils';
+import { clamp, formatTime, getTimes, playSound, storage } from '../utils';
 import { useTodos } from './useTodos';
 import { TimerModeEnum, TimerStatusEnum } from '../types';
 import { useDarkMode } from './useDarkMode';
+import { clearInterval, setInterval } from 'worker-timers'; // use a library instead of built my own untest solution
 
 interface TimerActions {
     toggleTimer: () => void;
@@ -101,30 +95,30 @@ const useTimer = (): UseTimer => {
         storage.longBreakInterval.set(longBreakInterval);
     }, [timerSettings, longBreakInterval]);
 
-    // Side effect: Run the timer if it's in a running state and update the remaining time every second
+    // Side effect: Run the timer if it's in a running state
     useEffect(() => {
         if (status !== TimerStatusEnum.RUNNING) return;
 
-        let lastTime = new Date();
-        let count = 0;
+        let lastTime = Date.now();
+        let milliseconds = 0;
 
-        const intervalId = timer.setInterval(() => {
-            count += Date.now() - lastTime.getTime();
-            lastTime = new Date();
+        const intervalId = setInterval(() => {
+            milliseconds += Date.now() - lastTime;
+            lastTime = Date.now();
 
             if (remainingTime <= 0) {
                 playSound(ringSound);
                 handleTimerCompletion();
             } else {
                 setTimeElapsed(
-                    (timeElapsed) => timeElapsed + Math.floor(count / 1000)
+                    (timeElapsed) =>
+                        timeElapsed + Math.floor(milliseconds / 1000)
                 );
-
                 updateTitle();
             }
-        }, 200);
+        }, 100);
 
-        return () => timer.clearInterval(intervalId);
+        return () => clearInterval(intervalId);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [status, remainingTime]);
 

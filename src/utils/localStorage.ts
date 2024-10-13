@@ -3,15 +3,14 @@ import { TimerModeEnum } from '../types';
 
 const TODOS_KEY = 'todos';
 const SELECTED_TODO_ID_KEY = 'selectedTodoId';
-
 const TIMER_SETTINGS_KEY = 'timerSettings';
+const LONG_BREAK_INTERVAL_KEY = 'longBreakInterval';
+
 const DEFAULT_TIMER_SETTINGS = {
     [TimerModeEnum.POMODORO]: 25,
     [TimerModeEnum.SHORT_BREAK]: 5,
     [TimerModeEnum.LONG_BREAK]: 20,
 };
-
-const LONG_BREAK_INTERVAL_KEY = 'longBreakInterval';
 const DEFAULT_LONG_BREAK_INTERVAL = 2;
 
 const storage = {

@@ -16,12 +16,6 @@ export { storage };
 import { moveCursorToTheEnd } from './dom';
 export { moveCursorToTheEnd };
 
-/**
- * worker-timer.js
- */
-import { timerWorker } from './worker-timer';
-export { timerWorker as timer };
-
 export function playSound(src: string) {
     try {
         new Audio(src).play();
