@@ -16,6 +16,12 @@ export { storage };
 import { moveCursorToTheEnd } from './dom';
 export { moveCursorToTheEnd };
 
+/**
+ * Auth.ts
+ */
+import { signUp, signIn, logOut } from './Auth';
+export { signUp, signIn, logOut };
+
 export function playSound(src: string) {
     try {
         new Audio(src).play();
