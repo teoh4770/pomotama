@@ -62,12 +62,14 @@ const Auth: React.FC = () => {
 
             <dialog
                 ref={dialogRef}
-                className="dialog | box | text-center backdrop:bg-red-200 space-y-4"
+                className="dialog | box | text-center  backdrop:bg-[var(--primary-color)] space-y-4"
+                style={{
+                    '--bg-color': 'transparent',
+                    maxWidth: '20rem',
+                }}
             >
-                <div className="space-y-4">
-                    <h1 className="text-3xl font-bold text-center text-black">
-                        Pomotama
-                    </h1>
+                <div className="space-y-4 text-white pb-5">
+                    <h1 className="text-4xl font-bold text-center">Pomotama</h1>
                     <h2 className="text-xl font-bold leading-tight tracking-tight">
                         {authView === AuthView.Login
                             ? 'Login'

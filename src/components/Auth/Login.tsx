@@ -69,7 +69,7 @@ const Login: React.FC<ILogin> = ({ authViewHandler }) => {
     };
 
     return (
-        <div className="grid max-w-sm mx-auto px-2 py-4 rounded-lg">
+        <div className="grid max-w-sm mx-auto px-2 py-6 rounded-lg">
             <form
                 className="space-y-4 md:space-y-6"
                 onSubmit={(e) => e.preventDefault()}

@@ -16,9 +16,6 @@ const App = () => {
 
     return (
         <main className="[&>*]:px-3 sm:[&>*]:px-4">
-            {/* Temp Auth section */}
-            <Auth />
-
             {/*  App section  */}
             <section
                 className={`min-h-full pb-4 ${hiddenClass} `}
@@ -54,15 +51,7 @@ const Header = ({ hiddenClass }: { hiddenClass: string }) => (
             Tutorial
         </Button>
         <Setting />
-        <Button
-            intent="secondary"
-            size="small"
-            type="button"
-            aria-label="Open Login Form"
-            onClick={() => console.log('open login form')}
-        >
-            Login
-        </Button>
+        <Auth />
     </header>
 );
 
