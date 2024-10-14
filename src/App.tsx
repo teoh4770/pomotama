@@ -43,6 +43,7 @@ const Header = ({ hiddenClass }: { hiddenClass: string }) => (
         <h1 className={`mr-auto text-2xl font-bold text-white ${hiddenClass}`}>
             Pomotama
         </h1>
+
         <Button
             intent="secondary"
             size="small"
@@ -53,6 +54,15 @@ const Header = ({ hiddenClass }: { hiddenClass: string }) => (
             Tutorial
         </Button>
         <Setting />
+        <Button
+            intent="secondary"
+            size="small"
+            type="button"
+            aria-label="Open Login Form"
+            onClick={() => console.log('open login form')}
+        >
+            Login
+        </Button>
     </header>
 );
 

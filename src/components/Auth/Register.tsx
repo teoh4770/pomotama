@@ -1,6 +1,7 @@
 // import { getAuth } from 'firebase/auth';
 import { useState } from 'react';
 import { signUp } from '../../utils';
+import { SignUpSchema } from '../../types/types';
 
 interface IRegister {
     authViewHandler: () => void;
@@ -12,14 +13,14 @@ const Register: React.FC<IRegister> = ({ authViewHandler }) => {
     const [password, setPassword] = useState<string>('');
     const [passwordConfirm, setPasswordConfirm] = useState<string>('');
     const [errorMessages, setErrorMessages] = useState<{
-        email: string;
-        password: string;
-        passwordConfirm: string;
+        email: string[] | undefined;
+        password: string[] | undefined;
+        passwordConfirm: string[] | undefined;
         generic: string;
     }>({
-        email: '',
-        password: '',
-        passwordConfirm: '',
+        email: undefined,
+        password: undefined,
+        passwordConfirm: undefined,
         generic: '',
     });
 
@@ -28,16 +29,50 @@ const Register: React.FC<IRegister> = ({ authViewHandler }) => {
         password: string,
         passwordConfirm: string
     ) => {
+        // refresh errorMessages
+
         // validate user inputs
         // check email
         // check password size
         // check if password and password confirm match...
+        const validationResult = SignUpSchema.safeParse({
+            email,
+            password,
+            passwordConfirm,
+        });
+
+        // if not successful, return early
+        if (!validationResult.success) {
+            const errors = validationResult.error.format();
+            console.log(errors.email, errors.password);
+
+            setErrorMessages({
+                ...errorMessages,
+                email: errors.email?._errors,
+                password: errors.password?._errors,
+                passwordConfirm: errors.passwordConfirm?._errors,
+            });
+
+            return;
+        } else {
+            setErrorMessages({
+                ...errorMessages,
+                email: undefined,
+                password: undefined,
+                passwordConfirm: undefined,
+            });
+            console.log('validate success!');
+        }
 
         // authenticate
         try {
             await signUp({ email, password });
 
             // If success, then reset the values
+            setErrorMessages({
+                ...errorMessages,
+                generic: '',
+            });
             setEmail('');
             setPassword('');
             setPasswordConfirm('');
@@ -51,11 +86,7 @@ const Register: React.FC<IRegister> = ({ authViewHandler }) => {
     };
 
     return (
-        <div className="grid bg-black/10 max-w-sm mx-auto px-2 py-4 rounded-lg">
-            <h2 className="text-xl font-bold leading-tight tracking-tight pb-4">
-                Create an account
-            </h2>
-
+        <div className="grid max-w-sm mx-auto px-2 py-4 rounded-lg">
             <form
                 className="space-y-4 md:space-y-6"
                 onSubmit={(e) => e.preventDefault()}
@@ -63,71 +94,82 @@ const Register: React.FC<IRegister> = ({ authViewHandler }) => {
                 <div>
                     <label
                         htmlFor="email"
-                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                        className="block mb-2 text-sm font-medium text-left text-gray-900 "
                     >
                         Your email
                     </label>
                     <input
                         type="email"
                         id="email"
-                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                         placeholder="name@flowbite.com"
                         required
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                     />
-                    {errorMessages.email && (
-                        <p className="text-red-400 mt-2">
-                            {errorMessages.email}
-                        </p>
-                    )}
+                    <div className="text-sm text-red-400 space-y-1">
+                        {errorMessages.email &&
+                            errorMessages.email.map((message, i) => (
+                                <p key={i}>{message}</p>
+                            ))}
+                    </div>
                 </div>
 
                 <div>
                     <label
                         htmlFor="password"
-                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                        className="block mb-2 text-sm font-medium text-left text-gray-900 "
                     >
                         Your password
                     </label>
                     <input
                         type="password"
                         id="password"
-                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                         required
                         value={password}
                         placeholder="********"
                         onChange={(e) => setPassword(e.target.value)}
                     />
-                    {errorMessages.password && (
-                        <p className="text-red-400 mt-2">
-                            {errorMessages.password}
-                        </p>
-                    )}
+                    <div className="text-sm text-red-400 space-y-1">
+                        {errorMessages.password &&
+                            errorMessages.password.map((message, i) => (
+                                <p key={i}>{message}</p>
+                            ))}
+                    </div>
                 </div>
 
                 <div>
                     <label
                         htmlFor="password-confirm"
-                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                        className="block mb-2 text-sm font-medium text-left text-gray-900"
                     >
                         Confirm password
                     </label>
                     <input
                         type="password"
                         id="password-confirm"
-                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                         required
                         value={passwordConfirm}
                         placeholder="********"
                         onChange={(e) => setPasswordConfirm(e.target.value)}
                     />
-                    {errorMessages.passwordConfirm && (
-                        <p className="text-red-400 mt-2">
-                            {errorMessages.passwordConfirm}
-                        </p>
-                    )}
+
+                    <div className="text-sm text-red-400 space-y-1">
+                        {errorMessages.passwordConfirm &&
+                            errorMessages.passwordConfirm.map((message) => (
+                                <p>{message}</p>
+                            ))}
+                    </div>
                 </div>
+
+                {/* place the firebase error here... */}
+                {errorMessages.generic && (
+                    <p className="text-sm text-red-400 mt-2">
+                        {errorMessages.generic}
+                    </p>
+                )}
 
                 <button
                     className="w-full border border-black rounded-lg py-2 bg-white"
@@ -141,7 +183,7 @@ const Register: React.FC<IRegister> = ({ authViewHandler }) => {
                 <div className="text-sm font-light">
                     <span>Already have an account? </span>
                     <button
-                        className="font-medium hover:underline"
+                        className="font-medium underline"
                         onClick={authViewHandler}
                     >
                         Login here
