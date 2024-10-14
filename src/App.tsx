@@ -1,5 +1,5 @@
 import { useAtomValue } from 'jotai';
-import { Setting, Summary, Timer, Todos } from './components';
+import { Auth, Setting, Summary, Timer, Todos } from './components';
 import { Button } from './components/ui';
 import { useTimer } from './hooks';
 import { runTour } from './lib';
@@ -16,6 +16,9 @@ const App = () => {
 
     return (
         <main className="[&>*]:px-3 sm:[&>*]:px-4">
+            {/* Temp Auth section */}
+            <Auth />
+
             {/*  App section  */}
             <section
                 className={`min-h-full pb-4 ${hiddenClass} `}

@@ -20,4 +20,15 @@ enum TodoFormMode {
     EDIT_TODO,
 }
 
-export { TimerStatusEnum, TimerModeEnum, TodosFilterEnum, TodoFormMode };
+enum AuthView {
+    Login = 'LOGIN',
+    Register = 'REGISTER',
+}
+
+export {
+    TimerStatusEnum,
+    TimerModeEnum,
+    TodosFilterEnum,
+    TodoFormMode,
+    AuthView,
+};
